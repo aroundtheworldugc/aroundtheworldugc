@@ -6,7 +6,7 @@ const WhyChooseUs = () => {
           <p className="text-sm tracking-[0.3em] uppercase text-muted-foreground mb-4 text-center">Why Choose Us</p>
           <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl font-light text-center mb-12">We Are Always Ready for the Next Adventure
             <br />
-            <span className="italic">We Create</span>
+            <span className="italic"></span>
           </h2>
 
           <div className="space-y-8 text-muted-foreground leading-relaxed text-center max-w-2xl mx-auto">
