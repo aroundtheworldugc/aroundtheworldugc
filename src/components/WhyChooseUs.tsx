@@ -4,8 +4,8 @@ const WhyChooseUs = () => {
       <div className="container mx-auto px-6">
         <div className="max-w-3xl mx-auto">
           <p className="text-sm tracking-[0.3em] uppercase text-muted-foreground mb-4 text-center">Why Choose Us</p>
-          <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl font-light text-center mb-12">
-            We Live the Experiences<br />
+          <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl font-light text-center mb-12">We Are Always Ready for the Next Adventure
+            <br />
             <span className="italic">We Create</span>
           </h2>
 
@@ -20,16 +20,16 @@ const WhyChooseUs = () => {
 
           <div className="grid sm:grid-cols-3 gap-8 mt-16">
             {[
-              { title: "Creativity", desc: "Fresh perspective on every project" },
-              { title: "Strategy", desc: "Data-informed creative decisions" },
-              { title: "Reliability", desc: "Professional, easy to work with" },
-            ].map((item) => (
-              <div key={item.title} className="text-center">
+            { title: "Creativity", desc: "Fresh perspective on every project" },
+            { title: "Strategy", desc: "Data-informed creative decisions" },
+            { title: "Reliability", desc: "Professional, easy to work with" }].
+            map((item) =>
+            <div key={item.title} className="text-center">
                 <h3 className="font-serif text-2xl font-light mb-2">{item.title}</h3>
                 <div className="w-6 h-px bg-primary mx-auto mb-3" />
                 <p className="text-sm text-muted-foreground">{item.desc}</p>
               </div>
-            ))}
+            )}
           </div>
 
           <div className="mt-16 border border-border p-8 text-center">
@@ -39,8 +39,8 @@ const WhyChooseUs = () => {
           </div>
         </div>
       </div>
-    </section>
-  );
+    </section>);
+
 };
 
 export default WhyChooseUs;
