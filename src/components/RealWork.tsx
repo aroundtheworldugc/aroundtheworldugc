@@ -1,4 +1,5 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect, useCallback } from "react";
+import Player from "@vimeo/player";
 
 const categories = [
   {
@@ -71,7 +72,6 @@ const categories = [
   },
 ];
 
-
 const PhoneMockup = ({
   video,
   brand,
@@ -82,17 +82,37 @@ const PhoneMockup = ({
   caption: string;
 }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const iframeRef = useRef<HTMLIFrameElement>(null);
+  const playerRef = useRef<Player | null>(null);
   const [muted, setMuted] = useState(true);
-
-  const toggleSound = () => {
-    if (videoRef.current) {
-      videoRef.current.muted = !videoRef.current.muted;
-      setMuted(videoRef.current.muted);
-    }
-  };
 
   const isPlaceholder = video.includes("placeholder");
   const isVimeo = video.includes("vimeo");
+
+  useEffect(() => {
+    if (isVimeo && !isPlaceholder && iframeRef.current) {
+      const player = new Player(iframeRef.current);
+      playerRef.current = player;
+      player.setVolume(0);
+      return () => {
+        player.destroy();
+      };
+    }
+  }, [isVimeo, isPlaceholder]);
+
+  const toggleSound = useCallback(() => {
+    if (isVimeo && playerRef.current) {
+      if (muted) {
+        playerRef.current.setVolume(1);
+      } else {
+        playerRef.current.setVolume(0);
+      }
+      setMuted(!muted);
+    } else if (videoRef.current) {
+      videoRef.current.muted = !videoRef.current.muted;
+      setMuted(videoRef.current.muted);
+    }
+  }, [muted, isVimeo]);
 
   return (
     <div className="flex flex-col items-center gap-5">
@@ -134,6 +154,7 @@ const PhoneMockup = ({
               </div>
             ) : isVimeo ? (
               <iframe
+                ref={iframeRef}
                 src={`${video}?autoplay=1&loop=1&muted=1&background=1`}
                 className="w-full h-full"
                 style={{ border: "none", objectFit: "cover" }}
