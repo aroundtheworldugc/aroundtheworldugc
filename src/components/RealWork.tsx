@@ -149,7 +149,8 @@ const PhoneMockup = ({
                       <path d="M8 5v14l11-7z" />
                     </svg>
                   </div>
-                  <p className="text-xs text-muted-foreground">Coming Soon</p>
+                  <p className="text-xs text-muted-foreground">
+                </p>
                 </div>
               </div> : isVimeo ?
             <iframe
