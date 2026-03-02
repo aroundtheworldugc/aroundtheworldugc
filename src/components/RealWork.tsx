@@ -4,7 +4,7 @@ const categories = [
     title: "Hotel Collaborations",
     items: [
       {
-        video: "https://player.vimeo.com/video/placeholder1",
+        video: "https://player.vimeo.com/video/1169466245",
         brand: "Surf Camp Weligama",
         caption: "Cinematic reel focused on community and ocean lifestyle.",
       },
@@ -70,6 +70,7 @@ const categories = [
 ];
 
 const PhoneMockup = ({
+  video,
   brand,
   caption,
 }: {
@@ -94,21 +95,27 @@ const PhoneMockup = ({
         {/* Notch */}
         <div className="absolute top-2 left-1/2 -translate-x-1/2 w-16 h-4 bg-foreground/80 rounded-full z-10" />
 
-        {/* Screen content — placeholder gradient */}
-        <div className="w-full h-full bg-gradient-to-br from-muted to-secondary flex items-center justify-center">
-          <div className="text-center px-4">
-            <div className="w-10 h-10 mx-auto mb-2 rounded-full bg-foreground/10 flex items-center justify-center">
-              <svg
-                className="w-5 h-5 text-muted-foreground"
-                fill="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path d="M8 5v14l11-7z" />
-              </svg>
+        {/* Screen content */}
+        {video.includes("placeholder") ? (
+          <div className="w-full h-full bg-gradient-to-br from-muted to-secondary flex items-center justify-center">
+            <div className="text-center px-4">
+              <div className="w-10 h-10 mx-auto mb-2 rounded-full bg-foreground/10 flex items-center justify-center">
+                <svg className="w-5 h-5 text-muted-foreground" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M8 5v14l11-7z" />
+                </svg>
+              </div>
+              <p className="text-[10px] text-muted-foreground">Video Preview</p>
             </div>
-            <p className="text-[10px] text-muted-foreground">Video Preview</p>
           </div>
-        </div>
+        ) : (
+          <iframe
+            src={`${video}?autoplay=1&loop=1&muted=1&background=1`}
+            className="absolute inset-0 w-full h-full"
+            style={{ border: "none" }}
+            allow="autoplay; fullscreen"
+            title={brand}
+          />
+        )}
       </div>
     </div>
 
