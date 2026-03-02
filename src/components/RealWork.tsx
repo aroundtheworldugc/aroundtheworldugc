@@ -1,3 +1,5 @@
+import React, { useRef, useState } from "react";
+
 const categories = [
   {
     icon: "🏨",
@@ -69,6 +71,7 @@ const categories = [
   },
 ];
 
+
 const PhoneMockup = ({
   video,
   brand,
@@ -77,56 +80,121 @@ const PhoneMockup = ({
   video: string;
   brand: string;
   caption: string;
-}) => (
-  <div className="flex flex-col items-center gap-4">
-    <div
-      className="relative mx-auto"
-      style={{ width: "180px" }}
-    >
-      {/* Phone frame */}
-      <div
-        className="rounded-[2rem] border-[3px] border-foreground/80 bg-foreground/5 overflow-hidden"
-        style={{
-          aspectRatio: "9/19.5",
-          boxShadow:
-            "0 20px 40px -12px hsl(var(--foreground) / 0.15), 0 8px 20px -8px hsl(var(--foreground) / 0.1)",
-        }}
-      >
-        {/* Notch */}
-        <div className="absolute top-2 left-1/2 -translate-x-1/2 w-16 h-4 bg-foreground/80 rounded-full z-10" />
+}) => {
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [muted, setMuted] = useState(true);
 
-        {/* Screen content */}
-        {video.includes("placeholder") ? (
-          <div className="w-full h-full bg-gradient-to-br from-muted to-secondary flex items-center justify-center">
-            <div className="text-center px-4">
-              <div className="w-10 h-10 mx-auto mb-2 rounded-full bg-foreground/10 flex items-center justify-center">
-                <svg className="w-5 h-5 text-muted-foreground" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M8 5v14l11-7z" />
-                </svg>
-              </div>
-              <p className="text-[10px] text-muted-foreground">Video Preview</p>
-            </div>
-          </div>
-        ) : (
-          <iframe
-            src={`${video}?autoplay=1&loop=1&muted=1&background=1`}
-            className="absolute inset-0 w-full h-full"
-            style={{ border: "none" }}
-            allow="autoplay; fullscreen"
-            title={brand}
+  const toggleSound = () => {
+    if (videoRef.current) {
+      videoRef.current.muted = !videoRef.current.muted;
+      setMuted(videoRef.current.muted);
+    }
+  };
+
+  const isPlaceholder = video.includes("placeholder");
+  const isVimeo = video.includes("vimeo");
+
+  return (
+    <div className="flex flex-col items-center gap-5">
+      <div className="relative mx-auto" style={{ width: "280px" }}>
+        {/* Phone frame */}
+        <div
+          className="relative overflow-hidden"
+          style={{
+            aspectRatio: "9/19.5",
+            borderRadius: "40px",
+            border: "4px solid #111",
+            background: "#111",
+            boxShadow: "0 20px 50px rgba(0,0,0,0.25)",
+          }}
+        >
+          {/* Notch */}
+          <div
+            className="absolute top-2 left-1/2 -translate-x-1/2 z-20"
+            style={{
+              width: "80px",
+              height: "20px",
+              background: "#111",
+              borderRadius: "12px",
+            }}
           />
-        )}
+
+          {/* Screen content */}
+          <div className="absolute inset-[2px] overflow-hidden" style={{ borderRadius: "36px" }}>
+            {isPlaceholder ? (
+              <div className="w-full h-full bg-gradient-to-br from-muted to-secondary flex items-center justify-center">
+                <div className="text-center px-4">
+                  <div className="w-12 h-12 mx-auto mb-3 rounded-full bg-foreground/10 flex items-center justify-center">
+                    <svg className="w-6 h-6 text-muted-foreground" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M8 5v14l11-7z" />
+                    </svg>
+                  </div>
+                  <p className="text-xs text-muted-foreground">Video Preview</p>
+                </div>
+              </div>
+            ) : isVimeo ? (
+              <iframe
+                src={`${video}?autoplay=1&loop=1&muted=1&background=1`}
+                className="w-full h-full"
+                style={{ border: "none", objectFit: "cover" }}
+                allow="autoplay; fullscreen"
+                title={brand}
+              />
+            ) : (
+              <video
+                ref={videoRef}
+                autoPlay
+                muted
+                loop
+                playsInline
+                className="w-full h-full object-cover"
+              >
+                <source src={video} type="video/mp4" />
+              </video>
+            )}
+          </div>
+
+          {/* Sound toggle */}
+          {!isPlaceholder && (
+            <button
+              onClick={toggleSound}
+              className="absolute bottom-4 right-4 z-20 flex items-center justify-center cursor-pointer"
+              style={{
+                width: "36px",
+                height: "36px",
+                borderRadius: "50%",
+                background: "rgba(0,0,0,0.6)",
+                border: "none",
+              }}
+              aria-label={muted ? "Unmute" : "Mute"}
+            >
+              {muted ? (
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M11 5L6 9H2v6h4l5 4V5z" />
+                  <line x1="23" y1="9" x2="17" y2="15" />
+                  <line x1="17" y1="9" x2="23" y2="15" />
+                </svg>
+              ) : (
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M11 5L6 9H2v6h4l5 4V5z" />
+                  <path d="M19.07 4.93a10 10 0 010 14.14" />
+                  <path d="M15.54 8.46a5 5 0 010 7.07" />
+                </svg>
+              )}
+            </button>
+          )}
+        </div>
+      </div>
+
+      <div className="text-center max-w-[260px]">
+        <p className="font-serif text-lg font-medium">{brand}</p>
+        <p className="text-sm text-muted-foreground leading-relaxed mt-1">
+          {caption}
+        </p>
       </div>
     </div>
-
-    <div className="text-center max-w-[200px]">
-      <p className="font-serif text-base font-medium">{brand}</p>
-      <p className="text-xs text-muted-foreground leading-relaxed mt-1">
-        {caption}
-      </p>
-    </div>
-  </div>
-);
+  );
+};
 
 const RealWork = () => {
   return (
