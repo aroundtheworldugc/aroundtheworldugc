@@ -21,8 +21,8 @@ const Index = () => {
       <Services />
       <Benefits />
       <WhyChooseUs />
-      <PartnershipModel />
       <Process />
+      <PartnershipModel />
       <BonusPositioning />
       <CallToAction />
       <Footer />
