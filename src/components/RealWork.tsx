@@ -29,7 +29,7 @@ const categories = [
   title: "Lifestyle",
   items: [
   {
-    video: "https://player.vimeo.com/video/1169824195",
+    video: "https://player.vimeo.com/video/1169831299",
     brand: "Morning Rituals",
     caption: "Slow living content capturing authentic daily moments."
   },
