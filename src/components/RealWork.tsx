@@ -8,18 +8,18 @@ const categories = [
   items: [
   {
     video: "https://player.vimeo.com/video/1169466245",
-    brand: "Surf Camp Weligama",
-    caption: "Cinematic reel focused on community and ocean lifestyle."
+    brand: "Box Hill – Esperance",
+    caption: "Cinematic reel focused on boutique coastal stay and immersive ocean atmosphere."
   },
   {
     video: "https://player.vimeo.com/video/1169824564",
-    brand: "Boutique Resort Bali",
-    caption: "Atmosphere-driven storytelling for a luxury eco retreat."
+    brand: "Anantara – Thailand",
+    caption: "Luxury resort storytelling designed for premium brand positioning."
   },
   {
     video: "https://player.vimeo.com/video/1169466233",
-    brand: "Heritage Hotel Galle",
-    caption: "Guest journey narrative blending culture and comfort."
+    brand: "Fails Cape – Kangaroo Island",
+    caption: "Experience-driven content highlighting wine tasting and destination immersion."
   },
   ]
 
@@ -30,18 +30,18 @@ const categories = [
   items: [
   {
     video: "https://player.vimeo.com/video/1169831299",
-    brand: "Morning Rituals",
-    caption: "Slow living content capturing authentic daily moments."
+    brand: "Australia – Blue vs Red",
+    caption: "From turquoise coastlines to red desert landscapes, a cinematic contrast narrative."
   },
   {
     video: "https://player.vimeo.com/video/1169825504",
-    brand: "Van Life Australia",
-    caption: "Road trip storytelling with cinematic transitions."
+    brand: "Van Life – Life on the Road",
+    caption: "Authentic travel storytelling capturing freedom, simplicity and real moments."
   },
   {
     video: "https://player.vimeo.com/video/1169825509",
-    brand: "Coastal Living",
-    caption: "Beach lifestyle reels optimized for high engagement."
+    brand: "Van Life – The Reality",
+    caption: "Unfiltered cinematic narrative revealing the true rhythm of life on the road."
   }]
 
 },
@@ -51,18 +51,18 @@ const categories = [
   items: [
   {
     video: "https://player.vimeo.com/video/1169824168",
-    brand: "Eco Sunscreen Co.",
-    caption: "Natural product placement in real travel scenarios."
+    brand: "ISDIN",
+    caption: "Performance-focused product integration highlighting sun protection in real travel conditions."
   },
   {
     video: "https://player.vimeo.com/video/1169824546",
-    brand: "Travel Essentials Kit",
-    caption: "Soft advertising integrated into adventure content."
+    brand: "Gifty Girls",
+    caption: "Creative lifestyle storytelling transforming personalized products into emotional keepsakes."
   },
   {
     video: "https://player.vimeo.com/video/1169824553",
-    brand: "Organic Skincare",
-    caption: "Lifestyle-driven vertical video for Instagram Reels."
+    brand: "Bialetti",
+    caption: "Cinematic step-by-step narrative blending ritual, lifestyle and iconic brand identity."
   }]
 
 }];
@@ -203,9 +203,9 @@ const PhoneMockup = ({
         </div>
       </div>
 
-      <div className="text-center max-w-[260px]">
-        <p className="font-serif text-lg font-medium">{brand}</p>
-        <p className="text-sm text-muted-foreground leading-relaxed mt-1">
+      <div className="text-center max-w-[280px]">
+        <p className="font-serif text-xl font-semibold tracking-tight">{brand}</p>
+        <p className="text-sm text-muted-foreground leading-relaxed mt-2 font-light">
           {caption}
         </p>
       </div>
