@@ -33,17 +33,17 @@ const categories = [
   title: "Lifestyle",
   items: [
   {
-    video: "https://player.vimeo.com/video/placeholder5",
+    video: "https://player.vimeo.com/video/1169824195",
     brand: "Morning Rituals",
     caption: "Slow living content capturing authentic daily moments."
   },
   {
-    video: "https://player.vimeo.com/video/placeholder6",
+    video: "https://player.vimeo.com/video/1169825504",
     brand: "Van Life Australia",
     caption: "Road trip storytelling with cinematic transitions."
   },
   {
-    video: "https://player.vimeo.com/video/placeholder7",
+    video: "https://player.vimeo.com/video/1169825509",
     brand: "Coastal Living",
     caption: "Beach lifestyle reels optimized for high engagement."
   }]
@@ -54,17 +54,17 @@ const categories = [
   title: "Products",
   items: [
   {
-    video: "https://player.vimeo.com/video/placeholder8",
+    video: "https://player.vimeo.com/video/1169824168",
     brand: "Eco Sunscreen Co.",
     caption: "Natural product placement in real travel scenarios."
   },
   {
-    video: "https://player.vimeo.com/video/placeholder9",
+    video: "https://player.vimeo.com/video/1169824546",
     brand: "Travel Essentials Kit",
     caption: "Soft advertising integrated into adventure content."
   },
   {
-    video: "https://player.vimeo.com/video/placeholder10",
+    video: "https://player.vimeo.com/video/1169824553",
     brand: "Organic Skincare",
     caption: "Lifestyle-driven vertical video for Instagram Reels."
   }]
