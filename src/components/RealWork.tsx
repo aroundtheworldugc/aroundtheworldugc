@@ -21,11 +21,7 @@ const categories = [
     brand: "Heritage Hotel Galle",
     caption: "Guest journey narrative blending culture and comfort."
   },
-  {
-    video: "https://player.vimeo.com/video/placeholder4",
-    brand: "Jungle Lodge Ella",
-    caption: "Immersive room tour with golden hour drone footage."
-  }]
+  ]
 
 },
 {
@@ -244,7 +240,7 @@ const RealWork = () => {
               </h3>
 
               {/* Desktop: grid — Mobile: horizontal scroll */}
-              <div className="hidden md:grid md:grid-cols-3 lg:grid-cols-4 gap-8 justify-items-center">
+              <div className="hidden md:grid md:grid-cols-3 gap-8 justify-items-center max-w-4xl mx-auto">
                 {cat.items.map((item) =>
               <PhoneMockup key={item.brand} {...item} />
               )}
