@@ -12,12 +12,12 @@ const categories = [
     caption: "Cinematic reel focused on community and ocean lifestyle."
   },
   {
-    video: "https://player.vimeo.com/video/placeholder2",
+    video: "https://player.vimeo.com/video/1169824564",
     brand: "Boutique Resort Bali",
     caption: "Atmosphere-driven storytelling for a luxury eco retreat."
   },
   {
-    video: "https://player.vimeo.com/video/placeholder3",
+    video: "https://player.vimeo.com/video/1169466233",
     brand: "Heritage Hotel Galle",
     caption: "Guest journey narrative blending culture and comfort."
   },
