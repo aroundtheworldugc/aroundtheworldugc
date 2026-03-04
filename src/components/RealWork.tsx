@@ -72,15 +72,16 @@ const PhoneMockup = ({
   video,
   brand,
   caption
-
-
-
-
-}: {video: string;brand: string;caption: string;}) => {
+}: {video: string; brand: string; caption: string;}) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const playerRef = useRef<Player | null>(null);
+  const scrubberRef = useRef<HTMLDivElement>(null);
   const [muted, setMuted] = useState(true);
+  const [showControls, setShowControls] = useState(false);
+  const [progress, setProgress] = useState(0);
+  const [duration, setDuration] = useState(0);
+  const animFrameRef = useRef<number>(0);
 
   const isPlaceholder = video.includes("placeholder");
   const isVimeo = video.includes("vimeo");
@@ -90,11 +91,35 @@ const PhoneMockup = ({
       const player = new Player(iframeRef.current);
       playerRef.current = player;
       player.setVolume(0);
+      player.getDuration().then((d) => setDuration(d));
+
+      const updateProgress = () => {
+        player.getCurrentTime().then((t) => {
+          player.getDuration().then((d) => {
+            if (d > 0) setProgress(t / d);
+          });
+        });
+        animFrameRef.current = requestAnimationFrame(updateProgress);
+      };
+      animFrameRef.current = requestAnimationFrame(updateProgress);
+
       return () => {
+        cancelAnimationFrame(animFrameRef.current);
         player.destroy();
       };
     }
   }, [isVimeo, isPlaceholder]);
+
+  // Native video progress tracking
+  useEffect(() => {
+    const vid = videoRef.current;
+    if (!vid || isVimeo) return;
+    const onTime = () => {
+      if (vid.duration > 0) setProgress(vid.currentTime / vid.duration);
+    };
+    vid.addEventListener("timeupdate", onTime);
+    return () => vid.removeEventListener("timeupdate", onTime);
+  }, [isVimeo]);
 
   const toggleSound = useCallback(() => {
     if (isVimeo && playerRef.current) {
@@ -110,19 +135,44 @@ const PhoneMockup = ({
     }
   }, [muted, isVimeo]);
 
+  const handleScrub = useCallback((e: React.MouseEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>) => {
+    const bar = scrubberRef.current;
+    if (!bar) return;
+    const rect = bar.getBoundingClientRect();
+    const clientX = "touches" in e ? e.touches[0].clientX : e.clientX;
+    const pct = Math.max(0, Math.min(1, (clientX - rect.left) / rect.width));
+
+    if (isVimeo && playerRef.current) {
+      playerRef.current.getDuration().then((d) => {
+        playerRef.current?.setCurrentTime(pct * d);
+      });
+    } else if (videoRef.current) {
+      videoRef.current.currentTime = pct * videoRef.current.duration;
+    }
+    setProgress(pct);
+  }, [isVimeo]);
+
+  const handleTap = useCallback(() => {
+    setShowControls((prev) => !prev);
+  }, []);
+
   return (
     <div className="flex flex-col items-center gap-5">
       <div className="relative mx-auto" style={{ width: "280px" }}>
         {/* Phone frame */}
         <div
-          className="relative overflow-hidden"
+          className="relative overflow-hidden group"
           style={{
             aspectRatio: "9/19.5",
             borderRadius: "40px",
             border: "4px solid #111",
             background: "#111",
             boxShadow: "0 20px 50px rgba(0,0,0,0.25)"
-          }}>
+          }}
+          onMouseEnter={() => setShowControls(true)}
+          onMouseLeave={() => setShowControls(false)}
+          onClick={handleTap}
+        >
 
           {/* Notch */}
           <div
@@ -133,7 +183,6 @@ const PhoneMockup = ({
               background: "#111",
               borderRadius: "12px"
             }} />
-
 
           {/* Screen content */}
           <div className="absolute inset-[2px] overflow-hidden" style={{ borderRadius: "36px" }}>
@@ -153,10 +202,9 @@ const PhoneMockup = ({
               ref={iframeRef}
               src={`${video}?autoplay=1&loop=1&muted=1&background=1`}
               className="w-full h-full"
-              style={{ border: "none", objectFit: "cover" }}
+              style={{ border: "none", objectFit: "cover", pointerEvents: showControls ? "none" : "auto" }}
               allow="autoplay; fullscreen"
               title={brand} /> :
-
 
             <video
               ref={videoRef}
@@ -164,24 +212,60 @@ const PhoneMockup = ({
               muted
               loop
               playsInline
-              className="w-full h-full object-cover">
-
+              className="w-full h-full object-cover"
+              style={{ pointerEvents: "none" }}
+            >
                 <source src={video} type="video/mp4" />
               </video>
             }
           </div>
 
+          {/* Custom scrubber – appears on hover (desktop) / tap (mobile) */}
+          {!isPlaceholder &&
+          <div
+            className="absolute bottom-14 left-4 right-4 z-20 transition-opacity duration-300"
+            style={{ opacity: showControls ? 1 : 0, pointerEvents: showControls ? "auto" : "none" }}
+          >
+            <div
+              ref={scrubberRef}
+              className="relative h-1 rounded-full cursor-pointer"
+              style={{ background: "rgba(255,255,255,0.25)" }}
+              onClick={(e) => { e.stopPropagation(); handleScrub(e); }}
+              onTouchStart={(e) => { e.stopPropagation(); handleScrub(e); }}
+            >
+              <div
+                className="absolute top-0 left-0 h-full rounded-full"
+                style={{ width: `${progress * 100}%`, background: "rgba(255,255,255,0.85)" }}
+              />
+              <div
+                className="absolute top-1/2 -translate-y-1/2"
+                style={{
+                  left: `${progress * 100}%`,
+                  width: "10px",
+                  height: "10px",
+                  borderRadius: "50%",
+                  background: "#fff",
+                  transform: `translate(-50%, -50%)`,
+                  boxShadow: "0 1px 4px rgba(0,0,0,0.4)"
+                }}
+              />
+            </div>
+          </div>
+          }
+
           {/* Sound toggle */}
           {!isPlaceholder &&
           <button
-            onClick={toggleSound}
-            className="absolute bottom-4 right-4 z-20 flex items-center justify-center cursor-pointer"
+            onClick={(e) => { e.stopPropagation(); toggleSound(); }}
+            className="absolute bottom-4 right-4 z-20 flex items-center justify-center cursor-pointer transition-opacity duration-300"
             style={{
               width: "36px",
               height: "36px",
               borderRadius: "50%",
               background: "rgba(0,0,0,0.6)",
-              border: "none"
+              border: "none",
+              opacity: showControls ? 1 : 0,
+              pointerEvents: showControls ? "auto" : "none"
             }}
             aria-label={muted ? "Unmute" : "Mute"}>
 
