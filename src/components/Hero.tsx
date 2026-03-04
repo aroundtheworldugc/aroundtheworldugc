@@ -50,7 +50,7 @@ const Hero = () => {
             Work With Us
           </a>
           <a
-            href="#portfolio"
+            href="#work"
             className="border border-primary-foreground/50 text-primary-foreground px-8 py-3.5 text-sm tracking-widest uppercase hover:bg-primary-foreground/10 transition-colors duration-300">
 
             View Our Work
