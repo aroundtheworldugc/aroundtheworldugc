@@ -24,8 +24,7 @@ const Hero = () => {
         <h1
           className="font-serif text-4xl md:text-7xl lg:text-8xl font-light text-primary-foreground leading-[1.1] mb-6 animate-fade-up max-w-5xl mx-auto"
           style={{ animationDelay: "0.4s" }}>
-          <span className="block whitespace-nowrap">We Don't Just Create Content.</span>
-          <span className="block">We Live It.</span>
+          Davide & Claudia
         </h1>
         <p
           className="font-serif text-xl md:text-2xl text-primary-foreground/90 italic mb-4 animate-fade-up"
