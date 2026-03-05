@@ -1,4 +1,5 @@
 import { TrendingUp, Eye, Clock, Heart, Zap, BarChart3, CheckCircle, Target } from "lucide-react";
+import { useScrollReveal } from "@/hooks/useScrollReveal";
 
 const benefits = [
   { icon: Eye, title: "Boost of Visibility", desc: "Amplify your brand reach across platforms" },
@@ -12,8 +13,9 @@ const benefits = [
 ];
 
 const Benefits = () => {
+  const ref = useScrollReveal<HTMLElement>();
   return (
-    <section className="py-24 md:py-32 bg-card">
+    <section ref={ref} className="py-20 md:py-26 bg-card">
       <div className="container mx-auto px-6">
         <div className="text-center mb-16">
           <p className="text-sm tracking-[0.3em] uppercase text-muted-foreground mb-4">What You Get</p>

@@ -1,6 +1,9 @@
+import { useScrollReveal } from "@/hooks/useScrollReveal";
+
 const WhyChooseUs = () => {
+  const ref = useScrollReveal<HTMLElement>();
   return (
-    <section className="py-24 md:py-32">
+    <section ref={ref} className="py-20 md:py-26">
       <div className="container mx-auto px-6">
         <div className="max-w-3xl mx-auto">
           <p className="text-sm tracking-[0.3em] uppercase text-muted-foreground mb-4 text-center">Why Choose Us</p>

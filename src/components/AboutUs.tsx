@@ -1,8 +1,10 @@
 import aboutImg from "@/assets/about-duo.jpg";
+import { useScrollReveal } from "@/hooks/useScrollReveal";
 
 const AboutUs = () => {
+  const ref = useScrollReveal<HTMLElement>();
   return (
-    <section id="about" className="py-24 md:py-32">
+    <section id="about" ref={ref} className="py-20 md:py-26">
       <div className="container mx-auto px-6">
         {/* Section header */}
         <div className="max-w-3xl mx-auto text-center mb-16">

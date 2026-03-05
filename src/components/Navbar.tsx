@@ -21,7 +21,7 @@ const Navbar = () => {
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         scrolled
-          ? "bg-background/90 backdrop-blur-md border-b border-border py-4"
+          ? "bg-background/95 backdrop-blur-md shadow-sm py-3"
           : "bg-transparent py-6"
       }`}
     >
@@ -43,7 +43,7 @@ const Navbar = () => {
           ))}
           <a
             href="#contact"
-            className="text-sm tracking-widest uppercase bg-primary text-primary-foreground px-5 py-2.5 hover:bg-primary/90 transition-colors duration-300"
+            className="text-sm tracking-widest uppercase bg-primary text-primary-foreground px-6 py-3 hover:bg-primary/90 transition-colors duration-300"
           >
             Contact
           </a>

@@ -1,8 +1,10 @@
 import { Mail } from "lucide-react";
+import { useScrollReveal } from "@/hooks/useScrollReveal";
 
 const CallToAction = () => {
+  const ref = useScrollReveal<HTMLElement>();
   return (
-    <section id="contact" className="py-24 md:py-32 bg-foreground">
+    <section id="contact" ref={ref} className="py-20 md:py-26 bg-foreground">
       <div className="container mx-auto px-6">
         <div className="max-w-2xl mx-auto text-center">
           <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl font-light text-primary-foreground mb-6">

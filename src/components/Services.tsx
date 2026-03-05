@@ -1,4 +1,5 @@
 import { Camera, Film, Image, Plane, FileVideo, Package } from "lucide-react";
+import { useScrollReveal } from "@/hooks/useScrollReveal";
 
 const deliverables = [
   { icon: Film, label: "15s Instagram Reel / TikTok" },
@@ -16,8 +17,9 @@ const extras = [
 ];
 
 const Services = () => {
+  const ref = useScrollReveal<HTMLElement>();
   return (
-    <section id="services" className="py-24 md:py-32">
+    <section id="services" ref={ref} className="py-20 md:py-26">
       <div className="container mx-auto px-6">
         <div className="text-center mb-16">
           <p className="text-sm tracking-[0.3em] uppercase text-muted-foreground mb-4">Services</p>
