@@ -1,3 +1,5 @@
+import { useScrollReveal } from "@/hooks/useScrollReveal";
+
 const partnerships = [
   "Hotel stays",
   "Experiences",
@@ -13,8 +15,9 @@ const formats = [
 ];
 
 const PartnershipModel = () => {
+  const ref = useScrollReveal<HTMLElement>();
   return (
-    <section className="py-24 md:py-32">
+    <section ref={ref} className="py-20 md:py-26">
       <div className="container mx-auto px-6">
         <div className="text-center mb-16">
           <p className="text-sm tracking-[0.3em] uppercase text-muted-foreground mb-4">Partnership</p>

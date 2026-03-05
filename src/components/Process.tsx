@@ -1,3 +1,5 @@
+import { useScrollReveal } from "@/hooks/useScrollReveal";
+
 const steps = [
   { num: "01", title: "Discovery", desc: "Brand discovery call to understand your goals" },
   { num: "02", title: "Concept", desc: "Creative concept development tailored to your brand" },
@@ -8,8 +10,9 @@ const steps = [
 ];
 
 const Process = () => {
+  const ref = useScrollReveal<HTMLElement>();
   return (
-    <section id="process" className="py-24 md:py-32 bg-card">
+    <section id="process" ref={ref} className="py-20 md:py-26 bg-card">
       <div className="container mx-auto px-6">
         <div className="text-center mb-16">
           <p className="text-sm tracking-[0.3em] uppercase text-muted-foreground mb-4">Process</p>

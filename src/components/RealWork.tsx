@@ -1,5 +1,6 @@
 import React, { useRef, useState, useEffect, useCallback } from "react";
 import Player from "@vimeo/player";
+import { useScrollReveal } from "@/hooks/useScrollReveal";
 
 const categories = [
 {
@@ -298,8 +299,9 @@ const PhoneMockup = ({
 };
 
 const RealWork = () => {
+  const ref = useScrollReveal<HTMLElement>();
   return (
-    <section id="work" className="py-24 md:py-32 bg-card">
+    <section id="work" ref={ref} className="py-20 md:py-26 bg-card">
       <div className="container mx-auto px-6">
         {/* Header */}
         <div className="text-center mb-20">
