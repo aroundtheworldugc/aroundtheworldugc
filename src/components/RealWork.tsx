@@ -19,7 +19,7 @@ const categories = [
   },
   {
     video: "https://player.vimeo.com/video/1169466233",
-    brand: "Fails Cape – Kangaroo Island",
+    brand: "False Cape – Kangaroo Island",
     caption: "Experience-driven content highlighting wine tasting and destination immersion."
   },
   ]
