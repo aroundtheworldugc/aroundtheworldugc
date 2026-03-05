@@ -10,7 +10,7 @@ const Hero = () => {
           alt="Cinematic golden hour travel scene"
           className="w-full h-full object-cover" />
 
-        <div className="absolute inset-0 bg-foreground/40" />
+        <div className="absolute inset-0 bg-foreground/20" />
       </div>
 
       {/* Content */}
