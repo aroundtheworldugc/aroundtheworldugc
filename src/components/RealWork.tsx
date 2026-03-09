@@ -98,22 +98,11 @@ const PhoneMockup = ({
     isTouchDevice.current = "ontouchstart" in window || navigator.maxTouchPoints > 0;
   }, []);
 
-  // Activate iframe immediately when near viewport (no artificial delay)
-  useEffect(() => {
-    if (activated) return;
-    const el = containerRef.current;
-    if (!el) return;
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setActivated(true);
-          observer.disconnect();
-        }
-      },
-      { rootMargin: "300px" }
-    );
-    observer.observe(el);
-    return () => observer.disconnect();
+  // Activate only on user click (no preloading iframes)
+  const handleActivate = useCallback(() => {
+    if (!activated) {
+      setActivated(true);
+    }
   }, [activated]);
 
   // Initialize Vimeo player with throttled progress
