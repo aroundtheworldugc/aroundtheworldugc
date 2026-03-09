@@ -1,7 +1,9 @@
 import aboutWebpSm from "@/assets/about-photo.jpg?format=webp&w=400";
-import aboutWebpLg from "@/assets/about-photo.jpg?format=webp&w=700";
+import aboutWebpMd from "@/assets/about-photo.jpg?format=webp&w=700";
+import aboutWebpLg from "@/assets/about-photo.jpg?format=webp&w=1000";
 import aboutFallbackSm from "@/assets/about-photo.jpg?w=400";
-import aboutFallbackLg from "@/assets/about-photo.jpg?w=700";
+import aboutFallbackMd from "@/assets/about-photo.jpg?w=700";
+import aboutFallbackLg from "@/assets/about-photo.jpg?w=1000";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 
 const AboutUs = () => {
@@ -24,13 +26,13 @@ const AboutUs = () => {
           <div className="aspect-[4/5] overflow-hidden">
             <picture>
               <source
-                srcSet={`${aboutWebpSm} 400w, ${aboutWebpLg} 700w`}
+                srcSet={`${aboutWebpSm} 400w, ${aboutWebpMd} 700w, ${aboutWebpLg} 1000w`}
                 sizes="(max-width: 768px) 100vw, 50vw"
                 type="image/webp"
               />
               <img
                 src={aboutFallbackSm}
-                srcSet={`${aboutFallbackSm} 400w, ${aboutFallbackLg} 700w`}
+                srcSet={`${aboutFallbackSm} 400w, ${aboutFallbackMd} 700w, ${aboutFallbackLg} 1000w`}
                 sizes="(max-width: 768px) 100vw, 50vw"
                 alt="Davide and Claudia"
                 className="w-full h-full object-cover"

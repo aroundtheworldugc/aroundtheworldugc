@@ -20,6 +20,10 @@ declare module '*.jpg?format=webp&w=768' {
   const src: string;
   export default src;
 }
+declare module '*.jpg?format=webp&w=1000' {
+  const src: string;
+  export default src;
+}
 declare module '*.jpg?format=webp&w=1280' {
   const src: string;
   export default src;
@@ -41,6 +45,10 @@ declare module '*.jpg?w=600' {
   export default src;
 }
 declare module '*.jpg?w=700' {
+  const src: string;
+  export default src;
+}
+declare module '*.jpg?w=1000' {
   const src: string;
   export default src;
 }
