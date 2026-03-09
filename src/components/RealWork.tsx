@@ -78,17 +78,49 @@ const PhoneMockup = ({
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const playerRef = useRef<Player | null>(null);
   const scrubberRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
   const [muted, setMuted] = useState(true);
   const [showControls, setShowControls] = useState(false);
   const [progress, setProgress] = useState(0);
   const [duration, setDuration] = useState(0);
   const animFrameRef = useRef<number>(0);
+  const [isVisible, setIsVisible] = useState(false);
+  const [activated, setActivated] = useState(false);
 
   const isPlaceholder = video.includes("placeholder");
   const isVimeo = video.includes("vimeo");
 
+  // Extract Vimeo video ID for thumbnail
+  const vimeoId = isVimeo ? video.split("/").pop() : null;
+
+  // Lazy load: observe when component enters viewport
   useEffect(() => {
-    if (isVimeo && !isPlaceholder && iframeRef.current) {
+    const el = containerRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: "200px" }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  // Auto-activate when visible (load iframe)
+  useEffect(() => {
+    if (isVisible && !activated) {
+      // Small delay to let critical content render first
+      const timer = setTimeout(() => setActivated(true), 300);
+      return () => clearTimeout(timer);
+    }
+  }, [isVisible, activated]);
+
+  useEffect(() => {
+    if (isVimeo && !isPlaceholder && activated && iframeRef.current) {
       const player = new Player(iframeRef.current);
       playerRef.current = player;
       player.setVolume(0);
@@ -109,7 +141,7 @@ const PhoneMockup = ({
         player.destroy();
       };
     }
-  }, [isVimeo, isPlaceholder]);
+  }, [isVimeo, isPlaceholder, activated]);
 
   // Native video progress tracking
   useEffect(() => {
