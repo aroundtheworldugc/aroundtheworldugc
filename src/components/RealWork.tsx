@@ -190,7 +190,7 @@ const PhoneMockup = ({
   }, []);
 
   return (
-    <div className="flex flex-col items-center gap-5">
+    <div ref={containerRef} className="flex flex-col items-center gap-5">
       <div className="relative mx-auto" style={{ width: "280px" }}>
         {/* Phone frame */}
         <div
