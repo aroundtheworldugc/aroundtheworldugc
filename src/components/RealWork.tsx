@@ -335,15 +335,21 @@ const PhoneMockup = ({
                     style={{ opacity: showThumbnail ? 1 : 0 }}
                     onClick={(e) => { e.stopPropagation(); handleActivate(); }}
                   >
-                    <img
-                      src={`https://vumbnail.com/${vimeoId}.jpg`}
-                      alt={brand}
-                      className="w-full h-full object-cover"
-                      width={280}
-                      height={607}
-                      loading="lazy"
-                      decoding="async"
-                    />
+                    <picture>
+                      <source
+                        srcSet={`https://vumbnail.com/${vimeoId}.jpg?fm=webp&w=800`}
+                        type="image/webp"
+                      />
+                      <img
+                        src={`https://vumbnail.com/${vimeoId}_800.jpg`}
+                        alt={brand}
+                        className="w-full h-full object-cover"
+                        width={280}
+                        height={607}
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </picture>
                     <div className="absolute inset-0 bg-black/15 flex items-center justify-center">
                       <div className="w-14 h-14 rounded-full bg-white/15 backdrop-blur-sm flex items-center justify-center border border-white/20">
                         <svg className="w-6 h-6 text-white ml-0.5" fill="currentColor" viewBox="0 0 24 24">
