@@ -307,7 +307,7 @@ const PhoneMockup = ({
           }
 
           {/* Sound toggle */}
-          {!isPlaceholder &&
+          {!isPlaceholder && activated &&
           <button
             onClick={(e) => { e.stopPropagation(); toggleSound(); }}
             className="absolute bottom-4 right-4 z-20 flex items-center justify-center cursor-pointer transition-opacity duration-300"
