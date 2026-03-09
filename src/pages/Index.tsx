@@ -2,16 +2,34 @@ import { lazy, Suspense } from "react";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 
-const AboutUs = lazy(() => import("@/components/AboutUs"));
-const RealWork = lazy(() => import("@/components/RealWork"));
-const Services = lazy(() => import("@/components/Services"));
-const Benefits = lazy(() => import("@/components/Benefits"));
-const WhyChooseUs = lazy(() => import("@/components/WhyChooseUs"));
-const PartnershipModel = lazy(() => import("@/components/PartnershipModel"));
-const Process = lazy(() => import("@/components/Process"));
-const BonusPositioning = lazy(() => import("@/components/BonusPositioning"));
-const CallToAction = lazy(() => import("@/components/CallToAction"));
-const Footer = lazy(() => import("@/components/Footer"));
+// Bundle related components into 2 chunks instead of 10
+const ContentBundle = lazy(() =>
+  import("@/components/bundles/ContentBundle").then((m) => ({
+    default: () => (
+      <>
+        <m.AboutUs />
+        <m.RealWork />
+        <m.Services />
+        <m.Benefits />
+        <m.WhyChooseUs />
+      </>
+    ),
+  }))
+);
+
+const ClosingBundle = lazy(() =>
+  import("@/components/bundles/ClosingBundle").then((m) => ({
+    default: () => (
+      <>
+        <m.Process />
+        <m.PartnershipModel />
+        <m.BonusPositioning />
+        <m.CallToAction />
+        <m.Footer />
+      </>
+    ),
+  }))
+);
 
 const Index = () => {
   return (
@@ -19,16 +37,8 @@ const Index = () => {
       <Navbar />
       <Hero />
       <Suspense fallback={null}>
-        <AboutUs />
-        <RealWork />
-        <Services />
-        <Benefits />
-        <WhyChooseUs />
-        <Process />
-        <PartnershipModel />
-        <BonusPositioning />
-        <CallToAction />
-        <Footer />
+        <ContentBundle />
+        <ClosingBundle />
       </Suspense>
     </main>
   );
