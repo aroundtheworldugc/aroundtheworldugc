@@ -10,19 +10,22 @@ const categories = [
   title: "Travel & Destinations",
   description:
   "Immersive storytelling that inspires exploration. Cinematic reels. Lifestyle photography. Drone footage. Experience-based narrative.",
-  image: portfolioTravel
+  webp: portfolioTravelWebp,
+  fallback: portfolioTravelFb
 },
 {
   title: "Hotels & Accommodations",
   description:
   "Atmosphere-driven content. Room tours. Detail shots. Guest journey storytelling. Luxury & boutique positioning. Highlighting experience, not just structure.",
-  image: portfolioHotel
+  webp: portfolioHotelWebp,
+  fallback: portfolioHotelFb
 },
 {
   title: "Lifestyle & Product",
   description:
   "Natural integration of products into real-life travel scenarios. Soft advertising. Emotional product placement. Short-form vertical videos optimized for Instagram and TikTok.",
-  image: portfolioLifestyle
+  webp: portfolioLifestyleWebp,
+  fallback: portfolioLifestyleFb
 }];
 
 
