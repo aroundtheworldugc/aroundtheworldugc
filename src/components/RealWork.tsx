@@ -2,6 +2,9 @@ import React, { useRef, useState, useEffect, useCallback } from "react";
 import Player from "@vimeo/player";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 
+// Global registry: only one video plays at a time
+const activePlayerRef: { current: (() => void) | null } = { current: null };
+
 const categories = [
 {
   icon: "🏨",
