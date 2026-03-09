@@ -274,7 +274,7 @@ const PhoneMockup = ({
           </div>
 
           {/* Custom scrubber – appears on hover (desktop) / tap (mobile) */}
-          {!isPlaceholder &&
+          {!isPlaceholder && activated &&
           <div
             className="absolute bottom-14 left-4 right-4 z-20 transition-opacity duration-300"
             style={{ opacity: showControls ? 1 : 0, pointerEvents: showControls ? "auto" : "none" }}
