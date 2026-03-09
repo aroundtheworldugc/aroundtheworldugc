@@ -85,7 +85,6 @@ const PhoneMockup = ({
   const [progress, setProgress] = useState(0);
   const animFrameRef = useRef<number>(0);
   const hideTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const [isVisible, setIsVisible] = useState(false);
   const [activated, setActivated] = useState(false);
   const [iframeLoaded, setIframeLoaded] = useState(false);
   const isTouchDevice = useRef(false);
@@ -99,14 +98,15 @@ const PhoneMockup = ({
     isTouchDevice.current = "ontouchstart" in window || navigator.maxTouchPoints > 0;
   }, []);
 
-  // Lazy load: observe when component enters viewport
+  // Activate iframe immediately when near viewport (no artificial delay)
   useEffect(() => {
+    if (activated) return;
     const el = containerRef.current;
     if (!el) return;
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          setIsVisible(true);
+          setActivated(true);
           observer.disconnect();
         }
       },
@@ -114,15 +114,7 @@ const PhoneMockup = ({
     );
     observer.observe(el);
     return () => observer.disconnect();
-  }, []);
-
-  // Auto-activate when visible
-  useEffect(() => {
-    if (isVisible && !activated) {
-      const timer = setTimeout(() => setActivated(true), 200);
-      return () => clearTimeout(timer);
-    }
-  }, [isVisible, activated]);
+  }, [activated]);
 
   // Initialize Vimeo player with throttled progress
   useEffect(() => {
