@@ -350,9 +350,11 @@ const PhoneMockup = ({
                     style={{ opacity: showThumbnail ? 1 : 0 }}
                   >
                     <img
-                      src={`https://vumbnail.com/${vimeoId}_large.jpg`}
+                      src={`https://vumbnail.com/${vimeoId}.jpg`}
                       alt={brand}
                       className="w-full h-full object-cover"
+                      width={280}
+                      height={607}
                       loading="lazy"
                       decoding="async"
                     />
