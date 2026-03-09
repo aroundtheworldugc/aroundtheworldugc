@@ -78,15 +78,23 @@ const PhoneMockup = ({
   const containerRef = useRef<HTMLDivElement>(null);
   const [muted, setMuted] = useState(true);
   const [showControls, setShowControls] = useState(false);
+  const [playing, setPlaying] = useState(true);
   const [progress, setProgress] = useState(0);
   const animFrameRef = useRef<number>(0);
+  const hideTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [isVisible, setIsVisible] = useState(false);
   const [activated, setActivated] = useState(false);
   const [iframeLoaded, setIframeLoaded] = useState(false);
+  const isTouchDevice = useRef(false);
 
   const isPlaceholder = video.includes("placeholder");
   const isVimeo = video.includes("vimeo");
   const vimeoId = isVimeo ? video.split("/").pop() : null;
+
+  // Detect touch device
+  useEffect(() => {
+    isTouchDevice.current = "ontouchstart" in window || navigator.maxTouchPoints > 0;
+  }, []);
 
   // Lazy load: observe when component enters viewport
   useEffect(() => {
