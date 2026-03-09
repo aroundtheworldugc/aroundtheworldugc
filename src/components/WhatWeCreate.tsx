@@ -1,6 +1,9 @@
-import portfolioTravel from "@/assets/portfolio-travel.jpg";
-import portfolioHotel from "@/assets/portfolio-hotel.jpg";
-import portfolioLifestyle from "@/assets/portfolio-lifestyle.jpg";
+import portfolioTravelWebp from "@/assets/portfolio-travel.jpg?format=webp&w=600";
+import portfolioTravelFb from "@/assets/portfolio-travel.jpg?w=600";
+import portfolioHotelWebp from "@/assets/portfolio-hotel.jpg?format=webp&w=600";
+import portfolioHotelFb from "@/assets/portfolio-hotel.jpg?w=600";
+import portfolioLifestyleWebp from "@/assets/portfolio-lifestyle.jpg?format=webp&w=600";
+import portfolioLifestyleFb from "@/assets/portfolio-lifestyle.jpg?w=600";
 
 const categories = [
 {
