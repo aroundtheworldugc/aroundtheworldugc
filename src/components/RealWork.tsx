@@ -147,8 +147,8 @@ const PhoneMockup = ({
     };
     animFrameRef.current = requestAnimationFrame(updateProgress);
 
-    // Mark as loaded when playing
-    player.on("playing", () => setIframeLoaded(true));
+    // Mark as loaded when player is ready (not when playing — avoids deadlock)
+    player.ready().then(() => setIframeLoaded(true)).catch(() => {});
 
     return () => {
       cancelAnimationFrame(animFrameRef.current);
