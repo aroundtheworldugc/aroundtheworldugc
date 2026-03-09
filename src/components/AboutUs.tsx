@@ -1,7 +1,9 @@
 import aboutWebpSm from "@/assets/about-photo.jpg?format=webp&w=400";
-import aboutWebpLg from "@/assets/about-photo.jpg?format=webp&w=700";
+import aboutWebpMd from "@/assets/about-photo.jpg?format=webp&w=700";
+import aboutWebpLg from "@/assets/about-photo.jpg?format=webp&w=1000";
 import aboutFallbackSm from "@/assets/about-photo.jpg?w=400";
-import aboutFallbackLg from "@/assets/about-photo.jpg?w=700";
+import aboutFallbackMd from "@/assets/about-photo.jpg?w=700";
+import aboutFallbackLg from "@/assets/about-photo.jpg?w=1000";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 
 const AboutUs = () => {
