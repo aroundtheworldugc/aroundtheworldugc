@@ -370,7 +370,7 @@ const PhoneMockup = ({
                 {activated && isVimeo ? (
                   <iframe
                     ref={iframeRef}
-                    src={`${video}?autoplay=1&loop=1&muted=1&background=1&quality=720p`}
+                    src={`${video}?autoplay=0&loop=1&muted=1&background=1&quality=720p`}
                     className="w-full h-full"
                     style={{ border: "none", objectFit: "cover", pointerEvents: showControls ? "none" : "auto" }}
                     allow="autoplay; fullscreen"
@@ -380,7 +380,6 @@ const PhoneMockup = ({
                 ) : !isVimeo ? (
                   <video
                     ref={videoRef}
-                    autoPlay
                     muted
                     loop
                     playsInline
