@@ -98,12 +98,24 @@ const PhoneMockup = ({
     isTouchDevice.current = "ontouchstart" in window || navigator.maxTouchPoints > 0;
   }, []);
 
-  // Activate only on user click (no preloading iframes)
-  const handleActivate = useCallback(() => {
-    if (!activated) {
-      setActivated(true);
-    }
-  }, [activated]);
+  // Activate when visible in viewport (lazy load)
+  useEffect(() => {
+    if (isPlaceholder || activated) return;
+    const el = containerRef.current;
+    if (!el) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setActivated(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.3 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [isPlaceholder, activated]);
 
   // Initialize Vimeo player with throttled progress
   useEffect(() => {
@@ -328,12 +340,11 @@ const PhoneMockup = ({
               </div>
             ) : (
               <>
-                {/* Thumbnail layer — click to load and play */}
+                {/* Thumbnail layer — shown while iframe loads */}
                 {vimeoId && showThumbnail && (
                   <div
-                    className="absolute inset-0 z-10 transition-opacity duration-500 cursor-pointer"
+                    className="absolute inset-0 z-10 transition-opacity duration-500"
                     style={{ opacity: showThumbnail ? 1 : 0 }}
-                    onClick={(e) => { e.stopPropagation(); handleActivate(); }}
                   >
                     <picture>
                       <source
@@ -350,12 +361,8 @@ const PhoneMockup = ({
                         decoding="async"
                       />
                     </picture>
-                    <div className="absolute inset-0 bg-black/15 flex items-center justify-center">
-                      <div className="w-14 h-14 rounded-full bg-white/15 backdrop-blur-sm flex items-center justify-center border border-white/20">
-                        <svg className="w-6 h-6 text-white ml-0.5" fill="currentColor" viewBox="0 0 24 24">
-                          <path d="M8 5v14l11-7z" />
-                        </svg>
-                      </div>
+                    <div className="absolute inset-0 bg-black/10 flex items-center justify-center">
+                      <div className="w-10 h-10 rounded-full border-2 border-white/40 border-t-white animate-spin" />
                     </div>
                   </div>
                 )}
