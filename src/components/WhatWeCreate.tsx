@@ -44,11 +44,18 @@ const WhatWeCreate = () => {
           {categories.map((cat) =>
           <div key={cat.title} className="group">
               <div className="aspect-[3/4] overflow-hidden mb-6">
-                <img
-                src={cat.image}
-                alt={cat.title}
-                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                loading="lazy" />
+                <picture>
+                  <source srcSet={cat.webp} type="image/webp" />
+                  <img
+                    src={cat.fallback}
+                    alt={cat.title}
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    loading="lazy"
+                    decoding="async"
+                    width={600}
+                    height={800}
+                  />
+                </picture>
 
               </div>
               <h3 className="font-serif text-2xl font-light mb-3">{cat.title}</h3>

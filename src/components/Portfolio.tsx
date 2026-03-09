@@ -28,12 +28,18 @@ const Portfolio = () => {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 max-w-6xl mx-auto">
           {items.map((item) => (
             <div key={item.label} className={`group relative overflow-hidden aspect-[3/4] ${item.span}`}>
-              <img
-                src={item.src}
-                alt={item.label}
-                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                loading="lazy"
-              />
+              <picture>
+                <source srcSet={item.webp} type="image/webp" />
+                <img
+                  src={item.fallback}
+                  alt={item.label}
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  loading="lazy"
+                  decoding="async"
+                  width={600}
+                  height={800}
+                />
+              </picture>
               <div className="absolute inset-0 bg-foreground/0 group-hover:bg-foreground/30 transition-colors duration-500 flex items-end">
                 <p className="text-primary-foreground text-sm tracking-widest uppercase p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
                   {item.label}

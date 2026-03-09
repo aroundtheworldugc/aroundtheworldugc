@@ -22,9 +22,13 @@ const AboutUs = () => {
         <div className="grid md:grid-cols-2 gap-12 lg:gap-20 items-center max-w-6xl mx-auto">
           <div className="aspect-[4/5] overflow-hidden">
             <img
-
               alt="Davide and Claudia"
-              className="w-full h-full object-cover" src="/lovable-uploads/4070b360-2001-4e1e-a131-72217a0fcdb4.jpg" />
+              className="w-full h-full object-cover"
+              loading="lazy"
+              decoding="async"
+              width={600}
+              height={750}
+              src="/lovable-uploads/4070b360-2001-4e1e-a131-72217a0fcdb4.jpg" />
 
           </div>
 
