@@ -164,6 +164,25 @@ const PhoneMockup = ({
     return () => vid.removeEventListener("timeupdate", onTime);
   }, [isVimeo]);
 
+  const togglePlay = useCallback(() => {
+    if (isVimeo && playerRef.current) {
+      if (playing) {
+        playerRef.current.pause();
+      } else {
+        playerRef.current.play();
+      }
+      setPlaying(!playing);
+    } else if (videoRef.current) {
+      if (videoRef.current.paused) {
+        videoRef.current.play();
+        setPlaying(true);
+      } else {
+        videoRef.current.pause();
+        setPlaying(false);
+      }
+    }
+  }, [playing, isVimeo]);
+
   const toggleSound = useCallback(() => {
     if (isVimeo && playerRef.current) {
       playerRef.current.setVolume(muted ? 1 : 0);
@@ -191,9 +210,26 @@ const PhoneMockup = ({
     setProgress(pct);
   }, [isVimeo]);
 
-  const handleTap = useCallback(() => {
-    setShowControls((prev) => !prev);
+  // Auto-hide controls after 3s on touch devices
+  const showControlsWithTimer = useCallback(() => {
+    setShowControls(true);
+    if (hideTimerRef.current) clearTimeout(hideTimerRef.current);
+    hideTimerRef.current = setTimeout(() => setShowControls(false), 3000);
   }, []);
+
+  const handleTap = useCallback(() => {
+    if (isTouchDevice.current) {
+      if (showControls) {
+        // If controls visible, hide them
+        if (hideTimerRef.current) clearTimeout(hideTimerRef.current);
+        setShowControls(false);
+      } else {
+        showControlsWithTimer();
+      }
+    } else {
+      setShowControls((prev) => !prev);
+    }
+  }, [showControls, showControlsWithTimer]);
 
   // Show thumbnail when: not activated yet, or activated but iframe not loaded
   const showThumbnail = !isPlaceholder && !isVimeo ? false : (!activated || (activated && !iframeLoaded));
