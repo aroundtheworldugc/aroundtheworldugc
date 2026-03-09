@@ -26,13 +26,13 @@ const AboutUs = () => {
           <div className="aspect-[4/5] overflow-hidden">
             <picture>
               <source
-                srcSet={`${aboutWebpSm} 400w, ${aboutWebpLg} 700w`}
+                srcSet={`${aboutWebpSm} 400w, ${aboutWebpMd} 700w, ${aboutWebpLg} 1000w`}
                 sizes="(max-width: 768px) 100vw, 50vw"
                 type="image/webp"
               />
               <img
                 src={aboutFallbackSm}
-                srcSet={`${aboutFallbackSm} 400w, ${aboutFallbackLg} 700w`}
+                srcSet={`${aboutFallbackSm} 400w, ${aboutFallbackMd} 700w, ${aboutFallbackLg} 1000w`}
                 sizes="(max-width: 768px) 100vw, 50vw"
                 alt="Davide and Claudia"
                 className="w-full h-full object-cover"
