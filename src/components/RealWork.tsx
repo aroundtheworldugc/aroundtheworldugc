@@ -98,22 +98,11 @@ const PhoneMockup = ({
     isTouchDevice.current = "ontouchstart" in window || navigator.maxTouchPoints > 0;
   }, []);
 
-  // Activate iframe immediately when near viewport (no artificial delay)
-  useEffect(() => {
-    if (activated) return;
-    const el = containerRef.current;
-    if (!el) return;
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setActivated(true);
-          observer.disconnect();
-        }
-      },
-      { rootMargin: "300px" }
-    );
-    observer.observe(el);
-    return () => observer.disconnect();
+  // Activate only on user click (no preloading iframes)
+  const handleActivate = useCallback(() => {
+    if (!activated) {
+      setActivated(true);
+    }
   }, [activated]);
 
   // Initialize Vimeo player with throttled progress
@@ -139,8 +128,12 @@ const PhoneMockup = ({
     };
     animFrameRef.current = requestAnimationFrame(updateProgress);
 
-    // Mark as loaded when player is ready (not when playing — avoids deadlock)
-    player.ready().then(() => setIframeLoaded(true)).catch(() => {});
+    // Auto-play once ready (user clicked to activate)
+    player.ready().then(() => {
+      setIframeLoaded(true);
+      player.play().catch(() => {});
+      setPlaying(true);
+    }).catch(() => {});
 
     return () => {
       cancelAnimationFrame(animFrameRef.current);
@@ -335,11 +328,12 @@ const PhoneMockup = ({
               </div>
             ) : (
               <>
-                {/* Thumbnail layer — visible until video plays */}
+                {/* Thumbnail layer — click to load and play */}
                 {vimeoId && showThumbnail && (
                   <div
-                    className="absolute inset-0 z-10 transition-opacity duration-500"
+                    className="absolute inset-0 z-10 transition-opacity duration-500 cursor-pointer"
                     style={{ opacity: showThumbnail ? 1 : 0 }}
+                    onClick={(e) => { e.stopPropagation(); handleActivate(); }}
                   >
                     <img
                       src={`https://vumbnail.com/${vimeoId}.jpg`}
