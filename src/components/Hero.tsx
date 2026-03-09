@@ -1,15 +1,23 @@
-import heroBg from "@/assets/hero-bg.jpg";
+import heroBgWebp from "@/assets/hero-bg.jpg?format=webp&w=1920";
+import heroBgFallback from "@/assets/hero-bg.jpg?w=1920";
 
 const Hero = () => {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Background image */}
       <div className="absolute inset-0">
-        <img
-          src={heroBg}
-          alt="Cinematic golden hour travel scene"
-          className="w-full h-full object-cover" />
-
+        <picture>
+          <source srcSet={heroBgWebp} type="image/webp" />
+          <img
+            src={heroBgFallback}
+            alt="Cinematic golden hour travel scene"
+            className="w-full h-full object-cover"
+            fetchPriority="high"
+            decoding="async"
+            width={1920}
+            height={1080}
+          />
+        </picture>
         <div className="absolute inset-0 bg-foreground/20" />
       </div>
 

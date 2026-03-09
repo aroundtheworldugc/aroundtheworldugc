@@ -1,25 +1,31 @@
-import portfolioTravel from "@/assets/portfolio-travel.jpg";
-import portfolioHotel from "@/assets/portfolio-hotel.jpg";
-import portfolioLifestyle from "@/assets/portfolio-lifestyle.jpg";
+import portfolioTravelWebp from "@/assets/portfolio-travel.jpg?format=webp&w=600";
+import portfolioTravelFb from "@/assets/portfolio-travel.jpg?w=600";
+import portfolioHotelWebp from "@/assets/portfolio-hotel.jpg?format=webp&w=600";
+import portfolioHotelFb from "@/assets/portfolio-hotel.jpg?w=600";
+import portfolioLifestyleWebp from "@/assets/portfolio-lifestyle.jpg?format=webp&w=600";
+import portfolioLifestyleFb from "@/assets/portfolio-lifestyle.jpg?w=600";
 
 const categories = [
 {
   title: "Travel & Destinations",
   description:
   "Immersive storytelling that inspires exploration. Cinematic reels. Lifestyle photography. Drone footage. Experience-based narrative.",
-  image: portfolioTravel
+  webp: portfolioTravelWebp,
+  fallback: portfolioTravelFb
 },
 {
   title: "Hotels & Accommodations",
   description:
   "Atmosphere-driven content. Room tours. Detail shots. Guest journey storytelling. Luxury & boutique positioning. Highlighting experience, not just structure.",
-  image: portfolioHotel
+  webp: portfolioHotelWebp,
+  fallback: portfolioHotelFb
 },
 {
   title: "Lifestyle & Product",
   description:
   "Natural integration of products into real-life travel scenarios. Soft advertising. Emotional product placement. Short-form vertical videos optimized for Instagram and TikTok.",
-  image: portfolioLifestyle
+  webp: portfolioLifestyleWebp,
+  fallback: portfolioLifestyleFb
 }];
 
 
@@ -38,11 +44,18 @@ const WhatWeCreate = () => {
           {categories.map((cat) =>
           <div key={cat.title} className="group">
               <div className="aspect-[3/4] overflow-hidden mb-6">
-                <img
-                src={cat.image}
-                alt={cat.title}
-                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                loading="lazy" />
+                <picture>
+                  <source srcSet={cat.webp} type="image/webp" />
+                  <img
+                    src={cat.fallback}
+                    alt={cat.title}
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    loading="lazy"
+                    decoding="async"
+                    width={600}
+                    height={800}
+                  />
+                </picture>
 
               </div>
               <h3 className="font-serif text-2xl font-light mb-3">{cat.title}</h3>
