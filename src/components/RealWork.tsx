@@ -329,74 +329,109 @@ const PhoneMockup = ({
             )}
           </div>
 
-          {/* Custom scrubber */}
+          {/* Controls overlay */}
           {!isPlaceholder && activated && iframeLoaded && (
-            <div
-              className="absolute bottom-14 left-4 right-4 z-20"
-              style={{
-                opacity: showControls ? 1 : 0,
-                pointerEvents: showControls ? "auto" : "none",
-                transition: "opacity 0.2s ease-out",
-              }}
-            >
+            <>
+              {/* Play/Pause button - center */}
+              <button
+                onClick={(e) => { e.stopPropagation(); togglePlay(); if (isTouchDevice.current) showControlsWithTimer(); }}
+                className="absolute inset-0 z-20 flex items-center justify-center cursor-pointer"
+                style={{
+                  background: "transparent",
+                  border: "none",
+                  opacity: showControls ? 1 : 0,
+                  pointerEvents: showControls ? "auto" : "none",
+                  transition: "opacity 0.2s ease-out",
+                }}
+                aria-label={playing ? "Pause" : "Play"}>
+                <div
+                  className="flex items-center justify-center"
+                  style={{
+                    width: "48px",
+                    height: "48px",
+                    borderRadius: "50%",
+                    background: "rgba(0,0,0,0.5)",
+                    backdropFilter: "blur(4px)",
+                  }}
+                >
+                  {playing ? (
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="white">
+                      <rect x="6" y="4" width="4" height="16" rx="1" />
+                      <rect x="14" y="4" width="4" height="16" rx="1" />
+                    </svg>
+                  ) : (
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="white">
+                      <path d="M8 5v14l11-7z" />
+                    </svg>
+                  )}
+                </div>
+              </button>
+
+              {/* Scrubber */}
               <div
-                ref={scrubberRef}
-                className="relative h-1 rounded-full cursor-pointer"
-                style={{ background: "rgba(255,255,255,0.25)" }}
-                onClick={(e) => { e.stopPropagation(); handleScrub(e); }}
-                onTouchStart={(e) => { e.stopPropagation(); handleScrub(e); }}
+                className="absolute bottom-14 left-4 right-4 z-20"
+                style={{
+                  opacity: showControls ? 1 : 0,
+                  pointerEvents: showControls ? "auto" : "none",
+                  transition: "opacity 0.2s ease-out",
+                }}
               >
                 <div
-                  className="absolute top-0 left-0 h-full rounded-full"
-                  style={{ width: `${progress * 100}%`, background: "rgba(255,255,255,0.85)" }}
-                />
-                <div
-                  className="absolute top-1/2 -translate-y-1/2"
-                  style={{
-                    left: `${progress * 100}%`,
-                    width: "10px",
-                    height: "10px",
-                    borderRadius: "50%",
-                    background: "#fff",
-                    transform: `translate(-50%, -50%)`,
-                    boxShadow: "0 1px 4px rgba(0,0,0,0.4)"
-                  }}
-                />
+                  ref={scrubberRef}
+                  className="relative h-2 rounded-full cursor-pointer"
+                  style={{ background: "rgba(255,255,255,0.25)" }}
+                  onClick={(e) => { e.stopPropagation(); handleScrub(e); }}
+                  onTouchStart={(e) => { e.stopPropagation(); handleScrub(e); }}
+                >
+                  <div
+                    className="absolute top-0 left-0 h-full rounded-full"
+                    style={{ width: `${progress * 100}%`, background: "rgba(255,255,255,0.85)" }}
+                  />
+                  <div
+                    className="absolute top-1/2 -translate-y-1/2"
+                    style={{
+                      left: `${progress * 100}%`,
+                      width: "14px",
+                      height: "14px",
+                      borderRadius: "50%",
+                      background: "#fff",
+                      transform: `translate(-50%, -50%)`,
+                      boxShadow: "0 1px 4px rgba(0,0,0,0.4)"
+                    }}
+                  />
+                </div>
               </div>
-            </div>
-          )}
 
-          {/* Sound toggle */}
-          {!isPlaceholder && activated && iframeLoaded && (
-            <button
-              onClick={(e) => { e.stopPropagation(); toggleSound(); }}
-              className="absolute bottom-4 right-4 z-20 flex items-center justify-center cursor-pointer"
-              style={{
-                width: "36px",
-                height: "36px",
-                borderRadius: "50%",
-                background: "rgba(0,0,0,0.6)",
-                border: "none",
-                opacity: showControls ? 1 : 0,
-                pointerEvents: showControls ? "auto" : "none",
-                transition: "opacity 0.2s ease-out",
-              }}
-              aria-label={muted ? "Unmute" : "Mute"}>
-
+              {/* Sound toggle */}
+              <button
+                onClick={(e) => { e.stopPropagation(); toggleSound(); if (isTouchDevice.current) showControlsWithTimer(); }}
+                className="absolute bottom-4 right-4 z-20 flex items-center justify-center cursor-pointer"
+                style={{
+                  width: "40px",
+                  height: "40px",
+                  borderRadius: "50%",
+                  background: "rgba(0,0,0,0.6)",
+                  border: "none",
+                  opacity: showControls ? 1 : 0,
+                  pointerEvents: showControls ? "auto" : "none",
+                  transition: "opacity 0.2s ease-out",
+                }}
+                aria-label={muted ? "Unmute" : "Mute"}>
                 {muted ? (
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M11 5L6 9H2v6h4l5 4V5z" />
                     <line x1="23" y1="9" x2="17" y2="15" />
                     <line x1="17" y1="9" x2="23" y2="15" />
                   </svg>
                 ) : (
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M11 5L6 9H2v6h4l5 4V5z" />
                     <path d="M19.07 4.93a10 10 0 010 14.14" />
                     <path d="M15.54 8.46a5 5 0 010 7.07" />
                   </svg>
                 )}
-            </button>
+              </button>
+            </>
           )}
         </div>
       </div>
