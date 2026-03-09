@@ -1,31 +1,35 @@
+import { lazy, Suspense } from "react";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
-import AboutUs from "@/components/AboutUs";
-import RealWork from "@/components/RealWork";
-import Services from "@/components/Services";
-import Benefits from "@/components/Benefits";
-import WhyChooseUs from "@/components/WhyChooseUs";
-import PartnershipModel from "@/components/PartnershipModel";
-import Process from "@/components/Process";
-import BonusPositioning from "@/components/BonusPositioning";
-import CallToAction from "@/components/CallToAction";
-import Footer from "@/components/Footer";
+
+const AboutUs = lazy(() => import("@/components/AboutUs"));
+const RealWork = lazy(() => import("@/components/RealWork"));
+const Services = lazy(() => import("@/components/Services"));
+const Benefits = lazy(() => import("@/components/Benefits"));
+const WhyChooseUs = lazy(() => import("@/components/WhyChooseUs"));
+const PartnershipModel = lazy(() => import("@/components/PartnershipModel"));
+const Process = lazy(() => import("@/components/Process"));
+const BonusPositioning = lazy(() => import("@/components/BonusPositioning"));
+const CallToAction = lazy(() => import("@/components/CallToAction"));
+const Footer = lazy(() => import("@/components/Footer"));
 
 const Index = () => {
   return (
     <main>
       <Navbar />
       <Hero />
-      <AboutUs />
-      <RealWork />
-      <Services />
-      <Benefits />
-      <WhyChooseUs />
-      <Process />
-      <PartnershipModel />
-      <BonusPositioning />
-      <CallToAction />
-      <Footer />
+      <Suspense fallback={null}>
+        <AboutUs />
+        <RealWork />
+        <Services />
+        <Benefits />
+        <WhyChooseUs />
+        <Process />
+        <PartnershipModel />
+        <BonusPositioning />
+        <CallToAction />
+        <Footer />
+      </Suspense>
     </main>
   );
 };
