@@ -1,9 +1,21 @@
+import { useEffect } from "react";
 import heroBgWebpSm from "@/assets/hero-bg.jpg?format=webp&w=768";
 import heroBgWebpMd from "@/assets/hero-bg.jpg?format=webp&w=1280";
 import heroBgWebpLg from "@/assets/hero-bg.jpg?format=webp&w=1920";
 import heroBgFallbackSm from "@/assets/hero-bg.jpg?w=768";
 import heroBgFallbackMd from "@/assets/hero-bg.jpg?w=1280";
 import heroBgFallbackLg from "@/assets/hero-bg.jpg?w=1920";
+
+// Inject preload link immediately (module-level, runs once)
+if (typeof document !== "undefined") {
+  const link = document.createElement("link");
+  link.rel = "preload";
+  link.as = "image";
+  link.type = "image/webp";
+  link.imageSrcset = `${heroBgWebpSm} 768w, ${heroBgWebpMd} 1280w, ${heroBgWebpLg} 1920w`;
+  link.imageSizes = "100vw";
+  document.head.appendChild(link);
+}
 
 const Hero = () => {
   return (
