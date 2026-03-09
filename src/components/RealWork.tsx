@@ -128,8 +128,12 @@ const PhoneMockup = ({
     };
     animFrameRef.current = requestAnimationFrame(updateProgress);
 
-    // Mark as loaded when player is ready (not when playing — avoids deadlock)
-    player.ready().then(() => setIframeLoaded(true)).catch(() => {});
+    // Auto-play once ready (user clicked to activate)
+    player.ready().then(() => {
+      setIframeLoaded(true);
+      player.play().catch(() => {});
+      setPlaying(true);
+    }).catch(() => {});
 
     return () => {
       cancelAnimationFrame(animFrameRef.current);
