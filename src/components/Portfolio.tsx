@@ -1,13 +1,17 @@
-import portfolioTravel from "@/assets/portfolio-travel.jpg";
-import portfolioHotel from "@/assets/portfolio-hotel.jpg";
-import portfolioLifestyle from "@/assets/portfolio-lifestyle.jpg";
-import portfolioSurfcamp from "@/assets/portfolio-surfcamp.jpg";
+import portfolioTravelWebp from "@/assets/portfolio-travel.jpg?format=webp&w=600";
+import portfolioTravelFb from "@/assets/portfolio-travel.jpg?w=600";
+import portfolioHotelWebp from "@/assets/portfolio-hotel.jpg?format=webp&w=600";
+import portfolioHotelFb from "@/assets/portfolio-hotel.jpg?w=600";
+import portfolioLifestyleWebp from "@/assets/portfolio-lifestyle.jpg?format=webp&w=600";
+import portfolioLifestyleFb from "@/assets/portfolio-lifestyle.jpg?w=600";
+import portfolioSurfcampWebp from "@/assets/portfolio-surfcamp.jpg?format=webp&w=600";
+import portfolioSurfcampFb from "@/assets/portfolio-surfcamp.jpg?w=600";
 
 const items = [
-  { src: portfolioTravel, label: "Travel Australia", span: "col-span-1 row-span-1" },
-  { src: portfolioHotel, label: "Hotel Collaborations", span: "col-span-1 row-span-1" },
-  { src: portfolioSurfcamp, label: "Surf Camp", span: "col-span-2 row-span-1 md:col-span-1" },
-  { src: portfolioLifestyle, label: "Lifestyle & Product", span: "col-span-1 row-span-1" },
+  { webp: portfolioTravelWebp, fallback: portfolioTravelFb, label: "Travel Australia", span: "col-span-1 row-span-1" },
+  { webp: portfolioHotelWebp, fallback: portfolioHotelFb, label: "Hotel Collaborations", span: "col-span-1 row-span-1" },
+  { webp: portfolioSurfcampWebp, fallback: portfolioSurfcampFb, label: "Surf Camp", span: "col-span-2 row-span-1 md:col-span-1" },
+  { webp: portfolioLifestyleWebp, fallback: portfolioLifestyleFb, label: "Lifestyle & Product", span: "col-span-1 row-span-1" },
 ];
 
 const Portfolio = () => {
