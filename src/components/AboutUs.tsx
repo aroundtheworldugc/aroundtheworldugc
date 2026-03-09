@@ -1,4 +1,7 @@
-import aboutImg from "@/assets/about-duo.jpg";
+import aboutWebpSm from "@/assets/about-photo.jpg?format=webp&w=400";
+import aboutWebpLg from "@/assets/about-photo.jpg?format=webp&w=700";
+import aboutFallbackSm from "@/assets/about-photo.jpg?w=400";
+import aboutFallbackLg from "@/assets/about-photo.jpg?w=700";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 
 const AboutUs = () => {
@@ -13,23 +16,30 @@ const AboutUs = () => {
             We Don't Just Create Content.<br />
             <span className="italic">We Live It.</span>
           </h2>
-          <p className="text-muted-foreground leading-relaxed">We are a creative travel duo specializing in User Generated Content for hotels, travel brands and lifestyle companies. We travel in our van exploring unique destinations, capturing real experiences and turning them into engaging digital assets.
-
-          </p>
+          <p className="text-muted-foreground leading-relaxed">We are a creative travel duo specializing in User Generated Content for hotels, travel brands and lifestyle companies. We travel in our van exploring unique destinations, capturing real experiences and turning them into engaging digital assets.</p>
         </div>
 
         {/* Image + Bios */}
         <div className="grid md:grid-cols-2 gap-12 lg:gap-20 items-center max-w-6xl mx-auto">
           <div className="aspect-[4/5] overflow-hidden">
-            <img
-              alt="Davide and Claudia"
-              className="w-full h-full object-cover"
-              loading="lazy"
-              decoding="async"
-              width={600}
-              height={750}
-              src="/lovable-uploads/4070b360-2001-4e1e-a131-72217a0fcdb4.jpg" />
-
+            <picture>
+              <source
+                srcSet={`${aboutWebpSm} 400w, ${aboutWebpLg} 700w`}
+                sizes="(max-width: 768px) 100vw, 50vw"
+                type="image/webp"
+              />
+              <img
+                src={aboutFallbackSm}
+                srcSet={`${aboutFallbackSm} 400w, ${aboutFallbackLg} 700w`}
+                sizes="(max-width: 768px) 100vw, 50vw"
+                alt="Davide and Claudia"
+                className="w-full h-full object-cover"
+                loading="lazy"
+                decoding="async"
+                width={700}
+                height={875}
+              />
+            </picture>
           </div>
 
           <div className="space-y-10">
@@ -57,19 +67,18 @@ const AboutUs = () => {
               <div className="w-8 h-px bg-primary mb-4" />
               <div className="flex flex-wrap gap-3">
                 {[
-                "Creative Direction",
-                "Cinematic Filmmaking",
-                "Strategic Positioning",
-                "Authentic Storytelling",
-                "Marketing Awareness"].
-                map((skill) =>
-                <span
-                  key={skill}
-                  className="text-xs tracking-widest uppercase border border-border px-3 py-1.5 text-muted-foreground">
-
+                  "Creative Direction",
+                  "Cinematic Filmmaking",
+                  "Strategic Positioning",
+                  "Authentic Storytelling",
+                  "Marketing Awareness",
+                ].map((skill) => (
+                  <span
+                    key={skill}
+                    className="text-xs tracking-widest uppercase border border-border px-3 py-1.5 text-muted-foreground">
                     {skill}
                   </span>
-                )}
+                ))}
               </div>
             </div>
           </div>
@@ -77,15 +86,15 @@ const AboutUs = () => {
 
         {/* Content feels */}
         <div className="flex flex-wrap justify-center gap-6 md:gap-10 mt-20">
-          {["Natural", "Unforced", "Human", "Immersive", "Emotionally Engaging"].map((word) =>
-          <span key={word} className="font-serif text-xl md:text-2xl italic text-muted-foreground">
+          {["Natural", "Unforced", "Human", "Immersive", "Emotionally Engaging"].map((word) => (
+            <span key={word} className="font-serif text-xl md:text-2xl italic text-muted-foreground">
               {word}
             </span>
-          )}
+          ))}
         </div>
       </div>
-    </section>);
-
+    </section>
+  );
 };
 
 export default AboutUs;
