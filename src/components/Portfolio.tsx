@@ -1,17 +1,21 @@
-import portfolioTravelWebp from "@/assets/portfolio-travel.jpg?format=webp&w=600";
+import portfolioTravelWebpSm from "@/assets/portfolio-travel.jpg?format=webp&w=300";
+import portfolioTravelWebpLg from "@/assets/portfolio-travel.jpg?format=webp&w=600";
 import portfolioTravelFb from "@/assets/portfolio-travel.jpg?w=600";
-import portfolioHotelWebp from "@/assets/portfolio-hotel.jpg?format=webp&w=600";
+import portfolioHotelWebpSm from "@/assets/portfolio-hotel.jpg?format=webp&w=300";
+import portfolioHotelWebpLg from "@/assets/portfolio-hotel.jpg?format=webp&w=600";
 import portfolioHotelFb from "@/assets/portfolio-hotel.jpg?w=600";
-import portfolioLifestyleWebp from "@/assets/portfolio-lifestyle.jpg?format=webp&w=600";
+import portfolioLifestyleWebpSm from "@/assets/portfolio-lifestyle.jpg?format=webp&w=300";
+import portfolioLifestyleWebpLg from "@/assets/portfolio-lifestyle.jpg?format=webp&w=600";
 import portfolioLifestyleFb from "@/assets/portfolio-lifestyle.jpg?w=600";
-import portfolioSurfcampWebp from "@/assets/portfolio-surfcamp.jpg?format=webp&w=600";
+import portfolioSurfcampWebpSm from "@/assets/portfolio-surfcamp.jpg?format=webp&w=300";
+import portfolioSurfcampWebpLg from "@/assets/portfolio-surfcamp.jpg?format=webp&w=600";
 import portfolioSurfcampFb from "@/assets/portfolio-surfcamp.jpg?w=600";
 
 const items = [
-  { webp: portfolioTravelWebp, fallback: portfolioTravelFb, label: "Travel Australia", span: "col-span-1 row-span-1" },
-  { webp: portfolioHotelWebp, fallback: portfolioHotelFb, label: "Hotel Collaborations", span: "col-span-1 row-span-1" },
-  { webp: portfolioSurfcampWebp, fallback: portfolioSurfcampFb, label: "Surf Camp", span: "col-span-2 row-span-1 md:col-span-1" },
-  { webp: portfolioLifestyleWebp, fallback: portfolioLifestyleFb, label: "Lifestyle & Product", span: "col-span-1 row-span-1" },
+  { webpSm: portfolioTravelWebpSm, webpLg: portfolioTravelWebpLg, fallback: portfolioTravelFb, label: "Travel Australia", span: "col-span-1 row-span-1" },
+  { webpSm: portfolioHotelWebpSm, webpLg: portfolioHotelWebpLg, fallback: portfolioHotelFb, label: "Hotel Collaborations", span: "col-span-1 row-span-1" },
+  { webpSm: portfolioSurfcampWebpSm, webpLg: portfolioSurfcampWebpLg, fallback: portfolioSurfcampFb, label: "Surf Camp", span: "col-span-2 row-span-1 md:col-span-1" },
+  { webpSm: portfolioLifestyleWebpSm, webpLg: portfolioLifestyleWebpLg, fallback: portfolioLifestyleFb, label: "Lifestyle & Product", span: "col-span-1 row-span-1" },
 ];
 
 const Portfolio = () => {
@@ -29,7 +33,11 @@ const Portfolio = () => {
           {items.map((item) => (
             <div key={item.label} className={`group relative overflow-hidden aspect-[3/4] ${item.span}`}>
               <picture>
-                <source srcSet={item.webp} type="image/webp" />
+                <source
+                  srcSet={`${item.webpSm} 300w, ${item.webpLg} 600w`}
+                  sizes="(max-width: 768px) 50vw, 25vw"
+                  type="image/webp"
+                />
                 <img
                   src={item.fallback}
                   alt={item.label}
