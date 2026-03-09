@@ -98,12 +98,24 @@ const PhoneMockup = ({
     isTouchDevice.current = "ontouchstart" in window || navigator.maxTouchPoints > 0;
   }, []);
 
-  // Activate only on user click (no preloading iframes)
-  const handleActivate = useCallback(() => {
-    if (!activated) {
-      setActivated(true);
-    }
-  }, [activated]);
+  // Activate when visible in viewport (lazy load)
+  useEffect(() => {
+    if (isPlaceholder || activated) return;
+    const el = containerRef.current;
+    if (!el) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setActivated(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.3 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [isPlaceholder, activated]);
 
   // Initialize Vimeo player with throttled progress
   useEffect(() => {
