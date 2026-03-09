@@ -328,11 +328,12 @@ const PhoneMockup = ({
               </div>
             ) : (
               <>
-                {/* Thumbnail layer — visible until video plays */}
+                {/* Thumbnail layer — click to load and play */}
                 {vimeoId && showThumbnail && (
                   <div
-                    className="absolute inset-0 z-10 transition-opacity duration-500"
+                    className="absolute inset-0 z-10 transition-opacity duration-500 cursor-pointer"
                     style={{ opacity: showThumbnail ? 1 : 0 }}
+                    onClick={(e) => { e.stopPropagation(); handleActivate(); }}
                   >
                     <img
                       src={`https://vumbnail.com/${vimeoId}.jpg`}
