@@ -390,7 +390,7 @@ const PhoneMockup = ({
           {/* Controls overlay */}
           {!isPlaceholder && activated && iframeLoaded && (
             <>
-              {/* Play/Pause button - center */}
+              {/* Play/Pause button - center (tap to toggle on mobile, hover on desktop) */}
               <button
                 onClick={(e) => { e.stopPropagation(); togglePlay(); if (isTouchDevice.current) showControlsWithTimer(); }}
                 className="absolute inset-0 z-20 flex items-center justify-center cursor-pointer"
@@ -425,12 +425,12 @@ const PhoneMockup = ({
                 </div>
               </button>
 
-              {/* Scrubber */}
+              {/* Scrubber — always visible on mobile, hover on desktop */}
               <div
                 className="absolute bottom-14 left-4 right-4 z-20"
                 style={{
-                  opacity: showControls ? 1 : 0,
-                  pointerEvents: showControls ? "auto" : "none",
+                  opacity: isTouchDevice.current ? 1 : (showControls ? 1 : 0),
+                  pointerEvents: isTouchDevice.current ? "auto" : (showControls ? "auto" : "none"),
                   transition: "opacity 0.2s ease-out",
                 }}
               >
@@ -460,9 +460,9 @@ const PhoneMockup = ({
                 </div>
               </div>
 
-              {/* Sound toggle */}
+              {/* Sound toggle — always visible on mobile, hover on desktop */}
               <button
-                onClick={(e) => { e.stopPropagation(); toggleSound(); if (isTouchDevice.current) showControlsWithTimer(); }}
+                onClick={(e) => { e.stopPropagation(); toggleSound(); }}
                 className="absolute bottom-4 right-4 z-20 flex items-center justify-center cursor-pointer"
                 style={{
                   width: "40px",
@@ -470,8 +470,8 @@ const PhoneMockup = ({
                   borderRadius: "50%",
                   background: "rgba(0,0,0,0.6)",
                   border: "none",
-                  opacity: showControls ? 1 : 0,
-                  pointerEvents: showControls ? "auto" : "none",
+                  opacity: isTouchDevice.current ? 1 : (showControls ? 1 : 0),
+                  pointerEvents: isTouchDevice.current ? "auto" : (showControls ? "auto" : "none"),
                   transition: "opacity 0.2s ease-out",
                 }}
                 aria-label={muted ? "Unmute" : "Mute"}>
