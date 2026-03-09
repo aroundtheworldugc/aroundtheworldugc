@@ -167,6 +167,68 @@ const PhoneMockup = ({
     return () => vid.removeEventListener("timeupdate", onTime);
   }, [isVimeo]);
 
+  // Scroll-based autoplay: play when in viewport, pause when out
+  useEffect(() => {
+    if (isPlaceholder || !activated) return;
+    // Wait for player/iframe to be ready
+    if (isVimeo && !iframeLoaded) return;
+
+    const el = containerRef.current;
+    if (!el) return;
+
+    const playVideo = () => {
+      // Pause the previously active video
+      if (activePlayerRef.current) {
+        activePlayerRef.current();
+      }
+
+      if (isVimeo && playerRef.current) {
+        playerRef.current.setCurrentTime(0).then(() => {
+          playerRef.current?.play();
+        }).catch(() => {});
+      } else if (videoRef.current) {
+        videoRef.current.currentTime = 0;
+        videoRef.current.play().catch(() => {});
+      }
+      setPlaying(true);
+      setProgress(0);
+
+      // Register this video's pause function as the active one
+      activePlayerRef.current = pauseVideo;
+    };
+
+    const pauseVideo = () => {
+      if (isVimeo && playerRef.current) {
+        playerRef.current.pause().catch(() => {});
+      } else if (videoRef.current) {
+        videoRef.current.pause();
+      }
+      setPlaying(false);
+      if (activePlayerRef.current === pauseVideo) {
+        activePlayerRef.current = null;
+      }
+    };
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          playVideo();
+        } else {
+          pauseVideo();
+        }
+      },
+      { threshold: 0.5 }
+    );
+    observer.observe(el);
+
+    return () => {
+      observer.disconnect();
+      if (activePlayerRef.current === pauseVideo) {
+        activePlayerRef.current = null;
+      }
+    };
+  }, [isPlaceholder, activated, isVimeo, iframeLoaded]);
+
   const togglePlay = useCallback(() => {
     if (isVimeo && playerRef.current) {
       if (playing) {
