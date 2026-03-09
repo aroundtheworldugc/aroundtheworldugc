@@ -23,7 +23,6 @@ const categories = [
     caption: "Experience-driven content highlighting wine tasting and destination immersion."
   },
   ]
-
 },
 {
   icon: "🌴",
@@ -44,7 +43,6 @@ const categories = [
     brand: "Van Life – The Reality",
     caption: "Unfiltered cinematic narrative revealing the true rhythm of life on the road."
   }]
-
 },
 {
   icon: "🧴",
@@ -65,7 +63,6 @@ const categories = [
     brand: "Bialetti",
     caption: "Cinematic step-by-step narrative blending ritual, lifestyle and iconic brand identity."
   }]
-
 }];
 
 
@@ -82,15 +79,13 @@ const PhoneMockup = ({
   const [muted, setMuted] = useState(true);
   const [showControls, setShowControls] = useState(false);
   const [progress, setProgress] = useState(0);
-  const [duration, setDuration] = useState(0);
   const animFrameRef = useRef<number>(0);
   const [isVisible, setIsVisible] = useState(false);
   const [activated, setActivated] = useState(false);
+  const [iframeLoaded, setIframeLoaded] = useState(false);
 
   const isPlaceholder = video.includes("placeholder");
   const isVimeo = video.includes("vimeo");
-
-  // Extract Vimeo video ID for thumbnail
   const vimeoId = isVimeo ? video.split("/").pop() : null;
 
   // Lazy load: observe when component enters viewport
@@ -104,43 +99,50 @@ const PhoneMockup = ({
           observer.disconnect();
         }
       },
-      { rootMargin: "200px" }
+      { rootMargin: "300px" }
     );
     observer.observe(el);
     return () => observer.disconnect();
   }, []);
 
-  // Auto-activate when visible (load iframe)
+  // Auto-activate when visible
   useEffect(() => {
     if (isVisible && !activated) {
-      // Small delay to let critical content render first
-      const timer = setTimeout(() => setActivated(true), 300);
+      const timer = setTimeout(() => setActivated(true), 200);
       return () => clearTimeout(timer);
     }
   }, [isVisible, activated]);
 
+  // Initialize Vimeo player with throttled progress
   useEffect(() => {
-    if (isVimeo && !isPlaceholder && activated && iframeRef.current) {
-      const player = new Player(iframeRef.current);
-      playerRef.current = player;
-      player.setVolume(0);
-      player.getDuration().then((d) => setDuration(d));
+    if (!isVimeo || isPlaceholder || !activated || !iframeRef.current) return;
 
-      const updateProgress = () => {
+    const player = new Player(iframeRef.current);
+    playerRef.current = player;
+    player.setVolume(0);
+
+    // Throttled progress: update every ~250ms instead of every rAF
+    let lastUpdate = 0;
+    const updateProgress = (timestamp: number) => {
+      if (timestamp - lastUpdate > 250) {
+        lastUpdate = timestamp;
         player.getCurrentTime().then((t) => {
           player.getDuration().then((d) => {
             if (d > 0) setProgress(t / d);
           });
-        });
-        animFrameRef.current = requestAnimationFrame(updateProgress);
-      };
+        }).catch(() => {});
+      }
       animFrameRef.current = requestAnimationFrame(updateProgress);
+    };
+    animFrameRef.current = requestAnimationFrame(updateProgress);
 
-      return () => {
-        cancelAnimationFrame(animFrameRef.current);
-        player.destroy();
-      };
-    }
+    // Mark as loaded when playing
+    player.on("playing", () => setIframeLoaded(true));
+
+    return () => {
+      cancelAnimationFrame(animFrameRef.current);
+      player.destroy();
+    };
   }, [isVimeo, isPlaceholder, activated]);
 
   // Native video progress tracking
@@ -156,11 +158,7 @@ const PhoneMockup = ({
 
   const toggleSound = useCallback(() => {
     if (isVimeo && playerRef.current) {
-      if (muted) {
-        playerRef.current.setVolume(1);
-      } else {
-        playerRef.current.setVolume(0);
-      }
+      playerRef.current.setVolume(muted ? 1 : 0);
       setMuted(!muted);
     } else if (videoRef.current) {
       videoRef.current.muted = !videoRef.current.muted;
@@ -189,6 +187,9 @@ const PhoneMockup = ({
     setShowControls((prev) => !prev);
   }, []);
 
+  // Show thumbnail when: not activated yet, or activated but iframe not loaded
+  const showThumbnail = !isPlaceholder && !isVimeo ? false : (!activated || (activated && !iframeLoaded));
+
   return (
     <div ref={containerRef} className="flex flex-col items-center gap-5">
       <div className="relative mx-auto" style={{ width: "280px" }}>
@@ -200,7 +201,9 @@ const PhoneMockup = ({
             borderRadius: "40px",
             border: "4px solid #111",
             background: "#111",
-            boxShadow: "0 20px 50px rgba(0,0,0,0.25)"
+            boxShadow: "0 20px 50px rgba(0,0,0,0.25)",
+            willChange: "auto",
+            contain: "layout style paint",
           }}
           onMouseEnter={() => setShowControls(true)}
           onMouseLeave={() => setShowControls(false)}
@@ -219,124 +222,138 @@ const PhoneMockup = ({
 
           {/* Screen content */}
           <div className="absolute inset-[2px] overflow-hidden" style={{ borderRadius: "36px" }}>
-            {isPlaceholder ?
-            <div className="w-full h-full bg-gradient-to-br from-muted to-secondary flex items-center justify-center">
+            {isPlaceholder ? (
+              <div className="w-full h-full bg-gradient-to-br from-muted to-secondary flex items-center justify-center">
                 <div className="text-center px-4">
                   <div className="w-12 h-12 mx-auto mb-3 rounded-full bg-foreground/10 flex items-center justify-center">
                     <svg className="w-6 h-6 text-muted-foreground" fill="currentColor" viewBox="0 0 24 24">
                       <path d="M8 5v14l11-7z" />
                     </svg>
                   </div>
-                  <p className="text-xs text-muted-foreground">
-                </p>
-                </div>
-              </div> : !activated ? (
-            /* Thumbnail placeholder before lazy load */
-            <div className="w-full h-full bg-foreground/5 flex items-center justify-center">
-              {vimeoId && (
-                <img
-                  src={`https://vumbnail.com/${vimeoId}.jpg`}
-                  alt={brand}
-                  className="w-full h-full object-cover"
-                  loading="lazy"
-                />
-              )}
-              <div className="absolute inset-0 bg-black/20 flex items-center justify-center">
-                <div className="w-14 h-14 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center">
-                  <svg className="w-6 h-6 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M8 5v14l11-7z" />
-                  </svg>
                 </div>
               </div>
-            </div>
-            ) : isVimeo ?
-            <iframe
-              ref={iframeRef}
-              src={`${video}?autoplay=1&loop=1&muted=1&background=1`}
-              className="w-full h-full"
-              style={{ border: "none", objectFit: "cover", pointerEvents: showControls ? "none" : "auto" }}
-              allow="autoplay; fullscreen"
-              loading="lazy"
-              title={brand} /> :
+            ) : (
+              <>
+                {/* Thumbnail layer — visible until video plays */}
+                {vimeoId && showThumbnail && (
+                  <div
+                    className="absolute inset-0 z-10 transition-opacity duration-500"
+                    style={{ opacity: showThumbnail ? 1 : 0 }}
+                  >
+                    <img
+                      src={`https://vumbnail.com/${vimeoId}_large.jpg`}
+                      alt={brand}
+                      className="w-full h-full object-cover"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                    <div className="absolute inset-0 bg-black/15 flex items-center justify-center">
+                      <div className="w-14 h-14 rounded-full bg-white/15 backdrop-blur-sm flex items-center justify-center border border-white/20">
+                        <svg className="w-6 h-6 text-white ml-0.5" fill="currentColor" viewBox="0 0 24 24">
+                          <path d="M8 5v14l11-7z" />
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+                )}
 
-            <video
-              ref={videoRef}
-              autoPlay
-              muted
-              loop
-              playsInline
-              className="w-full h-full object-cover"
-              style={{ pointerEvents: "none" }}
-            >
-                <source src={video} type="video/mp4" />
-              </video>
-            }
+                {/* Video layer */}
+                {activated && isVimeo ? (
+                  <iframe
+                    ref={iframeRef}
+                    src={`${video}?autoplay=1&loop=1&muted=1&background=1&quality=720p`}
+                    className="w-full h-full"
+                    style={{ border: "none", objectFit: "cover", pointerEvents: showControls ? "none" : "auto" }}
+                    allow="autoplay; fullscreen"
+                    loading="lazy"
+                    title={brand}
+                  />
+                ) : !isVimeo ? (
+                  <video
+                    ref={videoRef}
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    className="w-full h-full object-cover"
+                    style={{ pointerEvents: "none" }}
+                  >
+                    <source src={video} type="video/mp4" />
+                  </video>
+                ) : null}
+              </>
+            )}
           </div>
 
-          {/* Custom scrubber – appears on hover (desktop) / tap (mobile) */}
-          {!isPlaceholder && activated &&
-          <div
-            className="absolute bottom-14 left-4 right-4 z-20 transition-opacity duration-300"
-            style={{ opacity: showControls ? 1 : 0, pointerEvents: showControls ? "auto" : "none" }}
-          >
+          {/* Custom scrubber */}
+          {!isPlaceholder && activated && iframeLoaded && (
             <div
-              ref={scrubberRef}
-              className="relative h-1 rounded-full cursor-pointer"
-              style={{ background: "rgba(255,255,255,0.25)" }}
-              onClick={(e) => { e.stopPropagation(); handleScrub(e); }}
-              onTouchStart={(e) => { e.stopPropagation(); handleScrub(e); }}
+              className="absolute bottom-14 left-4 right-4 z-20"
+              style={{
+                opacity: showControls ? 1 : 0,
+                pointerEvents: showControls ? "auto" : "none",
+                transition: "opacity 0.2s ease-out",
+              }}
             >
               <div
-                className="absolute top-0 left-0 h-full rounded-full"
-                style={{ width: `${progress * 100}%`, background: "rgba(255,255,255,0.85)" }}
-              />
-              <div
-                className="absolute top-1/2 -translate-y-1/2"
-                style={{
-                  left: `${progress * 100}%`,
-                  width: "10px",
-                  height: "10px",
-                  borderRadius: "50%",
-                  background: "#fff",
-                  transform: `translate(-50%, -50%)`,
-                  boxShadow: "0 1px 4px rgba(0,0,0,0.4)"
-                }}
-              />
+                ref={scrubberRef}
+                className="relative h-1 rounded-full cursor-pointer"
+                style={{ background: "rgba(255,255,255,0.25)" }}
+                onClick={(e) => { e.stopPropagation(); handleScrub(e); }}
+                onTouchStart={(e) => { e.stopPropagation(); handleScrub(e); }}
+              >
+                <div
+                  className="absolute top-0 left-0 h-full rounded-full"
+                  style={{ width: `${progress * 100}%`, background: "rgba(255,255,255,0.85)" }}
+                />
+                <div
+                  className="absolute top-1/2 -translate-y-1/2"
+                  style={{
+                    left: `${progress * 100}%`,
+                    width: "10px",
+                    height: "10px",
+                    borderRadius: "50%",
+                    background: "#fff",
+                    transform: `translate(-50%, -50%)`,
+                    boxShadow: "0 1px 4px rgba(0,0,0,0.4)"
+                  }}
+                />
+              </div>
             </div>
-          </div>
-          }
+          )}
 
           {/* Sound toggle */}
-          {!isPlaceholder && activated &&
-          <button
-            onClick={(e) => { e.stopPropagation(); toggleSound(); }}
-            className="absolute bottom-4 right-4 z-20 flex items-center justify-center cursor-pointer transition-opacity duration-300"
-            style={{
-              width: "36px",
-              height: "36px",
-              borderRadius: "50%",
-              background: "rgba(0,0,0,0.6)",
-              border: "none",
-              opacity: showControls ? 1 : 0,
-              pointerEvents: showControls ? "auto" : "none"
-            }}
-            aria-label={muted ? "Unmute" : "Mute"}>
+          {!isPlaceholder && activated && iframeLoaded && (
+            <button
+              onClick={(e) => { e.stopPropagation(); toggleSound(); }}
+              className="absolute bottom-4 right-4 z-20 flex items-center justify-center cursor-pointer"
+              style={{
+                width: "36px",
+                height: "36px",
+                borderRadius: "50%",
+                background: "rgba(0,0,0,0.6)",
+                border: "none",
+                opacity: showControls ? 1 : 0,
+                pointerEvents: showControls ? "auto" : "none",
+                transition: "opacity 0.2s ease-out",
+              }}
+              aria-label={muted ? "Unmute" : "Mute"}>
 
-              {muted ?
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M11 5L6 9H2v6h4l5 4V5z" />
-                  <line x1="23" y1="9" x2="17" y2="15" />
-                  <line x1="17" y1="9" x2="23" y2="15" />
-                </svg> :
-
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M11 5L6 9H2v6h4l5 4V5z" />
-                  <path d="M19.07 4.93a10 10 0 010 14.14" />
-                  <path d="M15.54 8.46a5 5 0 010 7.07" />
-                </svg>
-            }
+                {muted ? (
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M11 5L6 9H2v6h4l5 4V5z" />
+                    <line x1="23" y1="9" x2="17" y2="15" />
+                    <line x1="17" y1="9" x2="23" y2="15" />
+                  </svg>
+                ) : (
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M11 5L6 9H2v6h4l5 4V5z" />
+                    <path d="M19.07 4.93a10 10 0 010 14.14" />
+                    <path d="M15.54 8.46a5 5 0 010 7.07" />
+                  </svg>
+                )}
             </button>
-          }
+          )}
         </div>
       </div>
 
@@ -346,8 +363,8 @@ const PhoneMockup = ({
           {caption}
         </p>
       </div>
-    </div>);
-
+    </div>
+  );
 };
 
 const RealWork = () => {
@@ -370,40 +387,41 @@ const RealWork = () => {
 
         {/* Categories */}
         <div className="space-y-24 max-w-7xl mx-auto">
-          {categories.map((cat) =>
-          <div key={cat.title}>
+          {categories.map((cat) => (
+            <div key={cat.title}>
               <h3 className="font-serif text-2xl md:text-3xl font-light mb-10 text-center">
                 <span className="mr-2">{cat.icon}</span>
                 {cat.title}
               </h3>
 
-              {/* Desktop: grid — Mobile: horizontal scroll */}
+              {/* Desktop: grid */}
               <div className="hidden md:grid md:grid-cols-3 gap-8 justify-items-center max-w-4xl mx-auto">
-                {cat.items.map((item) =>
-              <PhoneMockup key={item.brand} {...item} />
-              )}
+                {cat.items.map((item) => (
+                  <PhoneMockup key={item.brand} {...item} />
+                ))}
               </div>
 
-              <div className="flex md:hidden gap-6 overflow-x-auto pb-4 snap-x snap-mandatory -mx-6 px-6">
-                {cat.items.map((item) =>
+              {/* Mobile: horizontal scroll with momentum */}
               <div
-                key={item.brand}
-                className="snap-center shrink-0">
-
+                className="flex md:hidden gap-6 overflow-x-auto pb-4 snap-x snap-mandatory -mx-6 px-6"
+                style={{ WebkitOverflowScrolling: "touch" }}
+              >
+                {cat.items.map((item) => (
+                  <div key={item.brand} className="snap-center shrink-0">
                     <PhoneMockup {...item} />
                   </div>
-              )}
+                ))}
               </div>
             </div>
-          )}
+          ))}
         </div>
 
         <p className="text-center text-sm text-muted-foreground mt-16 italic">
           More examples available upon request.
         </p>
       </div>
-    </section>);
-
+    </section>
+  );
 };
 
 export default RealWork;
