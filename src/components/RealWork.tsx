@@ -98,24 +98,18 @@ const PhoneMockup = ({
     isTouchDevice.current = "ontouchstart" in window || navigator.maxTouchPoints > 0;
   }, []);
 
-  // Activate when visible in viewport (lazy load)
+  // Click-to-load facade: user must click thumbnail to instantiate Vimeo player.
+  // For native <video> (non-Vimeo, non-placeholder), activate immediately.
   useEffect(() => {
-    if (isPlaceholder || activated) return;
-    const el = containerRef.current;
-    if (!el) return;
+    if (!isVimeo && !isPlaceholder && !activated) {
+      setActivated(true);
+    }
+  }, [isVimeo, isPlaceholder, activated]);
 
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setActivated(true);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.3 }
-    );
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, [isPlaceholder, activated]);
+  const handleFacadeClick = useCallback((e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (!activated) setActivated(true);
+  }, [activated]);
 
   // Initialize Vimeo player with throttled progress
   useEffect(() => {
