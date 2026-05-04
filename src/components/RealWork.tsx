@@ -334,11 +334,14 @@ const PhoneMockup = ({
               </div>
             ) : (
               <>
-                {/* Thumbnail layer — shown while iframe loads */}
+                {/* Thumbnail facade — shown until user clicks (Vimeo iframe not instantiated yet) */}
                 {vimeoId && showThumbnail && (
                   <div
-                    className="absolute inset-0 z-10 transition-opacity duration-500"
+                    className="absolute inset-0 z-10 transition-opacity duration-500 cursor-pointer"
                     style={{ opacity: showThumbnail ? 1 : 0 }}
+                    onClick={handleFacadeClick}
+                    role="button"
+                    aria-label={`Play ${brand}`}
                   >
                     <picture>
                       <source
@@ -355,8 +358,25 @@ const PhoneMockup = ({
                         decoding="async"
                       />
                     </picture>
-                    <div className="absolute inset-0 bg-black/10 flex items-center justify-center">
-                      <div className="w-10 h-10 rounded-full border-2 border-white/40 border-t-white animate-spin" />
+                    <div className="absolute inset-0 bg-black/20 flex items-center justify-center">
+                      {!activated ? (
+                        <div
+                          className="flex items-center justify-center"
+                          style={{
+                            width: "64px",
+                            height: "64px",
+                            borderRadius: "50%",
+                            background: "rgba(0,0,0,0.55)",
+                            backdropFilter: "blur(4px)",
+                          }}
+                        >
+                          <svg width="26" height="26" viewBox="0 0 24 24" fill="white" aria-hidden="true">
+                            <path d="M8 5v14l11-7z" />
+                          </svg>
+                        </div>
+                      ) : (
+                        <div className="w-10 h-10 rounded-full border-2 border-white/40 border-t-white animate-spin" />
+                      )}
                     </div>
                   </div>
                 )}
