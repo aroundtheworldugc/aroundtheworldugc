@@ -33,7 +33,7 @@ const Hero = () => {
             srcSet={`${heroBgFallbackSm} 768w, ${heroBgFallbackMd} 1280w, ${heroBgFallbackLg} 1920w`}
             sizes="100vw"
             alt="Cinematic golden hour travel scene"
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover object-[50%_70%]"
             fetchPriority="high"
             decoding="async"
             width={1920}
