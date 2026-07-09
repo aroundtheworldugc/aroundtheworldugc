@@ -311,18 +311,37 @@ const PhoneMockup = ({
 
   const togglePlay = useCallback(() => {
     if (isVimeo && playerRef.current) {
+      const p = playerRef.current;
       if (playing) {
-        playerRef.current.pause();
+        p.pause().catch(() => {});
+        setPlaying(false);
       } else {
-        playerRef.current.play();
+        p.play()
+          .then(() => setPlaying(true))
+          .catch(() => {
+            // Retry muted if autoplay policy blocks unmuted playback.
+            p.setMuted(true)
+              .then(() => p.setVolume(0))
+              .then(() => p.play())
+              .then(() => { setMuted(true); setPlaying(true); })
+              .catch(() => setPlaying(false));
+          });
       }
-      setPlaying(!playing);
     } else if (videoRef.current) {
-      if (videoRef.current.paused) {
-        videoRef.current.play();
-        setPlaying(true);
+      const v = videoRef.current;
+      if (v.paused) {
+        const attempt = v.play();
+        if (attempt && typeof attempt.catch === "function") {
+          attempt.then(() => setPlaying(true)).catch(() => {
+            v.muted = true;
+            setMuted(true);
+            v.play().then(() => setPlaying(true)).catch(() => setPlaying(false));
+          });
+        } else {
+          setPlaying(true);
+        }
       } else {
-        videoRef.current.pause();
+        v.pause();
         setPlaying(false);
       }
     }
@@ -330,11 +349,28 @@ const PhoneMockup = ({
 
   const toggleSound = useCallback(() => {
     if (isVimeo && playerRef.current) {
-      playerRef.current.setVolume(muted ? 1 : 0);
-      setMuted(!muted);
+      const p = playerRef.current;
+      const nextMuted = !muted;
+      // setMuted first, then align volume. Revert UI state if the call fails.
+      p.setMuted(nextMuted)
+        .then(() => p.setVolume(nextMuted ? 0 : 1))
+        .then(() => setMuted(nextMuted))
+        .catch(() => {
+          // Unmute rejected (rare) — keep muted.
+          if (!nextMuted) setMuted(true);
+        });
     } else if (videoRef.current) {
-      videoRef.current.muted = !videoRef.current.muted;
-      setMuted(videoRef.current.muted);
+      const v = videoRef.current;
+      v.muted = !v.muted;
+      setMuted(v.muted);
+      // If unmuting caused a pause (some mobile browsers), resume.
+      if (!v.muted && v.paused) {
+        v.play().catch(() => {
+          v.muted = true;
+          setMuted(true);
+          v.play().catch(() => {});
+        });
+      }
     }
   }, [muted, isVimeo]);
 
