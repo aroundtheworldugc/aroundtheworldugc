@@ -1,4 +1,4 @@
-import { Mail } from "lucide-react";
+import { Mail, Instagram } from "lucide-react";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 
 const CallToAction = () => {
@@ -26,6 +26,16 @@ const CallToAction = () => {
           <p className="text-primary-foreground/40 text-xs mt-8 tracking-wider">
             aroundtheworld.ugc@gmail.com
           </p>
+
+          <a
+            href="https://instagram.com/aroundtheworld.ugc"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 text-primary-foreground/60 hover:text-primary-foreground text-xs mt-3 tracking-wider transition-colors duration-300"
+          >
+            <Instagram className="w-3.5 h-3.5" />
+            @aroundtheworld.ugc
+          </a>
         </div>
       </div>
     </section>
