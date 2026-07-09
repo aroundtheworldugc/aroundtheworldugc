@@ -140,42 +140,18 @@ const PhoneMockup = ({
     isTouchDevice.current = "ontouchstart" in window || navigator.maxTouchPoints > 0;
   }, []);
 
-  // Auto-activate via IntersectionObserver. Vimeo players are capped globally
-  // (MAX_ACTIVE_VIMEO_PLAYERS); furthest-from-viewport player is evicted when full.
-  // Native <video> activates immediately.
+  // Native <video> files (local, lightweight) activate immediately since there's
+  // no streaming cost. Vimeo videos are NOT auto-activated on scroll proximity:
+  // starting a Vimeo iframe means starting a real video stream, which is
+  // expensive on mobile data. Vimeo videos activate only on explicit tap, via
+  // handleFacadeClick below.
   useEffect(() => {
     if (isPlaceholder) return;
-    if (!isVimeo) {
-      if (!activated) setActivated(true);
-      return;
+    if (!isVimeo && !activated) {
+      setActivated(true);
     }
-    const el = containerRef.current;
-    if (!el) return;
-
-    let entry: ActivatedEntry | null = null;
-
-    const deactivate = () => {
-      setActivated(false);
-      setIframeLoaded(false);
-    };
-
-    const observer = new IntersectionObserver(
-      ([obsEntry]) => {
-        if (obsEntry.isIntersecting && !activated) {
-          entry = { el, deactivate };
-          registerActivatedPlayer(entry);
-          setActivated(true);
-        }
-      },
-      { threshold: 0.1, rootMargin: "200px 0px" }
-    );
-    observer.observe(el);
-
-    return () => {
-      observer.disconnect();
-      if (entry) unregisterActivatedPlayer(entry);
-    };
   }, [isVimeo, isPlaceholder, activated]);
+
 
   // Click on thumbnail also triggers activation (fallback for users who tap
   // before the observer fires).
