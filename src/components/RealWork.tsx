@@ -170,13 +170,15 @@ const PhoneMockup = ({
     }
   }, [activated, isVimeo]);
 
-  // Initialize Vimeo player with throttled progress
+  // Initialize Vimeo player with throttled progress. Autoplay is only allowed
+  // when muted per browser policy (iOS/Android), so we enforce muted state
+  // before requesting play() and fall back to muted playback if unmuted play
+  // is ever rejected.
   useEffect(() => {
     if (!isVimeo || isPlaceholder || !activated || !iframeRef.current) return;
 
     const player = new Player(iframeRef.current);
     playerRef.current = player;
-    player.setVolume(0);
 
     // Throttled progress: update every ~250ms instead of every rAF
     let lastUpdate = 0;
@@ -193,12 +195,22 @@ const PhoneMockup = ({
     };
     animFrameRef.current = requestAnimationFrame(updateProgress);
 
-    // Auto-play once ready (user clicked to activate)
-    player.ready().then(() => {
-      setIframeLoaded(true);
-      player.play().catch(() => {});
-      setPlaying(true);
-    }).catch(() => {});
+    // Enforce muted state, then attempt autoplay. If play() rejects (rare when
+    // muted, but can happen on strict autoplay policies), keep the player ready
+    // and let the scroll observer / user tap resume playback via togglePlay.
+    player.ready()
+      .then(() => Promise.all([player.setMuted(true), player.setVolume(0)]))
+      .then(() => {
+        setIframeLoaded(true);
+        setMuted(true);
+        return player.play();
+      })
+      .then(() => setPlaying(true))
+      .catch(() => {
+        // Autoplay blocked: mark loaded so custom play button is available.
+        setIframeLoaded(true);
+        setPlaying(false);
+      });
 
     return () => {
       cancelAnimationFrame(animFrameRef.current);
@@ -233,12 +245,30 @@ const PhoneMockup = ({
       }
 
       if (isVimeo && playerRef.current) {
-        playerRef.current.setCurrentTime(0).then(() => {
-          playerRef.current?.play();
-        }).catch(() => {});
+        const p = playerRef.current;
+        p.setCurrentTime(0)
+          .then(() => p.play())
+          .catch(() => {
+            // Autoplay likely blocked because unmuted — force mute and retry.
+            p.setMuted(true)
+              .then(() => p.setVolume(0))
+              .then(() => p.play())
+              .then(() => setMuted(true))
+              .catch(() => setPlaying(false));
+          });
       } else if (videoRef.current) {
-        videoRef.current.currentTime = 0;
-        videoRef.current.play().catch(() => {});
+        const v = videoRef.current;
+        v.currentTime = 0;
+        const attempt = v.play();
+        if (attempt && typeof attempt.catch === "function") {
+          attempt.catch(() => {
+            // Force mute + playsInline (iOS) and retry once.
+            v.muted = true;
+            v.setAttribute("playsinline", "");
+            setMuted(true);
+            v.play().catch(() => setPlaying(false));
+          });
+        }
       }
       setPlaying(true);
       setProgress(0);
@@ -281,18 +311,37 @@ const PhoneMockup = ({
 
   const togglePlay = useCallback(() => {
     if (isVimeo && playerRef.current) {
+      const p = playerRef.current;
       if (playing) {
-        playerRef.current.pause();
+        p.pause().catch(() => {});
+        setPlaying(false);
       } else {
-        playerRef.current.play();
+        p.play()
+          .then(() => setPlaying(true))
+          .catch(() => {
+            // Retry muted if autoplay policy blocks unmuted playback.
+            p.setMuted(true)
+              .then(() => p.setVolume(0))
+              .then(() => p.play())
+              .then(() => { setMuted(true); setPlaying(true); })
+              .catch(() => setPlaying(false));
+          });
       }
-      setPlaying(!playing);
     } else if (videoRef.current) {
-      if (videoRef.current.paused) {
-        videoRef.current.play();
-        setPlaying(true);
+      const v = videoRef.current;
+      if (v.paused) {
+        const attempt = v.play();
+        if (attempt && typeof attempt.catch === "function") {
+          attempt.then(() => setPlaying(true)).catch(() => {
+            v.muted = true;
+            setMuted(true);
+            v.play().then(() => setPlaying(true)).catch(() => setPlaying(false));
+          });
+        } else {
+          setPlaying(true);
+        }
       } else {
-        videoRef.current.pause();
+        v.pause();
         setPlaying(false);
       }
     }
@@ -300,11 +349,28 @@ const PhoneMockup = ({
 
   const toggleSound = useCallback(() => {
     if (isVimeo && playerRef.current) {
-      playerRef.current.setVolume(muted ? 1 : 0);
-      setMuted(!muted);
+      const p = playerRef.current;
+      const nextMuted = !muted;
+      // setMuted first, then align volume. Revert UI state if the call fails.
+      p.setMuted(nextMuted)
+        .then(() => p.setVolume(nextMuted ? 0 : 1))
+        .then(() => setMuted(nextMuted))
+        .catch(() => {
+          // Unmute rejected (rare) — keep muted.
+          if (!nextMuted) setMuted(true);
+        });
     } else if (videoRef.current) {
-      videoRef.current.muted = !videoRef.current.muted;
-      setMuted(videoRef.current.muted);
+      const v = videoRef.current;
+      v.muted = !v.muted;
+      setMuted(v.muted);
+      // If unmuting caused a pause (some mobile browsers), resume.
+      if (!v.muted && v.paused) {
+        v.play().catch(() => {
+          v.muted = true;
+          setMuted(true);
+          v.play().catch(() => {});
+        });
+      }
     }
   }, [muted, isVimeo]);
 
@@ -444,10 +510,10 @@ const PhoneMockup = ({
                 {activated && isVimeo ? (
                   <iframe
                     ref={iframeRef}
-                    src={`${video}?autoplay=0&loop=1&muted=1&background=1&quality=720p`}
+                    src={`${video}?autoplay=1&loop=1&muted=1&controls=0&playsinline=1&dnt=1&title=0&byline=0&portrait=0&quality=720p`}
                     className="w-full h-full"
                     style={{ border: "none", objectFit: "cover", pointerEvents: showControls ? "none" : "auto" }}
-                    allow="autoplay; fullscreen"
+                    allow="autoplay; fullscreen; picture-in-picture"
                     loading="lazy"
                     title={brand}
                   />
