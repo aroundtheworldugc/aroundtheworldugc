@@ -1,4 +1,4 @@
-import { Mail } from "lucide-react";
+import { Mail, Instagram } from "lucide-react";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 
 const CallToAction = () => {
