@@ -170,13 +170,15 @@ const PhoneMockup = ({
     }
   }, [activated, isVimeo]);
 
-  // Initialize Vimeo player with throttled progress
+  // Initialize Vimeo player with throttled progress. Autoplay is only allowed
+  // when muted per browser policy (iOS/Android), so we enforce muted state
+  // before requesting play() and fall back to muted playback if unmuted play
+  // is ever rejected.
   useEffect(() => {
     if (!isVimeo || isPlaceholder || !activated || !iframeRef.current) return;
 
     const player = new Player(iframeRef.current);
     playerRef.current = player;
-    player.setVolume(0);
 
     // Throttled progress: update every ~250ms instead of every rAF
     let lastUpdate = 0;
@@ -193,12 +195,22 @@ const PhoneMockup = ({
     };
     animFrameRef.current = requestAnimationFrame(updateProgress);
 
-    // Auto-play once ready (user clicked to activate)
-    player.ready().then(() => {
-      setIframeLoaded(true);
-      player.play().catch(() => {});
-      setPlaying(true);
-    }).catch(() => {});
+    // Enforce muted state, then attempt autoplay. If play() rejects (rare when
+    // muted, but can happen on strict autoplay policies), keep the player ready
+    // and let the scroll observer / user tap resume playback via togglePlay.
+    player.ready()
+      .then(() => Promise.all([player.setMuted(true), player.setVolume(0)]))
+      .then(() => {
+        setIframeLoaded(true);
+        setMuted(true);
+        return player.play();
+      })
+      .then(() => setPlaying(true))
+      .catch(() => {
+        // Autoplay blocked: mark loaded so custom play button is available.
+        setIframeLoaded(true);
+        setPlaying(false);
+      });
 
     return () => {
       cancelAnimationFrame(animFrameRef.current);
