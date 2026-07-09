@@ -245,12 +245,30 @@ const PhoneMockup = ({
       }
 
       if (isVimeo && playerRef.current) {
-        playerRef.current.setCurrentTime(0).then(() => {
-          playerRef.current?.play();
-        }).catch(() => {});
+        const p = playerRef.current;
+        p.setCurrentTime(0)
+          .then(() => p.play())
+          .catch(() => {
+            // Autoplay likely blocked because unmuted — force mute and retry.
+            p.setMuted(true)
+              .then(() => p.setVolume(0))
+              .then(() => p.play())
+              .then(() => setMuted(true))
+              .catch(() => setPlaying(false));
+          });
       } else if (videoRef.current) {
-        videoRef.current.currentTime = 0;
-        videoRef.current.play().catch(() => {});
+        const v = videoRef.current;
+        v.currentTime = 0;
+        const attempt = v.play();
+        if (attempt && typeof attempt.catch === "function") {
+          attempt.catch(() => {
+            // Force mute + playsInline (iOS) and retry once.
+            v.muted = true;
+            v.setAttribute("playsinline", "");
+            setMuted(true);
+            v.play().catch(() => setPlaying(false));
+          });
+        }
       }
       setPlaying(true);
       setProgress(0);
