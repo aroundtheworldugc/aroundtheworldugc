@@ -37,7 +37,7 @@ const WhyChooseUs = () => {
 
           <div className="mt-16 border border-border p-8 text-center">
             <p className="text-sm text-muted-foreground leading-relaxed">
-              Budget-friendly because we are at the beginning of our growth phase. Open to long-term partnerships. Genuine enthusiasm and adaptability in every collaboration.
+              Trusted by 23 brands across five countries. Consistent quality, reliable delivery, and a workflow refined collaboration after collaboration.
             </p>
           </div>
         </div>
