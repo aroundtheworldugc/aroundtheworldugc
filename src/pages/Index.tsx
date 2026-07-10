@@ -24,7 +24,6 @@ const ClosingBundle = lazy(() =>
       <>
         <m.Process />
         <m.PartnershipModel />
-        <m.BonusPositioning />
         <m.CallToAction />
         <m.Footer />
       </>
@@ -37,6 +36,7 @@ const Index = () => {
     <main>
       <Navbar />
       <Hero />
+      <StatsBar />
       <Suspense fallback={null}>
         <ContentBundle />
         <ClosingBundle />
