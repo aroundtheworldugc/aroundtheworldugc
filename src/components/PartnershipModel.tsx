@@ -49,6 +49,9 @@ const PartnershipModel = () => {
                 </div>
               ))}
             </div>
+            <p className="text-xs text-muted-foreground italic mt-4 leading-relaxed">
+              For premium remote destinations, barter partnerships typically include extended stays to allow for richer, more complete storytelling.
+            </p>
           </div>
         </div>
       </div>
