@@ -1,6 +1,7 @@
 import { lazy, Suspense } from "react";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
+import StatsBar from "@/components/StatsBar";
 
 // Bundle related components into 2 chunks instead of 10
 const ContentBundle = lazy(() =>
@@ -23,7 +24,6 @@ const ClosingBundle = lazy(() =>
       <>
         <m.Process />
         <m.PartnershipModel />
-        <m.BonusPositioning />
         <m.CallToAction />
         <m.Footer />
       </>
@@ -36,6 +36,7 @@ const Index = () => {
     <main>
       <Navbar />
       <Hero />
+      <StatsBar />
       <Suspense fallback={null}>
         <ContentBundle />
         <ClosingBundle />
