@@ -43,6 +43,7 @@ const Index = () => {
         <ContentBundle />
         <ClosingBundle />
       </Suspense>
+      <MobileBottomBar />
     </main>
   );
 };
