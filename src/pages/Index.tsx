@@ -23,7 +23,6 @@ const ClosingBundle = lazy(() =>
   import("@/components/bundles/ClosingBundle").then((m) => ({
     default: () => (
       <>
-        
         <m.PartnershipModel />
         <m.CallToAction />
         <m.Footer />
