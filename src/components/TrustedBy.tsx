@@ -36,7 +36,7 @@ const TrustedBy = () => {
             Trusted By
           </p>
           <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl font-light mb-12">
-            23 Brands, <span className="italic">One Standard</span>
+            50+ Brands, <span className="italic">One Standard</span>
           </h2>
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-x-8 md:gap-x-12 gap-y-0 text-left">
