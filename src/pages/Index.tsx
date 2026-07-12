@@ -12,8 +12,7 @@ const ContentBundle = lazy(() =>
         <m.AboutUs />
         <m.RealWork />
         <m.TrustedBy />
-        <m.Services />
-        <m.Benefits />
+        <m.Deliverables />
         <m.WhyChooseUs />
       </>
     ),
