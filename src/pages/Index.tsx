@@ -13,7 +13,7 @@ const ContentBundle = lazy(() =>
         <m.RealWork />
         <m.TrustedBy />
         <m.Deliverables />
-        <m.WhyChooseUs />
+        <m.WhyAndHow />
       </>
     ),
   }))
@@ -23,7 +23,7 @@ const ClosingBundle = lazy(() =>
   import("@/components/bundles/ClosingBundle").then((m) => ({
     default: () => (
       <>
-        <m.Process />
+        
         <m.PartnershipModel />
         <m.CallToAction />
         <m.Footer />
