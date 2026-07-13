@@ -13,7 +13,7 @@ const StatsBar = () => {
               <p className="font-serif text-5xl md:text-6xl lg:text-7xl text-foreground leading-none mb-3">
                 {stat.value}
               </p>
-              <p className="text-sm text-muted-foreground max-w-xs mx-auto leading-relaxed">
+              <p className="text-sm text-muted-foreground max-w-xs mx-auto leading-relaxed whitespace-pre-line">
                 {stat.label}
               </p>
             </div>
