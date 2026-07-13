@@ -43,9 +43,15 @@ const TrustedBy = () => {
             {brands.map((brand) => (
               <div
                 key={brand}
-                className="text-xs md:text-sm text-foreground border-b border-border/50 py-3"
+                className="flex items-center gap-3 text-xs md:text-sm text-foreground border-b border-border/50 py-3"
               >
-                {brand}
+                <span
+                  aria-hidden="true"
+                  className="flex-shrink-0 flex items-center justify-center w-8 h-8 rounded-full bg-muted text-foreground font-serif text-sm"
+                >
+                  {brand.charAt(0)}
+                </span>
+                <span className="truncate">{brand}</span>
               </div>
             ))}
           </div>
