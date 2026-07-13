@@ -1,8 +1,8 @@
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 
 const deliverables = [
-  "One cinematic vertical video",
-  "5 to 7 professionally edited photos",
+  "Cinematic vertical videos",
+  "Professionally edited photos",
   "Instagram Stories coverage",
   "Full commercial usage rights",
   "Delivery within 14 days",
