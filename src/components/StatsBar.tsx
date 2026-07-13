@@ -1,6 +1,6 @@
 const stats = [
   { value: "150+", label: "Contents delivered across accommodations, tours, restaurants and products" },
-  { value: "5", label: "Countries explored and documented" },
+  { value: "5", label: "Countries explored and documented:\nAustralia, Maldives, Sri Lanka, Thailand, Italy" },
 ];
 
 const StatsBar = () => {
@@ -13,7 +13,7 @@ const StatsBar = () => {
               <p className="font-serif text-5xl md:text-6xl lg:text-7xl text-foreground leading-none mb-3">
                 {stat.value}
               </p>
-              <p className="text-sm text-muted-foreground max-w-xs mx-auto leading-relaxed">
+              <p className="text-sm text-muted-foreground max-w-xs mx-auto leading-relaxed whitespace-pre-line">
                 {stat.label}
               </p>
             </div>
