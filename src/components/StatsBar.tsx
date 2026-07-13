@@ -1,7 +1,6 @@
 const stats = [
-  { value: "23", label: "Collaborations completed" },
-  { value: "5", label: "Countries: Australia, Sri Lanka, Maldives, Thailand, Italy" },
-  { value: "10,000+ AUD", label: "In barter value received for content" },
+  { value: "150+", label: "Contents delivered across accommodations, tours, restaurants and products" },
+  { value: "5", label: "Countries explored and documented" },
 ];
 
 const StatsBar = () => {
