@@ -7,7 +7,7 @@ const StatsBar = () => {
   return (
     <section className="py-20 md:py-26 bg-background border-t border-border">
       <div className="container mx-auto px-6">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-8 text-center">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-8 text-center">
           {stats.map((stat) => (
             <div key={stat.label} className="flex flex-col items-center">
               <p className="font-serif text-5xl md:text-6xl lg:text-7xl text-foreground leading-none mb-3">
