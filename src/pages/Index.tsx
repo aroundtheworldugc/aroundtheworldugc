@@ -10,8 +10,8 @@ const ContentBundle = lazy(() =>
     default: () => (
       <>
         <m.AboutUs />
-        <m.RealWork />
         <m.TrustedBy />
+        <m.RealWork />
         <m.Deliverables />
         <m.WhyAndHow />
       </>
