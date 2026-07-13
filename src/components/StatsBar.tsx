@@ -1,6 +1,6 @@
 const stats = [
   { value: "150+", label: "Contents delivered across accommodations, tours, restaurants and products" },
-  { value: "5", label: "Countries explored and documented" },
+  { value: "5", label: "Countries explored and documented:\nAustralia, Maldives, Sri Lanka, Thailand, Italy" },
 ];
 
 const StatsBar = () => {
