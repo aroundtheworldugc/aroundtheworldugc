@@ -1,17 +1,38 @@
 import { useScrollReveal } from "@/hooks/useScrollReveal";
+import {
+  Video,
+  Plane,
+  Camera,
+  Film,
+  Instagram,
+  FileCheck,
+  Clock,
+  TrendingUp,
+  ShieldCheck,
+  Target,
+  Send,
+  Repeat,
+  type LucideIcon,
+} from "lucide-react";
 
-const deliverables = [
-  "Cinematic vertical videos",
-  "Professionally edited photos",
-  "Instagram Stories coverage",
-  "Full commercial usage rights",
-  "Delivery within 14 days",
+type Item = { icon: LucideIcon; text: string };
+
+const deliverables: Item[] = [
+  { icon: Video, text: "Cinematic vertical videos" },
+  { icon: Plane, text: "Drone footage" },
+  { icon: Camera, text: "Professionally edited photos" },
+  { icon: Film, text: "Raw footage" },
+  { icon: Instagram, text: "Instagram Stories coverage" },
+  { icon: FileCheck, text: "Full commercial usage rights" },
+  { icon: Clock, text: "Delivery within 14 days" },
 ];
 
-const meaning = [
-  "Ready-to-publish content for your own social channels",
-  "Assets you can reuse in ads and on your website for years",
-  "A stronger, more authentic brand presence without lifting a camera",
+const meaning: Item[] = [
+  { icon: TrendingUp, text: "Higher engagement within 24 hours of posting" },
+  { icon: ShieldCheck, text: "Authentic perception, builds genuine brand trust" },
+  { icon: Target, text: "Performance driven content, structured for conversion" },
+  { icon: Send, text: "Ready to publish content for your own social channels" },
+  { icon: Repeat, text: "Assets you can reuse in ads and on your website for years" },
 ];
 
 const Deliverables = () => {
@@ -34,12 +55,13 @@ const Deliverables = () => {
               The <span className="italic">Deliverables</span>
             </h3>
             <ul className="space-y-3">
-              {deliverables.map((item) => (
+              {deliverables.map(({ icon: Icon, text }) => (
                 <li
-                  key={item}
-                  className="text-sm text-foreground border-b border-border/50 pb-3 last:border-b-0"
+                  key={text}
+                  className="flex items-start gap-3 text-sm text-foreground border-b border-border/50 pb-3 last:border-b-0"
                 >
-                  {item}
+                  <Icon className="w-4 h-4 mt-0.5 shrink-0 text-muted-foreground" strokeWidth={1.5} />
+                  <span>{text}</span>
                 </li>
               ))}
             </ul>
@@ -50,12 +72,13 @@ const Deliverables = () => {
               What It <span className="italic">Means For You</span>
             </h3>
             <ul className="space-y-3">
-              {meaning.map((item) => (
+              {meaning.map(({ icon: Icon, text }) => (
                 <li
-                  key={item}
-                  className="text-sm text-foreground border-b border-border/50 pb-3 last:border-b-0"
+                  key={text}
+                  className="flex items-start gap-3 text-sm text-foreground border-b border-border/50 pb-3 last:border-b-0"
                 >
-                  {item}
+                  <Icon className="w-4 h-4 mt-0.5 shrink-0 text-muted-foreground" strokeWidth={1.5} />
+                  <span>{text}</span>
                 </li>
               ))}
             </ul>
