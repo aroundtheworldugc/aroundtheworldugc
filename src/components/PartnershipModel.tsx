@@ -3,6 +3,7 @@ import { useScrollReveal } from "@/hooks/useScrollReveal";
 const partnerships = [
   "Hotel stays",
   "Experiences",
+  "Restaurants",
   "Brand partnerships",
   "Long-term collaborations",
 ];
