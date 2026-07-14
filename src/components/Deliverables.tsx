@@ -3,10 +3,8 @@ import {
   Video,
   Plane,
   Camera,
-  Film,
   Instagram,
   FileCheck,
-  Clock,
   TrendingUp,
   ShieldCheck,
   Target,
@@ -21,10 +19,8 @@ const deliverables: Item[] = [
   { icon: Video, text: "Cinematic vertical videos" },
   { icon: Plane, text: "Drone footage" },
   { icon: Camera, text: "Professionally edited photos" },
-  { icon: Film, text: "Raw footage" },
   { icon: Instagram, text: "Instagram Stories coverage" },
-  { icon: FileCheck, text: "Full commercial usage rights" },
-  { icon: Clock, text: "Delivery within 14 days" },
+  { icon: FileCheck, text: "Full commercial usage rights, delivered within 14 days" },
 ];
 
 const meaning: Item[] = [
@@ -42,7 +38,7 @@ const Deliverables = () => {
       <div className="container mx-auto px-6">
         <div className="text-center mb-16">
           <p className="text-sm tracking-[0.3em] uppercase text-muted-foreground mb-4">
-            Deliverables
+            THE OFFER
           </p>
           <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl font-light">
             What <span className="italic">You Get</span>
