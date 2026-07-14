@@ -19,10 +19,8 @@ const deliverables: Item[] = [
   { icon: Video, text: "Cinematic vertical videos" },
   { icon: Plane, text: "Drone footage" },
   { icon: Camera, text: "Professionally edited photos" },
-  { icon: Film, text: "Raw footage" },
   { icon: Instagram, text: "Instagram Stories coverage" },
-  { icon: FileCheck, text: "Full commercial usage rights" },
-  { icon: Clock, text: "Delivery within 14 days" },
+  { icon: FileCheck, text: "Full commercial usage rights, delivered within 14 days" },
 ];
 
 const meaning: Item[] = [
