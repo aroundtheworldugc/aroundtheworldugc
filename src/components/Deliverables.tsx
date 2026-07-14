@@ -38,7 +38,7 @@ const Deliverables = () => {
       <div className="container mx-auto px-6">
         <div className="text-center mb-16">
           <p className="text-sm tracking-[0.3em] uppercase text-muted-foreground mb-4">
-            Deliverables
+            THE OFFER
           </p>
           <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl font-light">
             What <span className="italic">You Get</span>
