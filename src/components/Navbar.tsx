@@ -4,7 +4,7 @@ const navLinks = [
   { label: "About", href: "#about" },
   { label: "Work", href: "#work" },
   { label: "Services", href: "#services" },
-  { label: "Process", href: "#process" },
+  { label: "Our Approach", href: "#why-choose-us" },
 ];
 
 const Navbar = () => {
