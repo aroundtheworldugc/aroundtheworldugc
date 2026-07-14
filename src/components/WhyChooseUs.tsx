@@ -45,9 +45,41 @@ const WhyChooseUs = () => {
             </p>
           </div>
 
-          <p className="mt-6 text-center text-xs italic text-muted-foreground leading-relaxed">
-            Every collaboration follows the same rhythm: a quick message to align on details, days of filming on location, and a fully edited story delivered within 14 days.
-          </p>
+          <div className="mt-10">
+            <div className="hidden md:flex items-start justify-between relative">
+              <div className="absolute top-3 left-[16.67%] right-[16.67%] h-px bg-border" />
+              {[
+                { step: "01", title: "First Contact", desc: "A quick message to align on details" },
+                { step: "02", title: "On Location", desc: "Days of filming and photography" },
+                { step: "03", title: "Delivery", desc: "Fully edited story within 14 days" },
+              ].map((item) => (
+                <div key={item.step} className="relative flex flex-col items-center text-center w-1/3 px-4">
+                  <span className="flex items-center justify-center w-6 h-6 rounded-full bg-background border border-border text-[10px] tracking-widest text-muted-foreground z-10 mb-3">
+                    {item.step}
+                  </span>
+                  <p className="text-xs tracking-widest uppercase text-foreground mb-1">{item.title}</p>
+                  <p className="text-xs text-muted-foreground leading-relaxed">{item.desc}</p>
+                </div>
+              ))}
+            </div>
+
+            <div className="md:hidden flex flex-col items-start relative pl-6">
+              <div className="absolute top-2 left-[11px] bottom-2 w-px bg-border" />
+              {[
+                { step: "01", title: "First Contact", desc: "A quick message to align on details" },
+                { step: "02", title: "On Location", desc: "Days of filming and photography" },
+                { step: "03", title: "Delivery", desc: "Fully edited story within 14 days" },
+              ].map((item) => (
+                <div key={item.step} className="relative flex flex-col pb-6 last:pb-0">
+                  <span className="absolute -left-6 top-0 flex items-center justify-center w-5 h-5 rounded-full bg-background border border-border text-[10px] tracking-widest text-muted-foreground">
+                    {item.step}
+                  </span>
+                  <p className="text-xs tracking-widest uppercase text-foreground mb-1">{item.title}</p>
+                  <p className="text-xs text-muted-foreground leading-relaxed">{item.desc}</p>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </section>
