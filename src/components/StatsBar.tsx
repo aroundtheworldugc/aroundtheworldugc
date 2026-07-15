@@ -45,19 +45,23 @@ const StatItem = ({
     return () => cancelAnimationFrame(raf);
   }, [play, target]);
 
-  // SVG ring
+  // SVG ring: arc spans 85% of circumference (306°), leaving a 54° gap centered at bottom
   const size = 100; // viewBox units
   const stroke = 2;
   const r = (size - stroke) / 2;
   const c = 2 * Math.PI * r;
-  const offset = c * (1 - progress);
+  const arcLen = c * 0.85;
+  const gapLen = c - arcLen;
+  // Draw arcLen, then gap. strokeDashoffset animates from arcLen (empty) to 0 (full arc).
+  const offset = arcLen * (1 - progress);
 
   return (
     <div className="flex flex-col items-center">
-      <div className="relative w-40 h-40 md:w-48 md:h-48 lg:w-56 lg:h-56 mb-5">
+      <div className="relative w-[136px] h-[136px] md:w-[163px] md:h-[163px] lg:w-[190px] lg:h-[190px] mb-5">
         <svg
           viewBox={`0 0 ${size} ${size}`}
-          className="absolute inset-0 w-full h-full -rotate-90"
+          className="absolute inset-0 w-full h-full"
+          style={{ transform: "rotate(-243deg)" }}
           aria-hidden="true"
         >
           <circle
@@ -68,18 +72,19 @@ const StatItem = ({
             stroke="hsl(var(--primary))"
             strokeWidth={stroke}
             strokeLinecap="round"
-            strokeDasharray={c}
+            strokeDasharray={`${arcLen} ${gapLen}`}
             strokeDashoffset={offset}
             vectorEffect="non-scaling-stroke"
           />
         </svg>
         <div className="absolute inset-0 flex items-center justify-center">
-          <p className="font-serif text-5xl md:text-6xl lg:text-7xl text-foreground text-center leading-none m-0">
+          <p className="font-serif text-5xl md:text-6xl lg:text-7xl text-foreground text-center m-0 p-0 leading-none">
             {count}
             {suffix}
           </p>
         </div>
       </div>
+
       <p className="text-sm text-muted-foreground max-w-xs mx-auto leading-relaxed whitespace-pre-line text-center">
         {label}
       </p>
