@@ -10,9 +10,11 @@ const StatsBar = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-8 text-center">
           {stats.map((stat) => (
             <div key={stat.label} className="flex flex-col items-center">
-              <p className="font-serif text-5xl md:text-6xl lg:text-7xl text-foreground leading-none mb-3">
-                {stat.value}
-              </p>
+              <div className="inline-flex items-center justify-center rounded-full border border-muted-foreground/30 p-6 md:p-8 lg:p-10 mb-5">
+                <p className="font-serif text-5xl md:text-6xl lg:text-7xl text-foreground leading-none">
+                  {stat.value}
+                </p>
+              </div>
               <p className="text-sm text-muted-foreground max-w-xs mx-auto leading-relaxed whitespace-pre-line">
                 {stat.label}
               </p>
