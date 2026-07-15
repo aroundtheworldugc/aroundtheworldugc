@@ -11,7 +11,7 @@ const StatsBar = () => {
           {stats.map((stat) => (
             <div key={stat.label} className="flex flex-col items-center">
               <div className="flex items-center justify-center rounded-full border border-muted-foreground/30 w-40 h-40 md:w-48 md:h-48 lg:w-56 lg:h-56 mb-5">
-                <p className="font-serif text-5xl md:text-6xl lg:text-7xl text-foreground text-center">
+                <p className="font-serif text-5xl md:text-6xl lg:text-7xl text-foreground text-center leading-none">
                   {stat.value}
                 </p>
               </div>
