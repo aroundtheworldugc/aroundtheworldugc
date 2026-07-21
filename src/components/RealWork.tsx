@@ -121,7 +121,7 @@ const PhoneMockup = ({
   const playerRef = useRef<Player | null>(null);
   const scrubberRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
-  const [muted, setMuted] = useState(true);
+  const [muted, setMuted] = useState(false);
   const [showControls, setShowControls] = useState(false);
   const [playing, setPlaying] = useState(true);
   const [progress, setProgress] = useState(0);
@@ -170,10 +170,9 @@ const PhoneMockup = ({
     }
   }, [activated, isVimeo]);
 
-  // Initialize Vimeo player with throttled progress. Autoplay is only allowed
-  // when muted per browser policy (iOS/Android), so we enforce muted state
-  // before requesting play() and fall back to muted playback if unmuted play
-  // is ever rejected.
+  // Initialize Vimeo player with throttled progress. Start with active audio
+  // (setMuted(false), setVolume(1)) and fall back to muted playback if the
+  // browser's autoplay policy rejects unmuted playback.
   useEffect(() => {
     if (!isVimeo || isPlaceholder || !activated || !iframeRef.current) return;
 
@@ -195,21 +194,31 @@ const PhoneMockup = ({
     };
     animFrameRef.current = requestAnimationFrame(updateProgress);
 
-    // Enforce muted state, then attempt autoplay. If play() rejects (rare when
-    // muted, but can happen on strict autoplay policies), keep the player ready
-    // and let the scroll observer / user tap resume playback via togglePlay.
+    // Attempt unmuted playback with active audio. Browser autoplay policies may
+    // reject this; if so, fall back to muted playback instead of blocking the
+    // video entirely. The scroll observer and play button retain the same retry
+    // logic.
     player.ready()
-      .then(() => Promise.all([player.setMuted(true), player.setVolume(0)]))
+      .then(() => Promise.all([player.setMuted(false), player.setVolume(1)]))
       .then(() => {
         setIframeLoaded(true);
-        setMuted(true);
+        setMuted(false);
         return player.play();
       })
       .then(() => setPlaying(true))
       .catch(() => {
-        // Autoplay blocked: mark loaded so custom play button is available.
-        setIframeLoaded(true);
-        setPlaying(false);
+        // Fallback: retry muted playback.
+        player.setMuted(true)
+          .then(() => player.setVolume(0))
+          .then(() => {
+            setMuted(true);
+            return player.play();
+          })
+          .then(() => setPlaying(true))
+          .catch(() => {
+            setIframeLoaded(true);
+            setPlaying(false);
+          });
       });
 
     return () => {
@@ -510,7 +519,7 @@ const PhoneMockup = ({
                 {activated && isVimeo ? (
                   <iframe
                     ref={iframeRef}
-                    src={`${video}?autoplay=1&loop=1&muted=1&controls=0&playsinline=1&dnt=1&title=0&byline=0&portrait=0&quality=720p`}
+                    src={`${video}?autoplay=1&loop=1&muted=0&controls=0&playsinline=1&dnt=1&title=0&byline=0&portrait=0&quality=720p`}
                     className="w-full h-full object-cover"
                     style={{ border: "none", objectFit: "cover", pointerEvents: showControls ? "none" : "auto" }}
                     allow="autoplay; fullscreen; picture-in-picture"
@@ -520,7 +529,7 @@ const PhoneMockup = ({
                 ) : !isVimeo ? (
                   <video
                     ref={videoRef}
-                    muted
+                    muted={muted}
                     loop
                     playsInline
                     className="w-full h-full object-cover"
