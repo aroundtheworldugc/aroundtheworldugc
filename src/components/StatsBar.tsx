@@ -4,11 +4,13 @@ const stats = [
   {
     target: 150,
     suffix: "+",
+    circleLabel: "CONTENT",
     label: "Contents delivered across accommodations, tours, restaurants and products",
   },
   {
     target: 5,
     suffix: "",
+    circleLabel: "COUNTRIES",
     label: "Countries explored and documented:\nAustralia, Maldives, Sri Lanka, Thailand, Italy",
   },
 ];
@@ -26,11 +28,13 @@ const GAP_END = GAP_CENTER + GAP / 2; // 187deg
 const StatItem = ({
   target,
   suffix,
+  circleLabel,
   label,
   play,
 }: {
   target: number;
   suffix: string;
+  circleLabel: string;
   label: string;
   play: boolean;
 }) => {
@@ -64,12 +68,15 @@ const StatItem = ({
           className="absolute rounded-full bg-background"
           style={{ inset: "2px" }}
         />
-        {/* Centered number, nudged up ~12px for optical centering */}
-        <div className="absolute inset-0 flex items-center justify-center" style={{ transform: "translateY(-12px)" }}>
+        {/* Centered number + label, nudged up ~12px for optical centering */}
+        <div className="absolute inset-0 flex flex-col items-center justify-center" style={{ transform: "translateY(-12px)" }}>
           <p className="font-serif text-5xl md:text-6xl lg:text-7xl text-foreground text-center m-0 p-0 leading-none">
             {count}
             {suffix}
           </p>
+          <span className="text-xs uppercase tracking-widest text-muted-foreground mt-1.5 md:mt-2">
+            {circleLabel}
+          </span>
         </div>
       </div>
 
