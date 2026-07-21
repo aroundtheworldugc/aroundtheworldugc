@@ -74,7 +74,7 @@ const StatItem = ({
             {count}
             {suffix}
           </p>
-          <span className="text-xs uppercase tracking-widest text-muted-foreground mt-1.5 md:mt-2">
+          <span className="text-xs md:text-sm uppercase tracking-[0.2em] font-semibold text-primary mt-1.5 md:mt-2 whitespace-nowrap">
             {circleLabel}
           </span>
         </div>
