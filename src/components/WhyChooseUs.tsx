@@ -14,7 +14,7 @@ const WhyChooseUs = () => {
       <div className="container mx-auto px-6">
         <div className="max-w-3xl mx-auto">
           <p className="text-sm tracking-[0.3em] uppercase text-muted-foreground mb-4 text-center">
-            Why Choose Us
+            Approach
           </p>
           <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl font-light text-center mb-12">
             We Are Always Ready for the Next Adventure
