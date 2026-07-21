@@ -47,35 +47,54 @@ const WhyChooseUs = () => {
 
           <div className="mt-10">
             <div className="hidden md:flex items-start justify-between relative">
-              <div className="absolute top-3 left-[16.67%] right-[16.67%] h-px bg-border" />
+              {/* Horizontal connector — sits behind the filled circles */}
+              <div
+                className="absolute top-4 left-[16.67%] right-[16.67%] h-px bg-primary/30"
+                aria-hidden="true"
+              />
               {[
                 { step: "01", title: "First Contact", desc: "A quick message to align on details" },
                 { step: "02", title: "On Location", desc: "Days of filming and photography" },
                 { step: "03", title: "Delivery", desc: "Fully edited story within 14 days" },
               ].map((item) => (
                 <div key={item.step} className="relative flex flex-col items-center text-center w-1/3 px-4">
-                  <span className="flex items-center justify-center w-6 h-6 rounded-full bg-background border border-border text-[10px] tracking-widest text-muted-foreground z-10 mb-3">
+                  <span className="z-10 flex items-center justify-center w-8 h-8 rounded-full bg-primary text-primary-foreground font-serif text-sm tracking-widest mb-5">
                     {item.step}
                   </span>
-                  <p className="text-xs tracking-widest uppercase text-foreground mb-1">{item.title}</p>
-                  <p className="text-xs text-muted-foreground leading-relaxed">{item.desc}</p>
+                  <p className="text-xs tracking-widest uppercase text-foreground font-medium mb-1">
+                    {item.title}
+                  </p>
+                  <p className="text-xs text-muted-foreground leading-relaxed">
+                    {item.desc}
+                  </p>
                 </div>
               ))}
             </div>
 
-            <div className="md:hidden flex flex-col items-start relative pl-6">
-              <div className="absolute top-2 left-[11px] bottom-2 w-px bg-border" />
+            <div className="md:hidden flex flex-col">
               {[
                 { step: "01", title: "First Contact", desc: "A quick message to align on details" },
                 { step: "02", title: "On Location", desc: "Days of filming and photography" },
                 { step: "03", title: "Delivery", desc: "Fully edited story within 14 days" },
-              ].map((item) => (
-                <div key={item.step} className="relative flex flex-col pb-6 last:pb-0">
-                  <span className="absolute -left-6 top-0 flex items-center justify-center w-5 h-5 rounded-full bg-background border border-border text-[10px] tracking-widest text-muted-foreground">
+              ].map((item, i, arr) => (
+                <div key={item.step} className="relative flex items-start pb-6 last:pb-0">
+                  <span className="z-10 flex shrink-0 items-center justify-center w-8 h-8 rounded-full bg-primary text-primary-foreground font-serif text-sm tracking-widest">
                     {item.step}
                   </span>
-                  <p className="text-xs tracking-widest uppercase text-foreground mb-1">{item.title}</p>
-                  <p className="text-xs text-muted-foreground leading-relaxed">{item.desc}</p>
+                  {i < arr.length - 1 && (
+                    <div
+                      className="absolute top-8 left-4 bottom-6 w-px bg-primary/30"
+                      aria-hidden="true"
+                    />
+                  )}
+                  <div className="ml-4 flex flex-col">
+                    <p className="text-xs tracking-widest uppercase text-foreground font-medium mb-1">
+                      {item.title}
+                    </p>
+                    <p className="text-xs text-muted-foreground leading-relaxed">
+                      {item.desc}
+                    </p>
+                  </div>
                 </div>
               ))}
             </div>
