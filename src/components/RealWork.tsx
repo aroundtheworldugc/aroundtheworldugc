@@ -417,7 +417,7 @@ const PhoneMockup = ({
 
   return (
     <div ref={containerRef} className="flex flex-col items-center gap-5">
-      <div className="relative mx-auto" style={{ width: "280px" }}>
+      <div className="relative mx-auto" style={{ width: "230px" }}>
         {/* Phone frame */}
         <div
           className="relative overflow-hidden group"
@@ -477,8 +477,8 @@ const PhoneMockup = ({
                         src={`https://vumbnail.com/${vimeoId}_800.jpg`}
                         alt={brand}
                         className="w-full h-full object-cover"
-                        width={280}
-                        height={607}
+                        width={230}
+                        height={498}
                         loading="lazy"
                         decoding="async"
                       />
@@ -640,7 +640,7 @@ const PhoneMockup = ({
         </div>
       </div>
 
-      <div className="text-center max-w-[280px]">
+      <div className="text-center max-w-[230px]">
         <p className="font-serif text-xl font-semibold tracking-tight">{brand}</p>
         <p className="text-sm text-muted-foreground leading-relaxed mt-2 font-light">
           {caption}
@@ -669,7 +669,7 @@ const RealWork = () => {
         </div>
 
         {/* Categories */}
-        <div className="space-y-24 max-w-7xl mx-auto">
+        <div className="space-y-14 max-w-7xl mx-auto">
           {categories.map((cat) => (
             <div key={cat.title}>
               <h3 className="font-serif text-2xl md:text-3xl font-light mb-10 text-center">
