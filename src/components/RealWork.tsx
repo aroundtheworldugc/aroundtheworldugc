@@ -422,8 +422,8 @@ const PhoneMockup = ({
         <div
           className="relative overflow-hidden group"
           style={{
-            aspectRatio: "9/19.5",
-            borderRadius: "40px",
+            aspectRatio: "9/16",
+            borderRadius: "32px",
             border: "4px solid #111",
             background: "#111",
             boxShadow: "0 20px 50px rgba(0,0,0,0.25)",
@@ -446,7 +446,7 @@ const PhoneMockup = ({
             }} />
 
           {/* Screen content */}
-          <div className="absolute inset-[2px] overflow-hidden" style={{ borderRadius: "36px" }}>
+          <div className="absolute inset-[2px] overflow-hidden" style={{ borderRadius: "28px" }}>
             {isPlaceholder ? (
               <div className="w-full h-full bg-gradient-to-br from-muted to-secondary flex items-center justify-center">
                 <div className="text-center px-4">
@@ -478,7 +478,7 @@ const PhoneMockup = ({
                         alt={brand}
                         className="w-full h-full object-cover"
                         width={230}
-                        height={498}
+                        height={409}
                         loading="lazy"
                         decoding="async"
                       />
@@ -511,8 +511,8 @@ const PhoneMockup = ({
                   <iframe
                     ref={iframeRef}
                     src={`${video}?autoplay=1&loop=1&muted=1&controls=0&playsinline=1&dnt=1&title=0&byline=0&portrait=0&quality=720p`}
-                    className="w-full h-full bg-black"
-                    style={{ border: "none", objectFit: "contain", pointerEvents: showControls ? "none" : "auto" }}
+                    className="w-full h-full object-cover"
+                    style={{ border: "none", objectFit: "cover", pointerEvents: showControls ? "none" : "auto" }}
                     allow="autoplay; fullscreen; picture-in-picture"
                     loading="lazy"
                     title={brand}
@@ -523,7 +523,7 @@ const PhoneMockup = ({
                     muted
                     loop
                     playsInline
-                    className="w-full h-full object-contain bg-black"
+                    className="w-full h-full object-cover"
                     style={{ pointerEvents: "none" }}
                   >
                     <source src={video} type="video/mp4" />
