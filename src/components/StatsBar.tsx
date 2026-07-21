@@ -64,8 +64,8 @@ const StatItem = ({
           className="absolute rounded-full bg-background"
           style={{ inset: "2px" }}
         />
-        {/* Centered number, nudged up ~4px for optical centering */}
-        <div className="absolute inset-0 flex items-center justify-center" style={{ transform: "translateY(-4px)" }}>
+        {/* Centered number, nudged up ~12px for optical centering */}
+        <div className="absolute inset-0 flex items-center justify-center" style={{ transform: "translateY(-12px)" }}>
           <p className="font-serif text-5xl md:text-6xl lg:text-7xl text-foreground text-center m-0 p-0 leading-none">
             {count}
             {suffix}
