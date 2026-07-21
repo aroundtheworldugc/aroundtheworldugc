@@ -476,7 +476,7 @@ const PhoneMockup = ({
                       <img
                         src={`https://vumbnail.com/${vimeoId}_800.jpg`}
                         alt={brand}
-                        className="w-full h-full object-cover"
+                        className="w-full h-full object-contain bg-black"
                         width={230}
                         height={498}
                         loading="lazy"
@@ -511,8 +511,8 @@ const PhoneMockup = ({
                   <iframe
                     ref={iframeRef}
                     src={`${video}?autoplay=1&loop=1&muted=1&controls=0&playsinline=1&dnt=1&title=0&byline=0&portrait=0&quality=720p`}
-                    className="w-full h-full"
-                    style={{ border: "none", objectFit: "cover", pointerEvents: showControls ? "none" : "auto" }}
+                    className="w-full h-full bg-black"
+                    style={{ border: "none", objectFit: "contain", pointerEvents: showControls ? "none" : "auto" }}
                     allow="autoplay; fullscreen; picture-in-picture"
                     loading="lazy"
                     title={brand}
@@ -523,7 +523,7 @@ const PhoneMockup = ({
                     muted
                     loop
                     playsInline
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-contain bg-black"
                     style={{ pointerEvents: "none" }}
                   >
                     <source src={video} type="video/mp4" />
