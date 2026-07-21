@@ -86,14 +86,6 @@ const AboutUs = () => {
           </div>
         </div>
 
-        {/* Content feels */}
-        <div className="flex flex-wrap justify-center gap-6 md:gap-10 mt-20">
-          {["Natural", "Unforced", "Human", "Immersive", "Emotionally Engaging"].map((word) => (
-            <span key={word} className="font-serif text-xl md:text-2xl italic text-muted-foreground">
-              {word}
-            </span>
-          ))}
-        </div>
       </div>
     </section>
   );
