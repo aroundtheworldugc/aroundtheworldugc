@@ -45,15 +45,17 @@ const StatItem = ({
     return () => cancelAnimationFrame(raf);
   }, [play, target]);
 
-  // SVG ring: arc spans 85% of circumference (306°), leaving a 54° gap centered at bottom
+  // SVG ring: single circle, single dasharray/offset.
+  // The path starts at SVG 0° (3 o'clock). We rotate the whole SVG so that
+  // start point aligns with the bottom-left edge of the final gap (117°).
+  // The visible arc grows clockwise from 117° for up to 306° (85%), leaving a
+  // single 54° gap centered at 90° (bottom). Both endpoints sit at the bottom.
   const size = 100; // viewBox units
   const stroke = 2;
   const r = (size - stroke) / 2;
   const c = 2 * Math.PI * r;
   const arcLen = c * 0.85;
-  const gapLen = c - arcLen;
-  // Draw arcLen, then gap. strokeDashoffset animates from arcLen (empty) to 0 (full arc).
-  const offset = arcLen * (1 - progress);
+  const currentArcLen = progress * arcLen;
 
   return (
     <div className="flex flex-col items-center">
@@ -61,7 +63,7 @@ const StatItem = ({
         <svg
           viewBox={`0 0 ${size} ${size}`}
           className="absolute inset-0 w-full h-full"
-          style={{ transform: "rotate(-243deg)" }}
+          style={{ transform: "rotate(117deg)" }}
           aria-hidden="true"
         >
           <circle
@@ -72,8 +74,8 @@ const StatItem = ({
             stroke="hsl(var(--primary))"
             strokeWidth={stroke}
             strokeLinecap="round"
-            strokeDasharray={`${arcLen} ${gapLen}`}
-            strokeDashoffset={offset}
+            strokeDasharray={`${currentArcLen} ${c - currentArcLen}`}
+            strokeDashoffset={0}
             vectorEffect="non-scaling-stroke"
           />
         </svg>
