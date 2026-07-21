@@ -4,14 +4,14 @@ const stats = [
   {
     target: 150,
     suffix: "+",
-    circleLabel: "CONTENT",
-    label: "Contents delivered across accommodations, tours, restaurants and products",
+    circleLabel: "CONTENTS",
+    label: "delivered across accommodations, tours, restaurants and products",
   },
   {
     target: 5,
     suffix: "",
     circleLabel: "COUNTRIES",
-    label: "Countries explored and documented:\nAustralia, Maldives, Sri Lanka, Thailand, Italy",
+    label: "explored and documented:\nAustralia, Maldives, Sri Lanka, Thailand, Italy",
   },
 ];
 
