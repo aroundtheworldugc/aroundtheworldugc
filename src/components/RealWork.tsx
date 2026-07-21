@@ -475,7 +475,7 @@ const PhoneMockup = ({
                       />
                       <img
                         src={`https://vumbnail.com/${vimeoId}_800.jpg`}
-                        alt={brand}
+                        alt={`Travel UGC video for ${brand}`}
                         className="w-full h-full object-cover"
                         width={230}
                         height={409}

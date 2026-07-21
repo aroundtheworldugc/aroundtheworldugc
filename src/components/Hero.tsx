@@ -54,6 +54,7 @@ const Hero = () => {
           className="font-serif text-4xl md:text-7xl lg:text-8xl font-light text-primary-foreground leading-[1.1] mb-6 animate-fade-up max-w-5xl mx-auto"
           style={{ animationDelay: "0.4s" }}>
           Davide & Claudia
+          <span className="sr-only"> — Travel UGC Creators for Hotels & Travel Brands</span>
         </h1>
         <p
           className="font-serif text-xl md:text-2xl text-primary-foreground/90 italic mb-4 animate-fade-up"
