@@ -523,7 +523,7 @@ const PhoneMockup = ({
                     muted
                     loop
                     playsInline
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-contain bg-black"
                     style={{ pointerEvents: "none" }}
                   >
                     <source src={video} type="video/mp4" />
