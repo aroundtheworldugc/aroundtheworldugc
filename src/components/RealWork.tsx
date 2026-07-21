@@ -195,21 +195,31 @@ const PhoneMockup = ({
     };
     animFrameRef.current = requestAnimationFrame(updateProgress);
 
-    // Enforce muted state, then attempt autoplay. If play() rejects (rare when
-    // muted, but can happen on strict autoplay policies), keep the player ready
-    // and let the scroll observer / user tap resume playback via togglePlay.
+    // Attempt unmuted playback with active audio. Browser autoplay policies may
+    // reject this; if so, fall back to muted playback instead of blocking the
+    // video entirely. The scroll observer and play button retain the same retry
+    // logic.
     player.ready()
-      .then(() => Promise.all([player.setMuted(true), player.setVolume(0)]))
+      .then(() => Promise.all([player.setMuted(false), player.setVolume(1)]))
       .then(() => {
         setIframeLoaded(true);
-        setMuted(true);
+        setMuted(false);
         return player.play();
       })
       .then(() => setPlaying(true))
       .catch(() => {
-        // Autoplay blocked: mark loaded so custom play button is available.
-        setIframeLoaded(true);
-        setPlaying(false);
+        // Fallback: retry muted playback.
+        player.setMuted(true)
+          .then(() => player.setVolume(0))
+          .then(() => {
+            setMuted(true);
+            return player.play();
+          })
+          .then(() => setPlaying(true))
+          .catch(() => {
+            setIframeLoaded(true);
+            setPlaying(false);
+          });
       });
 
     return () => {
