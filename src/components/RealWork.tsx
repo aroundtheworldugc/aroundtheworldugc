@@ -170,10 +170,9 @@ const PhoneMockup = ({
     }
   }, [activated, isVimeo]);
 
-  // Initialize Vimeo player with throttled progress. Autoplay is only allowed
-  // when muted per browser policy (iOS/Android), so we enforce muted state
-  // before requesting play() and fall back to muted playback if unmuted play
-  // is ever rejected.
+  // Initialize Vimeo player with throttled progress. Start with active audio
+  // (setMuted(false), setVolume(1)) and fall back to muted playback if the
+  // browser's autoplay policy rejects unmuted playback.
   useEffect(() => {
     if (!isVimeo || isPlaceholder || !activated || !iframeRef.current) return;
 
