@@ -476,7 +476,7 @@ const PhoneMockup = ({
                       <img
                         src={`https://vumbnail.com/${vimeoId}_800.jpg`}
                         alt={brand}
-                        className="w-full h-full object-contain bg-black"
+                        className="w-full h-full object-cover"
                         width={230}
                         height={498}
                         loading="lazy"
