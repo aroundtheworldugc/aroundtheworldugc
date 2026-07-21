@@ -3,8 +3,8 @@ import { useState, useEffect } from "react";
 const navLinks = [
   { label: "About", href: "#about" },
   { label: "Work", href: "#work" },
-  { label: "Services", href: "#services" },
-  { label: "Our Approach", href: "#why-choose-us" },
+  { label: "Capabilities", href: "#services" },
+  { label: "Approach", href: "#why-choose-us" },
 ];
 
 const Navbar = () => {
