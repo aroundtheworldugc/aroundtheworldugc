@@ -13,8 +13,14 @@ const stats = [
   },
 ];
 
-const DURATION = 1200; // ms
+const DURATION = 1200;
 const easeOutCubic = (t: number) => 1 - Math.pow(1 - t, 3);
+
+// Ring geometry: 54° gap centered at the bottom (conic angle 180°).
+// Conic angle 0° = top, growing clockwise.
+const GAP = 54;
+const GAP_START = 180 - GAP / 2; // 153deg
+const GAP_END = 180 + GAP / 2; // 207deg
 
 const StatItem = ({
   target,
@@ -28,7 +34,6 @@ const StatItem = ({
   play: boolean;
 }) => {
   const [count, setCount] = useState(0);
-  const [progress, setProgress] = useState(0); // 0..1 for ring
 
   useEffect(() => {
     if (!play) return;
@@ -37,7 +42,6 @@ const StatItem = ({
     const tick = (now: number) => {
       const t = Math.min(1, (now - start) / DURATION);
       const eased = easeOutCubic(t);
-      setProgress(eased);
       setCount(Math.round(eased * target));
       if (t < 1) raf = requestAnimationFrame(tick);
     };
@@ -45,40 +49,21 @@ const StatItem = ({
     return () => cancelAnimationFrame(raf);
   }, [play, target]);
 
-  // SVG ring: single circle, single dasharray/offset.
-  // The path starts at SVG 0° (3 o'clock). We rotate the whole SVG so that
-  // start point aligns with the bottom-left edge of the final gap (117°).
-  // The visible arc grows clockwise from 117° for up to 306° (85%), leaving a
-  // single 54° gap centered at 90° (bottom). Both endpoints sit at the bottom.
-  const size = 100; // viewBox units
-  const stroke = 2;
-  const r = (size - stroke) / 2;
-  const c = 2 * Math.PI * r;
-  const arcLen = c * 0.85;
-  const currentArcLen = progress * arcLen;
-
   return (
     <div className="flex flex-col items-center">
-      <div className="relative w-[136px] h-[136px] md:w-[163px] md:h-[163px] lg:w-[190px] lg:h-[190px] mb-5">
-        <svg
-          viewBox={`0 0 ${size} ${size}`}
-          className="absolute inset-0 w-full h-full"
-          style={{ transform: "rotate(117deg)" }}
-          aria-hidden="true"
-        >
-          <circle
-            cx={size / 2}
-            cy={size / 2}
-            r={r}
-            fill="none"
-            stroke="hsl(var(--primary))"
-            strokeWidth={stroke}
-            strokeLinecap="round"
-            strokeDasharray={`${currentArcLen} ${c - currentArcLen}`}
-            strokeDashoffset={0}
-            vectorEffect="non-scaling-stroke"
-          />
-        </svg>
+      <div
+        className="relative w-[136px] h-[136px] md:w-[163px] md:h-[163px] lg:w-[190px] lg:h-[190px] mb-5 rounded-full"
+        style={{
+          background: `conic-gradient(hsl(var(--primary)) 0deg ${GAP_START}deg, transparent ${GAP_START}deg ${GAP_END}deg, hsl(var(--primary)) ${GAP_END}deg 360deg)`,
+        }}
+        aria-hidden="true"
+      >
+        {/* Inner mask to create the 2px ring thickness */}
+        <div
+          className="absolute rounded-full bg-background"
+          style={{ inset: "2px" }}
+        />
+        {/* Centered number */}
         <div className="absolute inset-0 flex items-center justify-center">
           <p className="font-serif text-5xl md:text-6xl lg:text-7xl text-foreground text-center m-0 p-0 leading-none">
             {count}
