@@ -16,11 +16,12 @@ const stats = [
 const DURATION = 1200;
 const easeOutCubic = (t: number) => 1 - Math.pow(1 - t, 3);
 
-// Ring geometry: 54° gap centered at the bottom (conic angle 180°).
+// Ring geometry: 54° gap centered at 160° (rotated 20° counter-clockwise from the bottom, toward south-west).
 // Conic angle 0° = top, growing clockwise.
 const GAP = 54;
-const GAP_START = 180 - GAP / 2; // 153deg
-const GAP_END = 180 + GAP / 2; // 207deg
+const GAP_CENTER = 160;
+const GAP_START = GAP_CENTER - GAP / 2; // 133deg
+const GAP_END = GAP_CENTER + GAP / 2; // 187deg
 
 const StatItem = ({
   target,
@@ -63,8 +64,8 @@ const StatItem = ({
           className="absolute rounded-full bg-background"
           style={{ inset: "2px" }}
         />
-        {/* Centered number */}
-        <div className="absolute inset-0 flex items-center justify-center">
+        {/* Centered number, nudged up ~4px for optical centering */}
+        <div className="absolute inset-0 flex items-center justify-center" style={{ transform: "translateY(-4px)" }}>
           <p className="font-serif text-5xl md:text-6xl lg:text-7xl text-foreground text-center m-0 p-0 leading-none">
             {count}
             {suffix}
