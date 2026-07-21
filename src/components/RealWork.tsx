@@ -426,7 +426,7 @@ const PhoneMockup = ({
 
   return (
     <div ref={containerRef} className="flex flex-col items-center gap-5">
-      <div className="relative mx-auto" style={{ width: "230px" }}>
+      <div className="relative mx-auto" style={{ width: "255px" }}>
         {/* Phone frame */}
         <div
           className="relative overflow-hidden group"
@@ -486,8 +486,8 @@ const PhoneMockup = ({
                         src={`https://vumbnail.com/${vimeoId}_800.jpg`}
                         alt={`Travel UGC video for ${brand}`}
                         className="w-full h-full object-cover"
-                        width={230}
-                        height={409}
+                        width={255}
+                        height={453}
                         loading="lazy"
                         decoding="async"
                       />
@@ -649,7 +649,7 @@ const PhoneMockup = ({
         </div>
       </div>
 
-      <div className="text-center max-w-[230px]">
+      <div className="text-center max-w-[255px]">
         <p className="font-serif text-xl font-semibold tracking-tight">{brand}</p>
         <p className="text-sm text-muted-foreground leading-relaxed mt-2 font-light">
           {caption}
