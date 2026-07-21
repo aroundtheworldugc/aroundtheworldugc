@@ -53,60 +53,60 @@ const categories = [
   title: "Hotel Collaborations",
   items: [
   {
-    video: "https://player.vimeo.com/video/1169466245",
-    brand: "Box Hill – Esperance",
-    caption: "Cinematic reel focused on boutique coastal stay and immersive ocean atmosphere."
+    video: "https://player.vimeo.com/video/1211523867",
+    brand: "Aqua Luna Dhangheti",
+    caption: "Cinematic reel capturing overwater luxury and the turquoise stillness of the Maldives."
   },
   {
-    video: "https://player.vimeo.com/video/1169824564",
-    brand: "Anantara – Thailand",
-    caption: "Luxury resort storytelling designed for premium brand positioning."
+    video: "https://player.vimeo.com/video/1211523870",
+    brand: "Theva Residency Kandy",
+    caption: "Immersive storytelling showcasing tropical hillside charm and boutique hospitality."
   },
   {
-    video: "https://player.vimeo.com/video/1169466233",
-    brand: "False Cape – Kangaroo Island",
-    caption: "Experience-driven content highlighting wine tasting and destination immersion."
+    video: "https://player.vimeo.com/video/1211523869",
+    brand: "The Whitehouse",
+    caption: "Coastal lifestyle content built around relaxed, elevated stays."
   },
   ]
 },
 {
-  icon: "🌴",
-  title: "Lifestyle",
+  icon: "🧭",
+  title: "Experiences",
   items: [
   {
-    video: "https://player.vimeo.com/video/1169831299",
-    brand: "Australia – Blue vs Red",
-    caption: "From turquoise coastlines to red desert landscapes, a cinematic contrast narrative."
+    video: "https://player.vimeo.com/video/1211526471",
+    brand: "The Surfer Surf Camp",
+    caption: "Energetic surf culture narrative capturing community and coastal adventure."
   },
   {
-    video: "https://player.vimeo.com/video/1169825504",
-    brand: "Van Life – Life on the Road",
-    caption: "Authentic travel storytelling capturing freedom, simplicity and real moments."
+    video: "https://player.vimeo.com/video/1211526550",
+    brand: "Ningaloo Discovery",
+    caption: "Adventure driven reel following an unforgettable whale shark encounter."
   },
   {
-    video: "https://player.vimeo.com/video/1169825509",
-    brand: "Van Life – The Reality",
-    caption: "Unfiltered cinematic narrative revealing the true rhythm of life on the road."
+    video: "https://player.vimeo.com/video/1211526549",
+    brand: "Safari Lodge Yala",
+    caption: "Wildlife inspired storytelling blending safari adventure with authentic hospitality."
   }]
 },
 {
-  icon: "🧴",
-  title: "Products",
+  icon: "🍽️",
+  title: "Restaurants",
   items: [
   {
-    video: "https://player.vimeo.com/video/1169824168",
-    brand: "ISDIN",
-    caption: "Performance-focused product integration highlighting sun protection in real travel conditions."
+    video: "https://player.vimeo.com/video/1211526559",
+    brand: "Subsea Estate Vinery",
+    caption: "Cinematic vineyard narrative pairing coastal wine culture with refined dining."
   },
   {
-    video: "https://player.vimeo.com/video/1169824546",
-    brand: "Gifty Girls",
-    caption: "Creative lifestyle storytelling transforming personalized products into emotional keepsakes."
+    video: "https://player.vimeo.com/video/1211527447",
+    brand: "Soul Food Sigiriya",
+    caption: "Vibrant food focused reel capturing flavor, atmosphere and local warmth."
   },
   {
-    video: "https://player.vimeo.com/video/1169824553",
-    brand: "Bialetti",
-    caption: "Cinematic step-by-step narrative blending ritual, lifestyle and iconic brand identity."
+    video: "https://player.vimeo.com/video/1211527450",
+    brand: "Seahaus",
+    caption: "Elevated coastal dining content designed for premium brand storytelling."
   }]
 }];
 
