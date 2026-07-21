@@ -54,17 +54,17 @@ const categories = [
   items: [
   {
     video: "https://player.vimeo.com/video/1211523867",
-    brand: "Aqua Luna Dhangheti",
+    brand: "Aqua Luna - Maldives",
     caption: "Cinematic reel capturing overwater luxury and the turquoise stillness of the Maldives."
   },
   {
     video: "https://player.vimeo.com/video/1211523870",
-    brand: "Theva Residency Kandy",
+    brand: "Theva Residency - Sri Lanka",
     caption: "Immersive storytelling showcasing tropical hillside charm and boutique hospitality."
   },
   {
     video: "https://player.vimeo.com/video/1211523869",
-    brand: "The Whitehouse",
+    brand: "The Whitehouse - Shark Bay",
     caption: "Coastal lifestyle content built around relaxed, elevated stays."
   },
   ]
@@ -75,17 +75,17 @@ const categories = [
   items: [
   {
     video: "https://player.vimeo.com/video/1211526471",
-    brand: "The Surfer Surf Camp",
+    brand: "The Surfer - Weligama",
     caption: "Energetic surf culture narrative capturing community and coastal adventure."
   },
   {
     video: "https://player.vimeo.com/video/1211526550",
-    brand: "Ningaloo Discovery",
+    brand: "Ningaloo Discovery - Exmouth",
     caption: "Adventure driven reel following an unforgettable whale shark encounter."
   },
   {
     video: "https://player.vimeo.com/video/1211526549",
-    brand: "Safari Lodge Yala",
+    brand: "Safari Lodge - Yala",
     caption: "Wildlife inspired storytelling blending safari adventure with authentic hospitality."
   }]
 },
@@ -95,17 +95,17 @@ const categories = [
   items: [
   {
     video: "https://player.vimeo.com/video/1211526559",
-    brand: "Subsea Estate Vinery",
+    brand: "Subsea Estate - Margaret River",
     caption: "Cinematic vineyard narrative pairing coastal wine culture with refined dining."
   },
   {
     video: "https://player.vimeo.com/video/1211527447",
-    brand: "Soul Food Sigiriya",
+    brand: "Soul Food - Sigiriya",
     caption: "Vibrant food focused reel capturing flavor, atmosphere and local warmth."
   },
   {
     video: "https://player.vimeo.com/video/1211527450",
-    brand: "Seahaus",
+    brand: "Seahaus - Kalbarri",
     caption: "Elevated coastal dining content designed for premium brand storytelling."
   }]
 }];
