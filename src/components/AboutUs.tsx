@@ -34,7 +34,7 @@ const AboutUs = () => {
                 src={aboutFallbackSm}
                 srcSet={`${aboutFallbackSm} 400w, ${aboutFallbackMd} 700w, ${aboutFallbackLg} 1000w`}
                 sizes="(max-width: 768px) 100vw, 50vw"
-                alt="Davide and Claudia"
+                alt="Davide and Claudia posing with their green van in the Australian outback, celebrating their arrival at the Northern Territory border during their road trip around Australia"
                 className="w-full h-full object-cover"
                 loading="lazy"
                 decoding="async"
