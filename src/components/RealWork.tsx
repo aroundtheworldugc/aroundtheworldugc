@@ -501,21 +501,33 @@ const PhoneMockup = ({
                     role="button"
                     aria-label={`Play ${brand}`}
                   >
-                    <picture>
-                      <source
-                        srcSet={`https://vumbnail.com/${vimeoId}.jpg?fm=webp&w=800`}
-                        type="image/webp"
-                      />
+                    {vimeoThumbnail ? (
                       <img
-                        src={`https://vumbnail.com/${vimeoId}_800.jpg`}
+                        src={vimeoThumbnail}
                         alt={`Travel UGC video for ${brand}`}
-                        className="w-full h-full object-contain"
+                        className="w-full h-full object-cover"
                         width={255}
                         height={453}
                         loading="lazy"
                         decoding="async"
                       />
-                    </picture>
+                    ) : (
+                      <picture>
+                        <source
+                          srcSet={`https://vumbnail.com/${vimeoId}.jpg?fm=webp&w=800`}
+                          type="image/webp"
+                        />
+                        <img
+                          src={`https://vumbnail.com/${vimeoId}_800.jpg`}
+                          alt={`Travel UGC video for ${brand}`}
+                          className="w-full h-full object-contain"
+                          width={255}
+                          height={453}
+                          loading="lazy"
+                          decoding="async"
+                        />
+                      </picture>
+                    )}
                     <div className="absolute inset-0 bg-black/20 flex items-center justify-center">
                       {!activated ? (
                         <div
