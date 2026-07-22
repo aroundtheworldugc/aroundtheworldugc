@@ -471,7 +471,7 @@ const PhoneMockup = ({
                 {/* Thumbnail facade — shown until user clicks (Vimeo iframe not instantiated yet) */}
                 {vimeoId && showThumbnail && (
                   <div
-                    className="absolute inset-0 z-10 transition-opacity duration-500 cursor-pointer"
+                    className="absolute inset-0 z-10 transition-opacity duration-500 cursor-pointer bg-black"
                     style={{ opacity: showThumbnail ? 1 : 0 }}
                     onClick={handleFacadeClick}
                     role="button"
@@ -485,7 +485,7 @@ const PhoneMockup = ({
                       <img
                         src={`https://vumbnail.com/${vimeoId}_800.jpg`}
                         alt={`Travel UGC video for ${brand}`}
-                        className="w-full h-full object-cover"
+                        className="w-full h-full object-contain"
                         width={255}
                         height={453}
                         loading="lazy"
