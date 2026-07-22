@@ -29,7 +29,7 @@ const WhyChooseUs = () => {
             </p>
           </div>
 
-          <div className="grid sm:grid-cols-3 gap-8 mt-16">
+          <div className="grid sm:grid-cols-3 gap-8 mt-12">
             {values.map((item) => (
               <div key={item.title} className="text-center">
                 <h3 className="font-serif text-2xl font-light mb-2">{item.title}</h3>
@@ -39,7 +39,7 @@ const WhyChooseUs = () => {
             ))}
           </div>
 
-          <div className="mt-16 border border-border p-8 text-center">
+          <div className="mt-12 border border-border p-8 text-center">
             <p className="text-sm text-muted-foreground leading-relaxed">
               Trusted by 50 brands across five countries. Consistent quality, reliable delivery, and a workflow refined collaboration after collaboration.
             </p>
