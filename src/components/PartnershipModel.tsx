@@ -18,7 +18,7 @@ const formats = [
 const PartnershipModel = () => {
   const ref = useScrollReveal<HTMLElement>();
   return (
-    <section ref={ref} className="py-20 md:py-26 bg-background">
+    <section ref={ref} className="py-14 md:py-20 bg-background">
       <div className="container mx-auto px-6">
         <div className="text-center mb-16">
           <p className="text-sm tracking-[0.3em] uppercase text-muted-foreground mb-4">Partnership</p>
