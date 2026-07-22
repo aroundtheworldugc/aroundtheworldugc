@@ -14,7 +14,7 @@ import rainbowSky from "@/assets/logos/rainbow-sky.webp.asset.json";
 import theva from "@/assets/logos/theva.png.asset.json";
 import soulFood from "@/assets/logos/soul-food.png.asset.json";
 import aquaLuna from "@/assets/logos/aqua-luna.webp.asset.json";
-import subsea from "@/assets/logos/subsea.webp.asset.json";
+import subsea from "@/assets/logos/subsea.svg.asset.json";
 import saunaEsperance from "@/assets/logos/sauna-esperance.webp.asset.json";
 import flatstak from "@/assets/logos/flatstak.avif.asset.json";
 import giftyGirls from "@/assets/logos/gifty-girls.webp.asset.json";
@@ -62,34 +62,19 @@ const TrustedBy = () => {
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-x-10 gap-y-12 md:gap-x-14 md:gap-y-16 items-center justify-items-center">
             {brands
               .filter((b) => b.logo)
-              .map((brand) => {
-                const needsDarkBg =
-                  brand.name === "Jurien Bay Origin" ||
-                  brand.name === "Subsea Estate Vinery" ||
-                  brand.name === "Anantara Elephant Camp and Resort";
-                const logoImg = (
+              .map((brand) => (
+                <div
+                  key={brand.name}
+                  className="flex items-center justify-center w-full h-20 md:h-24"
+                >
                   <img
                     src={brand.logo!.url}
                     alt={`${brand.name} logo`}
                     loading="lazy"
                     className="max-w-[140px] max-h-20 md:max-w-[160px] md:max-h-24 w-auto h-auto object-contain"
                   />
-                );
-                return (
-                  <div
-                    key={brand.name}
-                    className="flex items-center justify-center w-full h-20 md:h-24"
-                  >
-                    {needsDarkBg ? (
-                      <div className="bg-foreground rounded-sm p-3 flex items-center justify-center">
-                        {logoImg}
-                      </div>
-                    ) : (
-                      logoImg
-                    )}
-                  </div>
-                );
-              })}
+                </div>
+              ))}
           </div>
         </div>
       </div>
