@@ -153,6 +153,29 @@ const PhoneMockup = ({
     }
   }, [isVimeo, isPlaceholder, activated]);
 
+  // Fetch the official Vimeo oEmbed thumbnail once on mount. If the request
+  // fails, vimeoThumbnail stays null and the Vumbnail fallback is used.
+  useEffect(() => {
+    if (!vimeoId) return;
+    const controller = new AbortController();
+    fetch(`https://vimeo.com/api/oembed.json?url=https://vimeo.com/${vimeoId}`, {
+      signal: controller.signal,
+    })
+      .then((res) => {
+        if (!res.ok) throw new Error("oembed failed");
+        return res.json();
+      })
+      .then((data) => {
+        if (data && typeof data.thumbnail_url === "string") {
+          setVimeoThumbnail(data.thumbnail_url);
+        }
+      })
+      .catch(() => {
+        // Leave vimeoThumbnail as null so the Vumbnail fallback renders.
+      });
+    return () => controller.abort();
+  }, [vimeoId]);
+
 
   // Click on thumbnail also triggers activation (fallback for users who tap
   // before the observer fires).
