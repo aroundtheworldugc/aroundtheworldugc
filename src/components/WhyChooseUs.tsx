@@ -29,7 +29,7 @@ const WhyChooseUs = () => {
             </p>
           </div>
 
-          <div className="grid sm:grid-cols-3 gap-8 mt-16">
+          <div className="grid sm:grid-cols-3 gap-8 mt-12">
             {values.map((item) => (
               <div key={item.title} className="text-center">
                 <h3 className="font-serif text-2xl font-light mb-2">{item.title}</h3>
