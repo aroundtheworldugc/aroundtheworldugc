@@ -21,7 +21,7 @@ import giftyGirls from "@/assets/logos/gifty-girls.webp.asset.json";
 import anantara from "@/assets/logos/anantara.avif.asset.json";
 import isdin from "@/assets/logos/isdin.webp.asset.json";
 
-type Brand = { name: string; logo?: { url: string } };
+type Brand = { name: string; logo?: { url: string }; darkBackground?: boolean };
 
 const brands: Brand[] = [
   { name: "Whalebone", logo: whalebone },
@@ -30,7 +30,7 @@ const brands: Brand[] = [
   { name: "Cadillacs Bar and Grill", logo: cadillacs },
   { name: "The Whitehouse", logo: whitehouse },
   { name: "Seahaus", logo: seahaus },
-  { name: "Jurien Bay Origin", logo: jurien },
+  { name: "Jurien Bay Origin", logo: jurien, darkBackground: true },
   { name: "Quokka Tours", logo: quokka },
   { name: "The Surfer Surf Camp", logo: surfer },
   { name: "Safari Lodge Yala", logo: safariYala },
@@ -42,7 +42,7 @@ const brands: Brand[] = [
   { name: "Sauna Esperance", logo: saunaEsperance },
   { name: "Flatstak", logo: flatstak },
   { name: "The Gifty Girls", logo: giftyGirls },
-  { name: "Anantara Elephant Camp and Resort", logo: anantara },
+  { name: "Anantara Elephant Camp and Resort", logo: anantara, darkBackground: true },
   { name: "ISDIN", logo: isdin },
 ];
 
@@ -67,12 +67,23 @@ const TrustedBy = () => {
                   key={brand.name}
                   className="flex items-center justify-center w-full h-20 md:h-24"
                 >
-                  <img
-                    src={brand.logo!.url}
-                    alt={`${brand.name} logo`}
-                    loading="lazy"
-                    className="max-w-[140px] max-h-20 md:max-w-[160px] md:max-h-24 w-auto h-auto object-contain"
-                  />
+                  {brand.darkBackground ? (
+                    <div className="bg-foreground rounded-md p-3">
+                      <img
+                        src={brand.logo!.url}
+                        alt={`${brand.name} logo`}
+                        loading="lazy"
+                        className="max-w-[140px] max-h-20 md:max-w-[160px] md:max-h-24 w-auto h-auto object-contain"
+                      />
+                    </div>
+                  ) : (
+                    <img
+                      src={brand.logo!.url}
+                      alt={`${brand.name} logo`}
+                      loading="lazy"
+                      className="max-w-[140px] max-h-20 md:max-w-[160px] md:max-h-24 w-auto h-auto object-contain"
+                    />
+                  )}
                 </div>
               ))}
           </div>
