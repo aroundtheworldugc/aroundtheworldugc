@@ -45,6 +45,7 @@ const brands: Brand[] = [
   { name: "The Gifty Girls", logo: giftyGirls },
   { name: "Anantara Elephant Camp and Resort", logo: anantara, darkBackground: true },
   { name: "ISDIN", logo: isdin },
+  { name: "Bialetti", logo: bialetti },
 ];
 
 const TrustedBy = () => {
