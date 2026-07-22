@@ -9,7 +9,7 @@ import { useScrollReveal } from "@/hooks/useScrollReveal";
 const AboutUs = () => {
   const ref = useScrollReveal<HTMLElement>();
   return (
-    <section id="about" ref={ref} className="py-20 md:py-26 bg-secondary">
+    <section id="about" ref={ref} className="py-14 md:py-20 bg-secondary">
       <div className="container mx-auto px-6">
         {/* Section header */}
         <div className="max-w-3xl mx-auto text-center mb-16">

@@ -698,7 +698,7 @@ const PhoneMockup = ({
 const RealWork = () => {
   const ref = useScrollReveal<HTMLElement>();
   return (
-    <section id="work" ref={ref} className="py-20 md:py-26 bg-secondary">
+    <section id="work" ref={ref} className="py-14 md:py-20 bg-secondary">
       <div className="container mx-auto px-6">
         {/* Header */}
         <div className="text-center mb-20">
