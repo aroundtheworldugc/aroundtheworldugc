@@ -129,6 +129,7 @@ const PhoneMockup = ({
   const hideTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [activated, setActivated] = useState(false);
   const [iframeLoaded, setIframeLoaded] = useState(false);
+  const [vimeoThumbnail, setVimeoThumbnail] = useState<string | null>(null);
   const isTouchDevice = useRef(false);
 
   const isPlaceholder = video.includes("placeholder");
