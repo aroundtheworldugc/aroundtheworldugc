@@ -34,7 +34,7 @@ const meaning: Item[] = [
 const Deliverables = () => {
   const ref = useScrollReveal<HTMLElement>();
   return (
-    <section id="services" ref={ref} className="py-14 md:py-20 bg-background">
+    <section id="services" ref={ref} className="py-10 md:py-16 bg-background">
       <div className="container mx-auto px-6">
         <div className="text-center mb-16">
           <p className="text-sm tracking-[0.3em] uppercase text-muted-foreground mb-4">
