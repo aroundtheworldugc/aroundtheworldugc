@@ -14,7 +14,7 @@ import rainbowSky from "@/assets/logos/rainbow-sky.webp.asset.json";
 import theva from "@/assets/logos/theva.png.asset.json";
 import soulFood from "@/assets/logos/soul-food.png.asset.json";
 import aquaLuna from "@/assets/logos/aqua-luna.webp.asset.json";
-import subsea from "@/assets/logos/subsea.svg.asset.json";
+import subsea from "@/assets/logos/subsea.webp.asset.json";
 import saunaEsperance from "@/assets/logos/sauna-esperance.webp.asset.json";
 import flatstak from "@/assets/logos/flatstak.avif.asset.json";
 import giftyGirls from "@/assets/logos/gifty-girls.webp.asset.json";
