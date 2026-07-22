@@ -10,7 +10,7 @@ const WhyChooseUs = () => {
   const whyRef = useScrollReveal<HTMLElement>();
 
   return (
-    <section id="why-choose-us" ref={whyRef} className="py-14 md:py-20 bg-secondary">
+    <section id="why-choose-us" ref={whyRef} className="py-10 md:py-16 bg-secondary">
       <div className="container mx-auto px-6">
         <div className="max-w-3xl mx-auto">
           <p className="text-sm tracking-[0.3em] uppercase text-muted-foreground mb-4 text-center">

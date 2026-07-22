@@ -51,7 +51,7 @@ const brands: Brand[] = [
 const TrustedBy = () => {
   const ref = useScrollReveal<HTMLElement>();
   return (
-    <section ref={ref} className="py-14 md:py-20 bg-background">
+    <section ref={ref} className="py-10 md:py-16 bg-background">
       <div className="container mx-auto px-6">
         <div className="max-w-6xl mx-auto text-center">
           <p className="text-sm tracking-[0.3em] uppercase text-muted-foreground mb-4">
