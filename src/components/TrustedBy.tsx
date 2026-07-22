@@ -20,6 +20,7 @@ import flatstak from "@/assets/logos/flatstak.avif.asset.json";
 import giftyGirls from "@/assets/logos/gifty-girls.webp.asset.json";
 import anantara from "@/assets/logos/anantara.avif.asset.json";
 import isdin from "@/assets/logos/isdin.webp.asset.json";
+import bialetti from "@/assets/logos/bialetti.png.asset.json";
 
 type Brand = { name: string; logo?: { url: string }; darkBackground?: boolean };
 
@@ -44,6 +45,7 @@ const brands: Brand[] = [
   { name: "The Gifty Girls", logo: giftyGirls },
   { name: "Anantara Elephant Camp and Resort", logo: anantara, darkBackground: true },
   { name: "ISDIN", logo: isdin },
+  { name: "Bialetti", logo: bialetti },
 ];
 
 const TrustedBy = () => {
