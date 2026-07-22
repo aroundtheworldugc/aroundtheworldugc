@@ -129,6 +129,7 @@ const PhoneMockup = ({
   const hideTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [activated, setActivated] = useState(false);
   const [iframeLoaded, setIframeLoaded] = useState(false);
+  const [vimeoThumbnail, setVimeoThumbnail] = useState<string | null>(null);
   const isTouchDevice = useRef(false);
 
   const isPlaceholder = video.includes("placeholder");
@@ -151,6 +152,29 @@ const PhoneMockup = ({
       setActivated(true);
     }
   }, [isVimeo, isPlaceholder, activated]);
+
+  // Fetch the official Vimeo oEmbed thumbnail once on mount. If the request
+  // fails, vimeoThumbnail stays null and the Vumbnail fallback is used.
+  useEffect(() => {
+    if (!vimeoId) return;
+    const controller = new AbortController();
+    fetch(`https://vimeo.com/api/oembed.json?url=https://vimeo.com/${vimeoId}`, {
+      signal: controller.signal,
+    })
+      .then((res) => {
+        if (!res.ok) throw new Error("oembed failed");
+        return res.json();
+      })
+      .then((data) => {
+        if (data && typeof data.thumbnail_url === "string") {
+          setVimeoThumbnail(data.thumbnail_url);
+        }
+      })
+      .catch(() => {
+        // Leave vimeoThumbnail as null so the Vumbnail fallback renders.
+      });
+    return () => controller.abort();
+  }, [vimeoId]);
 
 
   // Click on thumbnail also triggers activation (fallback for users who tap
@@ -477,21 +501,33 @@ const PhoneMockup = ({
                     role="button"
                     aria-label={`Play ${brand}`}
                   >
-                    <picture>
-                      <source
-                        srcSet={`https://vumbnail.com/${vimeoId}.jpg?fm=webp&w=800`}
-                        type="image/webp"
-                      />
+                    {vimeoThumbnail ? (
                       <img
-                        src={`https://vumbnail.com/${vimeoId}_800.jpg`}
+                        src={vimeoThumbnail}
                         alt={`Travel UGC video for ${brand}`}
-                        className="w-full h-full object-contain"
+                        className="w-full h-full object-cover"
                         width={255}
                         height={453}
                         loading="lazy"
                         decoding="async"
                       />
-                    </picture>
+                    ) : (
+                      <picture>
+                        <source
+                          srcSet={`https://vumbnail.com/${vimeoId}.jpg?fm=webp&w=800`}
+                          type="image/webp"
+                        />
+                        <img
+                          src={`https://vumbnail.com/${vimeoId}_800.jpg`}
+                          alt={`Travel UGC video for ${brand}`}
+                          className="w-full h-full object-contain"
+                          width={255}
+                          height={453}
+                          loading="lazy"
+                          decoding="async"
+                        />
+                      </picture>
+                    )}
                     <div className="absolute inset-0 bg-black/20 flex items-center justify-center">
                       {!activated ? (
                         <div
