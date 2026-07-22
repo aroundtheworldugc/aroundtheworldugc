@@ -57,7 +57,7 @@ const StatItem = ({
   return (
     <div className="flex flex-col items-center">
       <div
-        className="relative w-[136px] h-[136px] md:w-[163px] md:h-[163px] lg:w-[190px] lg:h-[190px] mb-5 rounded-full"
+        className="relative w-[136px] h-[136px] md:w-[163px] md:h-[163px] lg:w-[190px] lg:h-[190px] mb-3 rounded-full"
         style={{
           background: `conic-gradient(hsl(var(--primary)) 0deg ${GAP_START}deg, transparent ${GAP_START}deg ${GAP_END}deg, hsl(var(--primary)) ${GAP_END}deg 360deg)`,
         }}
@@ -110,10 +110,10 @@ const StatsBar = () => {
   return (
     <section
       ref={sectionRef}
-      className="py-20 md:py-26 bg-background border-t border-border"
+      className="py-10 md:py-16 bg-background border-t border-border"
     >
       <div className="container mx-auto px-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-8 text-center">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-6 text-center">
           {stats.map((stat) => (
             <StatItem key={stat.label} {...stat} play={play} />
           ))}
