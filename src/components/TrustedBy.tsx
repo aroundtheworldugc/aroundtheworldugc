@@ -10,6 +10,16 @@ import jurien from "@/assets/logos/jurien.webp.asset.json";
 import quokka from "@/assets/logos/quokka.webp.asset.json";
 import surfer from "@/assets/logos/surfer.avif.asset.json";
 import safariYala from "@/assets/logos/safari-yala.webp.asset.json";
+import rainbowSky from "@/assets/logos/rainbow-sky.webp.asset.json";
+import theva from "@/assets/logos/theva.png.asset.json";
+import soulFood from "@/assets/logos/soul-food.png.asset.json";
+import aquaLuna from "@/assets/logos/aqua-luna.webp.asset.json";
+import subsea from "@/assets/logos/subsea.svg.asset.json";
+import saunaEsperance from "@/assets/logos/sauna-esperance.webp.asset.json";
+import flatstak from "@/assets/logos/flatstak.avif.asset.json";
+import giftyGirls from "@/assets/logos/gifty-girls.webp.asset.json";
+import anantara from "@/assets/logos/anantara.avif.asset.json";
+import isdin from "@/assets/logos/isdin.webp.asset.json";
 
 type Brand = { name: string; logo?: { url: string } };
 
@@ -24,16 +34,16 @@ const brands: Brand[] = [
   { name: "Quokka Tours", logo: quokka },
   { name: "The Surfer Surf Camp", logo: surfer },
   { name: "Safari Lodge Yala", logo: safariYala },
-  { name: "Sky Rainbow Cottage Ella" },
-  { name: "Theva Residency Kandy" },
-  { name: "Soul Food Sigiriya" },
-  { name: "Aqua Luna Dhangheti" },
-  { name: "Subsea Estate Vinery" },
-  { name: "Sauna Esperance" },
-  { name: "Flatstak" },
-  { name: "The Gifty Girls" },
-  { name: "Anantara Elephant Camp and Resort" },
-  { name: "ISDIN" },
+  { name: "Sky Rainbow Cottage Ella", logo: rainbowSky },
+  { name: "Theva Residency Kandy", logo: theva },
+  { name: "Soul Food Sigiriya", logo: soulFood },
+  { name: "Aqua Luna Dhangheti", logo: aquaLuna },
+  { name: "Subsea Estate Vinery", logo: subsea },
+  { name: "Sauna Esperance", logo: saunaEsperance },
+  { name: "Flatstak", logo: flatstak },
+  { name: "The Gifty Girls", logo: giftyGirls },
+  { name: "Anantara Elephant Camp and Resort", logo: anantara },
+  { name: "ISDIN", logo: isdin },
 ];
 
 const TrustedBy = () => {
