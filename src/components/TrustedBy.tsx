@@ -67,12 +67,23 @@ const TrustedBy = () => {
                   key={brand.name}
                   className="flex items-center justify-center w-full h-20 md:h-24"
                 >
-                  <img
-                    src={brand.logo!.url}
-                    alt={`${brand.name} logo`}
-                    loading="lazy"
-                    className="max-w-[140px] max-h-20 md:max-w-[160px] md:max-h-24 w-auto h-auto object-contain"
-                  />
+                  {brand.darkBackground ? (
+                    <div className="bg-foreground rounded-md p-3">
+                      <img
+                        src={brand.logo!.url}
+                        alt={`${brand.name} logo`}
+                        loading="lazy"
+                        className="max-w-[140px] max-h-20 md:max-w-[160px] md:max-h-24 w-auto h-auto object-contain"
+                      />
+                    </div>
+                  ) : (
+                    <img
+                      src={brand.logo!.url}
+                      alt={`${brand.name} logo`}
+                      loading="lazy"
+                      className="max-w-[140px] max-h-20 md:max-w-[160px] md:max-h-24 w-auto h-auto object-contain"
+                    />
+                  )}
                 </div>
               ))}
           </div>
