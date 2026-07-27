@@ -61,13 +61,13 @@ const TrustedBy = () => {
             50+ Brands, <span className="italic">One Standard</span>
           </h2>
 
-          <div className="grid grid-cols-2 md:grid-cols-5 lg:grid-cols-7 gap-x-6 gap-y-8 md:gap-x-6 md:gap-y-6 items-center justify-items-center">
+          <div className="grid grid-cols-3 md:grid-cols-5 lg:grid-cols-7 gap-x-4 gap-y-5 md:gap-x-6 md:gap-y-6 items-center justify-items-center">
             {brands
               .filter((b) => b.logo)
               .map((brand) => (
                 <div
                   key={brand.name}
-                  className="flex items-center justify-center w-full h-16 md:h-20 px-2 md:px-0"
+                  className="flex items-center justify-center w-full h-16 md:h-20"
                 >
                   {brand.darkBackground ? (
                     <div className="bg-foreground rounded-md p-3">
@@ -75,7 +75,7 @@ const TrustedBy = () => {
                         src={brand.logo!.url}
                         alt={`${brand.name} logo`}
                         loading="lazy"
-                        className="max-w-full max-h-10 md:max-w-[112px] md:max-h-16 w-auto h-auto object-contain"
+                        className="max-w-[100px] max-h-14 md:max-w-[112px] md:max-h-16 w-auto h-auto object-contain"
                       />
                     </div>
                   ) : (
@@ -83,13 +83,12 @@ const TrustedBy = () => {
                       src={brand.logo!.url}
                       alt={`${brand.name} logo`}
                       loading="lazy"
-                      className="max-w-full max-h-14 md:max-w-[112px] md:max-h-16 w-auto h-auto object-contain"
+                      className="max-w-[100px] max-h-14 md:max-w-[112px] md:max-h-16 w-auto h-auto object-contain"
                     />
                   )}
                 </div>
               ))}
           </div>
-
         </div>
       </div>
     </section>
