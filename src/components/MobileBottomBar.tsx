@@ -12,9 +12,9 @@ const MobileBottomBar = () => {
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        setVisible(!entry.isIntersecting);
+        setVisible(!(entry.isIntersecting && entry.intersectionRatio >= 0.15));
       },
-      { threshold: 0 }
+      { threshold: [0, 0.15, 0.3] }
     );
 
     observer.observe(contactEl);
@@ -23,8 +23,10 @@ const MobileBottomBar = () => {
 
   return (
     <div
-      className={`fixed bottom-0 left-0 right-0 z-40 md:hidden bg-background border-t border-border shadow-[0_-4px_20px_rgba(0,0,0,0.06)] transition-opacity duration-300 ${
-        visible ? "opacity-100" : "opacity-0 pointer-events-none"
+      className={`fixed bottom-0 left-0 right-0 z-40 md:hidden bg-background border-t border-border shadow-[0_-4px_20px_rgba(0,0,0,0.06)] transition-all duration-300 ease-out ${
+        visible
+          ? "opacity-100 translate-y-0"
+          : "opacity-0 translate-y-4 pointer-events-none"
       }`}
     >
       <div className="container mx-auto px-6 py-3">
