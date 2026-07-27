@@ -22,30 +22,36 @@ import anantara from "@/assets/logos/anantara.avif.asset.json";
 import isdin from "@/assets/logos/isdin.webp.asset.json";
 import bialetti from "@/assets/logos/bialetti.png.asset.json";
 
-type Brand = { name: string; logo?: { url: string }; darkBackground?: boolean };
+type Brand = {
+  name: string;
+  logo?: { url: string };
+  darkBackground?: boolean;
+  w: number;
+  h: number;
+};
 
 const brands: Brand[] = [
-  { name: "The Surfer Surf Camp", logo: surfer },
-  { name: "Ningaloo Discovery", logo: ningaloo },
-  { name: "Theva Residency Kandy", logo: theva },
-  { name: "Aqua Luna Dhangheti", logo: aquaLuna },
-  { name: "Subsea Estate Vinery", logo: subsea },
-  { name: "Anantara Elephant Camp and Resort", logo: anantara, darkBackground: true },
-  { name: "Seahaus Kalbarri", logo: seahaus },
-  { name: "Jurien Bay Oceanic Experience", logo: jurien, darkBackground: true },
-  { name: "Rainbow Sky Cottage Ella", logo: rainbowSky },
-  { name: "Whalebone Brewing Co", logo: whalebone },
-  { name: "Cadillacs Bar and Grill", logo: cadillacs },
-  { name: "Sauna Esperance", logo: saunaEsperance },
-  { name: "Quokka Tours", logo: quokka },
-  { name: "Soul Food Sigiriya", logo: soulFood },
-  { name: "The Whitehouse", logo: whitehouse },
-  { name: "ISDIN", logo: isdin },
-  { name: "The Gifty Girls", logo: giftyGirls },
-  { name: "Bialetti", logo: bialetti },
-  { name: "Mutts Caffè", logo: mutts },
-  { name: "Safari Lodge Yala", logo: safariYala },
-  { name: "Flat Stacks", logo: flatstak },
+  { name: "The Surfer Surf Camp", logo: surfer, w: 256, h: 123 },
+  { name: "Ningaloo Discovery", logo: ningaloo, w: 600, h: 194 },
+  { name: "Theva Residency Kandy", logo: theva, w: 214, h: 116 },
+  { name: "Aqua Luna Dhangheti", logo: aquaLuna, w: 281, h: 132 },
+  { name: "Subsea Estate Vinery", logo: subsea, w: 328, h: 170 },
+  { name: "Anantara Elephant Camp and Resort", logo: anantara, darkBackground: true, w: 360, h: 140 },
+  { name: "Seahaus Kalbarri", logo: seahaus, w: 699, h: 251 },
+  { name: "Jurien Bay Oceanic Experience", logo: jurien, darkBackground: true, w: 826, h: 185 },
+  { name: "Rainbow Sky Cottage Ella", logo: rainbowSky, w: 248, h: 62 },
+  { name: "Whalebone Brewing Co", logo: whalebone, w: 500, h: 108 },
+  { name: "Cadillacs Bar and Grill", logo: cadillacs, w: 948, h: 439 },
+  { name: "Sauna Esperance", logo: saunaEsperance, w: 800, h: 800 },
+  { name: "Quokka Tours", logo: quokka, w: 387, h: 240 },
+  { name: "Soul Food Sigiriya", logo: soulFood, w: 300, h: 202 },
+  { name: "The Whitehouse", logo: whitehouse, w: 1600, h: 288 },
+  { name: "ISDIN", logo: isdin, w: 329, h: 110 },
+  { name: "The Gifty Girls", logo: giftyGirls, w: 308, h: 192 },
+  { name: "Bialetti", logo: bialetti, w: 315, h: 156 },
+  { name: "Mutts Caffè", logo: mutts, w: 594, h: 586 },
+  { name: "Safari Lodge Yala", logo: safariYala, w: 330, h: 231 },
+  { name: "Flat Stacks", logo: flatstak, w: 105, h: 64 },
 ];
 
 const TrustedBy = () => {
@@ -75,6 +81,8 @@ const TrustedBy = () => {
                         src={brand.logo!.url}
                         alt={`${brand.name} logo`}
                         loading="lazy"
+                        width={brand.w}
+                        height={brand.h}
                         className="max-w-[100px] max-h-14 md:max-w-[112px] md:max-h-16 w-auto h-auto object-contain"
                       />
                     </div>
@@ -83,6 +91,8 @@ const TrustedBy = () => {
                       src={brand.logo!.url}
                       alt={`${brand.name} logo`}
                       loading="lazy"
+                      width={brand.w}
+                      height={brand.h}
                       className="max-w-[100px] max-h-14 md:max-w-[112px] md:max-h-16 w-auto h-auto object-contain"
                     />
                   )}
