@@ -136,22 +136,14 @@ const PhoneMockup = ({
   }, [vimeoId]);
 
 
-  // Click on thumbnail also triggers activation (fallback for users who tap
-  // before the observer fires).
+  // Tap on the thumbnail activates the Vimeo player.
   const handleFacadeClick = useCallback((e: React.MouseEvent) => {
     e.stopPropagation();
-    if (!activated && isVimeo && containerRef.current) {
-      const entry: ActivatedEntry = {
-        el: containerRef.current,
-        deactivate: () => {
-          setActivated(false);
-          setIframeLoaded(false);
-        },
-      };
-      registerActivatedPlayer(entry);
+    if (!activated && isVimeo) {
       setActivated(true);
     }
   }, [activated, isVimeo]);
+
 
   // Initialize Vimeo player with throttled progress. Start with active audio
   // (setMuted(false), setVolume(1)) and fall back to muted playback if the
