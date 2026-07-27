@@ -57,8 +57,7 @@ const Hero = () => {
           <span className="sr-only"> — Travel UGC Creators for Hotels & Travel Brands</span>
         </h1>
         <p
-          className="font-serif text-xl md:text-2xl text-primary-foreground/90 italic mb-4 animate-fade-up"
-          style={{ animationDelay: "0.6s" }}>
+          className="font-serif text-xl md:text-2xl text-primary-foreground/90 italic mb-4 animate-fade-up">
           Cinematic Storytelling for Hotels, Travel & Lifestyle Brands
         </p>
         <p
