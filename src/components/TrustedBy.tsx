@@ -1,14 +1,14 @@
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 
 import whalebone from "@/assets/logos/whalebone.webp.asset.json";
-import ningaloo from "@/assets/logos/ningaloo.png.asset.json";
-import mutts from "@/assets/logos/mutts.png.asset.json";
+import ningaloo from "@/assets/logos/ningaloo.webp.asset.json";
+import mutts from "@/assets/logos/mutts.webp.asset.json";
 import cadillacs from "@/assets/logos/cadillacs.webp.asset.json";
 import whitehouse from "@/assets/logos/whitehouse.webp.asset.json";
 import seahaus from "@/assets/logos/seahaus.webp.asset.json";
 import jurien from "@/assets/logos/jurien.webp.asset.json";
 import quokka from "@/assets/logos/quokka.webp.asset.json";
-import surfer from "@/assets/logos/surfer.avif.asset.json";
+import surfer from "@/assets/logos/surfer.webp.asset.json";
 import safariYala from "@/assets/logos/safari-yala.webp.asset.json";
 import rainbowSky from "@/assets/logos/rainbow-sky.webp.asset.json";
 import theva from "@/assets/logos/theva.png.asset.json";
