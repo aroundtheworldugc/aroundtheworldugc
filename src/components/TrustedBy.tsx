@@ -11,14 +11,14 @@ import quokka from "@/assets/logos/quokka.webp.asset.json";
 import surfer from "@/assets/logos/surfer.webp.asset.json";
 import safariYala from "@/assets/logos/safari-yala.webp.asset.json";
 import rainbowSky from "@/assets/logos/rainbow-sky.webp.asset.json";
-import theva from "@/assets/logos/theva.png.asset.json";
-import soulFood from "@/assets/logos/soul-food.png.asset.json";
+import theva from "@/assets/logos/theva.webp.asset.json";
+import soulFood from "@/assets/logos/soul-food.webp.asset.json";
 import aquaLuna from "@/assets/logos/aqua-luna.webp.asset.json";
 import subsea from "@/assets/logos/subsea.webp.asset.json";
 import saunaEsperance from "@/assets/logos/sauna-esperance.webp.asset.json";
-import flatstak from "@/assets/logos/flatstak.avif.asset.json";
+import flatstak from "@/assets/logos/flatstak.webp.asset.json";
 import giftyGirls from "@/assets/logos/gifty-girls.webp.asset.json";
-import anantara from "@/assets/logos/anantara.avif.asset.json";
+import anantara from "@/assets/logos/anantara.webp.asset.json";
 import isdin from "@/assets/logos/isdin.webp.asset.json";
 import bialetti from "@/assets/logos/bialetti.png.asset.json";
 
