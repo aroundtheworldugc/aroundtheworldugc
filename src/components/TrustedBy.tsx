@@ -20,7 +20,7 @@ import flatstak from "@/assets/logos/flatstak.webp.asset.json";
 import giftyGirls from "@/assets/logos/gifty-girls.webp.asset.json";
 import anantara from "@/assets/logos/anantara.webp.asset.json";
 import isdin from "@/assets/logos/isdin.webp.asset.json";
-import bialetti from "@/assets/logos/bialetti.png.asset.json";
+import bialetti from "@/assets/logos/bialetti.webp.asset.json";
 
 type Brand = {
   name: string;
@@ -48,7 +48,7 @@ const brands: Brand[] = [
   { name: "The Whitehouse", logo: whitehouse, w: 400, h: 66 },
   { name: "ISDIN", logo: isdin, w: 400, h: 126 },
   { name: "The Gifty Girls", logo: giftyGirls, w: 400, h: 249 },
-  { name: "Bialetti", logo: bialetti, w: 315, h: 156 },
+  { name: "Bialetti", logo: bialetti, w: 400, h: 198 },
   { name: "Mutts Caffè", logo: mutts, w: 400, h: 395 },
   { name: "Safari Lodge Yala", logo: safariYala, w: 400, h: 267 },
   { name: "Flat Stacks", logo: flatstak, w: 400, h: 244 },
