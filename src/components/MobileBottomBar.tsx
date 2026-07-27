@@ -1,24 +1,18 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
 const MobileBottomBar = () => {
   const [visible, setVisible] = useState(true);
-  const contactRef = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
-    const contactEl = document.getElementById("contact");
-    contactRef.current = contactEl;
+    const onScroll = () => {
+      const scrollPos = window.scrollY + window.innerHeight;
+      const docHeight = document.documentElement.scrollHeight;
+      setVisible(scrollPos < docHeight - 600);
+    };
 
-    if (!contactEl) return;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        setVisible(!(entry.isIntersecting && entry.intersectionRatio >= 0.15));
-      },
-      { threshold: [0, 0.15, 0.3] }
-    );
-
-    observer.observe(contactEl);
-    return () => observer.disconnect();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   return (
