@@ -1,14 +1,14 @@
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 
 import whalebone from "@/assets/logos/whalebone.webp.asset.json";
-import ningaloo from "@/assets/logos/ningaloo.png.asset.json";
-import mutts from "@/assets/logos/mutts.png.asset.json";
+import ningaloo from "@/assets/logos/ningaloo.webp.asset.json";
+import mutts from "@/assets/logos/mutts.webp.asset.json";
 import cadillacs from "@/assets/logos/cadillacs.webp.asset.json";
 import whitehouse from "@/assets/logos/whitehouse.webp.asset.json";
 import seahaus from "@/assets/logos/seahaus.webp.asset.json";
 import jurien from "@/assets/logos/jurien.webp.asset.json";
 import quokka from "@/assets/logos/quokka.webp.asset.json";
-import surfer from "@/assets/logos/surfer.avif.asset.json";
+import surfer from "@/assets/logos/surfer.webp.asset.json";
 import safariYala from "@/assets/logos/safari-yala.webp.asset.json";
 import rainbowSky from "@/assets/logos/rainbow-sky.webp.asset.json";
 import theva from "@/assets/logos/theva.png.asset.json";
@@ -31,26 +31,26 @@ type Brand = {
 };
 
 const brands: Brand[] = [
-  { name: "The Surfer Surf Camp", logo: surfer, w: 256, h: 123 },
-  { name: "Ningaloo Discovery", logo: ningaloo, w: 600, h: 194 },
+  { name: "The Surfer Surf Camp", logo: surfer, w: 400, h: 192 },
+  { name: "Ningaloo Discovery", logo: ningaloo, w: 400, h: 129 },
   { name: "Theva Residency Kandy", logo: theva, w: 214, h: 116 },
   { name: "Aqua Luna Dhangheti", logo: aquaLuna, w: 281, h: 132 },
   { name: "Subsea Estate Vinery", logo: subsea, w: 328, h: 170 },
   { name: "Anantara Elephant Camp and Resort", logo: anantara, darkBackground: true, w: 360, h: 140 },
-  { name: "Seahaus Kalbarri", logo: seahaus, w: 699, h: 251 },
-  { name: "Jurien Bay Oceanic Experience", logo: jurien, darkBackground: true, w: 826, h: 185 },
+  { name: "Seahaus Kalbarri", logo: seahaus, w: 400, h: 132 },
+  { name: "Jurien Bay Oceanic Experience", logo: jurien, darkBackground: true, w: 400, h: 90 },
   { name: "Rainbow Sky Cottage Ella", logo: rainbowSky, w: 248, h: 62 },
-  { name: "Whalebone Brewing Co", logo: whalebone, w: 500, h: 108 },
-  { name: "Cadillacs Bar and Grill", logo: cadillacs, w: 948, h: 439 },
+  { name: "Whalebone Brewing Co", logo: whalebone, w: 400, h: 83 },
+  { name: "Cadillacs Bar and Grill", logo: cadillacs, w: 400, h: 183 },
   { name: "Sauna Esperance", logo: saunaEsperance, w: 800, h: 800 },
-  { name: "Quokka Tours", logo: quokka, w: 387, h: 240 },
+  { name: "Quokka Tours", logo: quokka, w: 400, h: 210 },
   { name: "Soul Food Sigiriya", logo: soulFood, w: 300, h: 202 },
-  { name: "The Whitehouse", logo: whitehouse, w: 1600, h: 288 },
+  { name: "The Whitehouse", logo: whitehouse, w: 400, h: 66 },
   { name: "ISDIN", logo: isdin, w: 329, h: 110 },
   { name: "The Gifty Girls", logo: giftyGirls, w: 308, h: 192 },
   { name: "Bialetti", logo: bialetti, w: 315, h: 156 },
-  { name: "Mutts Caffè", logo: mutts, w: 594, h: 586 },
-  { name: "Safari Lodge Yala", logo: safariYala, w: 330, h: 231 },
+  { name: "Mutts Caffè", logo: mutts, w: 400, h: 395 },
+  { name: "Safari Lodge Yala", logo: safariYala, w: 400, h: 267 },
   { name: "Flat Stacks", logo: flatstak, w: 105, h: 64 },
 ];
 
