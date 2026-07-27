@@ -5,47 +5,6 @@ import { useScrollReveal } from "@/hooks/useScrollReveal";
 // Global registry: only one video plays at a time
 const activePlayerRef: { current: (() => void) | null } = { current: null };
 
-// Global registry: cap number of simultaneously initialized Vimeo players.
-// When the limit is reached and a new player needs to activate, the player
-// furthest from the viewport is deactivated (its iframe is unmounted).
-const MAX_ACTIVE_VIMEO_PLAYERS = 3;
-type ActivatedEntry = {
-  el: HTMLElement;
-  deactivate: () => void;
-};
-const activatedVimeoPlayers = new Set<ActivatedEntry>();
-
-const distanceFromViewport = (el: HTMLElement): number => {
-  const rect = el.getBoundingClientRect();
-  const vh = window.innerHeight || document.documentElement.clientHeight;
-  const elCenter = rect.top + rect.height / 2;
-  const viewportCenter = vh / 2;
-  return Math.abs(elCenter - viewportCenter);
-};
-
-const registerActivatedPlayer = (entry: ActivatedEntry) => {
-  // Evict the furthest-from-viewport player if at capacity
-  while (activatedVimeoPlayers.size >= MAX_ACTIVE_VIMEO_PLAYERS) {
-    let furthest: ActivatedEntry | null = null;
-    let furthestDist = -1;
-    activatedVimeoPlayers.forEach((e) => {
-      if (e === entry) return;
-      const d = distanceFromViewport(e.el);
-      if (d > furthestDist) {
-        furthestDist = d;
-        furthest = e;
-      }
-    });
-    if (!furthest) break;
-    activatedVimeoPlayers.delete(furthest);
-    furthest.deactivate();
-  }
-  activatedVimeoPlayers.add(entry);
-};
-
-const unregisterActivatedPlayer = (entry: ActivatedEntry) => {
-  activatedVimeoPlayers.delete(entry);
-};
 
 const categories = [
 {
@@ -177,22 +136,14 @@ const PhoneMockup = ({
   }, [vimeoId]);
 
 
-  // Click on thumbnail also triggers activation (fallback for users who tap
-  // before the observer fires).
+  // Tap on the thumbnail activates the Vimeo player.
   const handleFacadeClick = useCallback((e: React.MouseEvent) => {
     e.stopPropagation();
-    if (!activated && isVimeo && containerRef.current) {
-      const entry: ActivatedEntry = {
-        el: containerRef.current,
-        deactivate: () => {
-          setActivated(false);
-          setIframeLoaded(false);
-        },
-      };
-      registerActivatedPlayer(entry);
+    if (!activated && isVimeo) {
       setActivated(true);
     }
   }, [activated, isVimeo]);
+
 
   // Initialize Vimeo player with throttled progress. Start with active audio
   // (setMuted(false), setVolume(1)) and fall back to muted playback if the
