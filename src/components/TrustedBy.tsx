@@ -48,7 +48,7 @@ const brands: Brand[] = [
   { name: "The Whitehouse", logo: whitehouse, w: 240, h: 40 },
   { name: "ISDIN", logo: isdin, w: 240, h: 76 },
   { name: "The Gifty Girls", logo: giftyGirls, w: 240, h: 149 },
-  { name: "Bialetti", logo: bialetti, w: 400, h: 198 },
+  { name: "Bialetti", logo: bialetti, w: 240, h: 119 },
   { name: "Mutts Caffè", logo: mutts, w: 240, h: 237 },
   { name: "Safari Lodge Yala", logo: safariYala, w: 240, h: 160 },
   { name: "Flat Stacks", logo: flatstak, w: 240, h: 146 },
