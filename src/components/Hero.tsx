@@ -47,27 +47,28 @@ const Hero = () => {
       <div className="relative z-10 text-center px-6 max-w-4xl mx-auto">
         <p
           className="text-sm tracking-[0.3em] uppercase text-primary-foreground/80 mb-6 animate-fade-up md:text-xl"
-          style={{ animationDelay: "0.2s" }}>
+          style={{ animationDelay: "0.08s" }}>
           Davide & Claudia
         </p>
         <h1
-          className="font-serif text-4xl md:text-7xl lg:text-8xl font-light text-primary-foreground leading-[1.1] mb-6 animate-fade-up max-w-5xl mx-auto"
-          style={{ animationDelay: "0.4s" }}>
+          className="font-serif text-4xl md:text-7xl lg:text-8xl font-light text-primary-foreground leading-[1.1] mb-6 animate-fade-up max-w-5xl mx-auto">
           Cinematic Travel UGC Creators
           <span className="sr-only"> — Travel UGC Creators for Hotels & Travel Brands</span>
         </h1>
         <p
-          className="font-serif text-xl md:text-2xl text-primary-foreground/90 italic mb-4 animate-fade-up">
+          className="font-serif text-xl md:text-2xl text-primary-foreground/90 italic mb-4 animate-fade-up"
+          style={{ animationDelay: "0.16s" }}>
           Authentic Storytelling for Hotels, Tours, Restaurants & Lifestyle Brands
         </p>
         <p
           className="text-sm md:text-base text-primary-foreground/70 max-w-2xl mx-auto mb-10 leading-relaxed animate-fade-up"
-          style={{ animationDelay: "0.8s" }}>
+          style={{ animationDelay: "0.24s" }}>
           We create immersive, authentic content that makes people feel the experience before they even arrive.
         </p>
         <div
           className="flex flex-col sm:flex-row items-center justify-center gap-4 animate-fade-up"
-          style={{ animationDelay: "1s" }}>
+          style={{ animationDelay: "0.34s" }}>
+
           <a
             href="#contact"
             className="bg-primary-foreground text-foreground px-8 py-3.5 text-sm tracking-widest uppercase hover:bg-primary-foreground/90 transition-colors duration-300">
@@ -82,7 +83,7 @@ const Hero = () => {
       </div>
 
       {/* Scroll indicator */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-fade-in" style={{ animationDelay: "1.5s" }}>
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-fade-in" style={{ animationDelay: "0.9s" }}>
         <div className="w-px h-12 bg-primary-foreground/40 mx-auto mb-2" />
         <p className="text-[10px] tracking-[0.3em] uppercase text-primary-foreground/50">Scroll</p>
       </div>
