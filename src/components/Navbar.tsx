@@ -120,20 +120,36 @@ const Navbar = () => {
       {menuOpen && (
         <div className="md:hidden bg-background/95 backdrop-blur-md border-t border-border animate-fade-in">
           <div className="flex flex-col items-center gap-6 py-8">
-            {navLinks.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                onClick={() => setMenuOpen(false)}
-                className="text-sm tracking-widest uppercase text-muted-foreground hover:text-foreground transition-colors"
-              >
-                {link.label}
-              </a>
-            ))}
+            {navLinks.map((link) => {
+              const active = activeId === link.href;
+              return (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  onClick={() => handleNavClick(link.href)}
+                  className={`relative text-sm tracking-widest uppercase transition-all duration-300 ${
+                    active
+                      ? "font-medium text-foreground"
+                      : "text-muted-foreground hover:text-foreground"
+                  }`}
+                >
+                  {link.label}
+                  <span
+                    className={`absolute left-1/2 -bottom-1.5 h-px bg-foreground transition-all duration-300 ease-out ${
+                      active ? "w-6 opacity-100 -translate-x-1/2" : "w-0 opacity-0"
+                    }`}
+                  />
+                </a>
+              );
+            })}
             <a
               href="#contact"
-              onClick={() => setMenuOpen(false)}
-              className="text-sm tracking-widest uppercase bg-primary text-primary-foreground px-5 py-2.5"
+              onClick={() => handleNavClick("#contact")}
+              className={`text-sm tracking-widest uppercase transition-colors duration-300 px-5 py-2.5 ${
+                activeId === "#contact"
+                  ? "bg-primary text-primary-foreground ring-1 ring-primary/40"
+                  : "bg-primary text-primary-foreground"
+              }`}
             >
               Contact
             </a>
