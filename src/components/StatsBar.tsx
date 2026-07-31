@@ -6,7 +6,7 @@ const stats = [
     suffix: "+",
     circleLabel: "BRANDS",
     shortLabel: "Worked with",
-    label: "Brands worked with",
+    label: "worked with",
   },
   {
     target: 200,
