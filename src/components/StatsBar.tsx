@@ -2,6 +2,12 @@ import { useEffect, useRef, useState } from "react";
 
 const stats = [
   {
+    target: 50,
+    suffix: "+",
+    circleLabel: "BRANDS",
+    label: "Brands worked with",
+  },
+  {
     target: 200,
     suffix: "+",
     circleLabel: "CONTENTS",
@@ -57,7 +63,7 @@ const StatItem = ({
   return (
     <div className="flex flex-col items-center">
       <div
-        className="relative w-[136px] h-[136px] md:w-[163px] md:h-[163px] lg:w-[190px] lg:h-[190px] mb-3 rounded-full"
+        className="relative w-[96px] h-[96px] md:w-[163px] md:h-[163px] lg:w-[190px] lg:h-[190px] mb-3 rounded-full"
         style={{
           background: `conic-gradient(hsl(var(--primary)) 0deg ${GAP_START}deg, transparent ${GAP_START}deg ${GAP_END}deg, hsl(var(--primary)) ${GAP_END}deg 360deg)`,
         }}
@@ -70,11 +76,11 @@ const StatItem = ({
         />
         {/* Centered number + label, nudged up ~12px for optical centering */}
         <div className="absolute inset-0 flex flex-col items-center justify-center" style={{ transform: "translateY(-12px)" }}>
-          <p className="font-serif text-5xl md:text-6xl lg:text-7xl text-foreground text-center m-0 p-0 leading-none">
+          <p className="font-serif text-3xl md:text-6xl lg:text-7xl text-foreground text-center m-0 p-0 leading-none">
             {count}
             {suffix}
           </p>
-          <span className="text-xs md:text-sm uppercase tracking-[0.2em] font-semibold text-primary mt-1.5 md:mt-2 whitespace-nowrap">
+          <span className="text-[10px] md:text-sm uppercase tracking-[0.15em] md:tracking-[0.2em] font-semibold text-primary mt-1 md:mt-2 whitespace-nowrap">
             {circleLabel}
           </span>
         </div>
@@ -113,7 +119,7 @@ const StatsBar = () => {
       className="py-10 md:py-16 bg-background border-t border-border"
     >
       <div className="container mx-auto px-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-6 text-center">
+        <div className="grid grid-cols-3 gap-2 md:gap-6 text-center">
           {stats.map((stat) => (
             <StatItem key={stat.label} {...stat} play={play} />
           ))}
