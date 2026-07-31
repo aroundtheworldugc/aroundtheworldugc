@@ -67,18 +67,36 @@ const Navbar = () => {
 
         {/* Desktop */}
         <div className="hidden md:flex items-center gap-8">
-          {navLinks.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              className="text-sm tracking-widest uppercase text-muted-foreground hover:text-foreground transition-colors duration-300"
-            >
-              {link.label}
-            </a>
-          ))}
+          {navLinks.map((link) => {
+            const active = activeId === link.href;
+            return (
+              <a
+                key={link.href}
+                href={link.href}
+                onClick={() => handleNavClick(link.href)}
+                className={`relative text-sm tracking-widest uppercase transition-all duration-300 ${
+                  active
+                    ? "font-medium text-foreground"
+                    : "text-muted-foreground hover:text-foreground"
+                }`}
+              >
+                {link.label}
+                <span
+                  className={`absolute left-0 -bottom-1.5 h-px bg-foreground transition-all duration-300 ease-out ${
+                    active ? "w-full opacity-100" : "w-0 opacity-0"
+                  }`}
+                />
+              </a>
+            );
+          })}
           <a
             href="#contact"
-            className="text-sm tracking-widest uppercase bg-primary text-primary-foreground px-6 py-3 hover:bg-primary/90 transition-colors duration-300"
+            onClick={() => handleNavClick("#contact")}
+            className={`text-sm tracking-widest uppercase transition-colors duration-300 px-6 py-3 ${
+              activeId === "#contact"
+                ? "bg-primary text-primary-foreground ring-1 ring-primary/40"
+                : "bg-primary text-primary-foreground hover:bg-primary/90"
+            }`}
           >
             Contact
           </a>
