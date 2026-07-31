@@ -117,7 +117,40 @@ const Navbar = () => {
     setMenuOpen(false);
     activeIdRef.current = href;
     setActiveId(href);
+
+    // Lock detection until the smooth scroll settles on the target.
+    scrollLockRef.current = true;
+    if (unlockRafRef.current) cancelAnimationFrame(unlockRafRef.current);
+    window.clearTimeout(unlockTimerRef.current);
+
+    let lastY = window.scrollY;
+    let stableFrames = 0;
+    const watch = () => {
+      const y = window.scrollY;
+      stableFrames = Math.abs(y - lastY) < 1 ? stableFrames + 1 : 0;
+      lastY = y;
+      if (stableFrames > 6) {
+        scrollLockRef.current = false;
+        return;
+      }
+      unlockRafRef.current = requestAnimationFrame(watch);
+    };
+    unlockRafRef.current = requestAnimationFrame(watch);
+    // Safety net in case the scroll never settles.
+    unlockTimerRef.current = window.setTimeout(() => {
+      if (unlockRafRef.current) cancelAnimationFrame(unlockRafRef.current);
+      scrollLockRef.current = false;
+    }, 2500);
   };
+
+  useEffect(
+    () => () => {
+      if (unlockRafRef.current) cancelAnimationFrame(unlockRafRef.current);
+      window.clearTimeout(unlockTimerRef.current);
+    },
+    [],
+  );
+
 
   return (
     <nav
