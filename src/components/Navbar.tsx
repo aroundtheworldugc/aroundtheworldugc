@@ -15,6 +15,10 @@ const Navbar = () => {
   const [activeId, setActiveId] = useState<string>("");
   const activeIdRef = useRef<string>("");
   activeIdRef.current = activeId;
+  // While a programmatic (smooth) scroll is running, freeze the active item.
+  const scrollLockRef = useRef(false);
+  const unlockRafRef = useRef<number | undefined>(undefined);
+  const unlockTimerRef = useRef<number | undefined>(undefined);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -36,6 +40,8 @@ const Navbar = () => {
 
     const compute = () => {
       ticking = false;
+      if (scrollLockRef.current) return;
+
       if (sectionEls.length !== allLinks.length) {
         sectionEls = allLinks
           .map((link) => document.querySelector(link.href) as HTMLElement | null)
@@ -111,7 +117,40 @@ const Navbar = () => {
     setMenuOpen(false);
     activeIdRef.current = href;
     setActiveId(href);
+
+    // Lock detection until the smooth scroll settles on the target.
+    scrollLockRef.current = true;
+    if (unlockRafRef.current) cancelAnimationFrame(unlockRafRef.current);
+    window.clearTimeout(unlockTimerRef.current);
+
+    let lastY = window.scrollY;
+    let stableFrames = 0;
+    const watch = () => {
+      const y = window.scrollY;
+      stableFrames = Math.abs(y - lastY) < 1 ? stableFrames + 1 : 0;
+      lastY = y;
+      if (stableFrames > 6) {
+        scrollLockRef.current = false;
+        return;
+      }
+      unlockRafRef.current = requestAnimationFrame(watch);
+    };
+    unlockRafRef.current = requestAnimationFrame(watch);
+    // Safety net in case the scroll never settles.
+    unlockTimerRef.current = window.setTimeout(() => {
+      if (unlockRafRef.current) cancelAnimationFrame(unlockRafRef.current);
+      scrollLockRef.current = false;
+    }, 2500);
   };
+
+  useEffect(
+    () => () => {
+      if (unlockRafRef.current) cancelAnimationFrame(unlockRafRef.current);
+      window.clearTimeout(unlockTimerRef.current);
+    },
+    [],
+  );
+
 
   return (
     <nav
