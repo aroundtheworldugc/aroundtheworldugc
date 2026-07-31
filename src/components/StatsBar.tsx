@@ -91,9 +91,8 @@ const StatItem = ({
         </div>
       </div>
 
-      <p className="text-sm text-muted-foreground leading-relaxed text-center md:max-w-xs md:mx-auto">
-        <span className="md:hidden">{shortLabel}</span>
-        <span className="hidden md:inline whitespace-pre-line">{label}</span>
+      <p className="hidden md:block text-sm text-muted-foreground leading-relaxed text-center md:max-w-xs md:mx-auto whitespace-pre-line">
+        {label}
       </p>
     </div>
   );
