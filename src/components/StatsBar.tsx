@@ -5,21 +5,18 @@ const stats = [
     target: 50,
     suffix: "+",
     circleLabel: "BRANDS",
-    shortLabel: "Worked with",
     label: "worked with",
   },
   {
     target: 200,
     suffix: "+",
     circleLabel: "CONTENTS",
-    shortLabel: "Delivered",
     label: "delivered across accommodations, tours, restaurants and products",
   },
   {
     target: 5,
     suffix: "",
     circleLabel: "COUNTRIES",
-    shortLabel: "Across 5 countries",
     label: "explored and documented:\nAustralia, Maldives, Sri Lanka, Thailand, Italy",
   },
 ];
@@ -38,14 +35,12 @@ const StatItem = ({
   target,
   suffix,
   circleLabel,
-  shortLabel,
   label,
   play,
 }: {
   target: number;
   suffix: string;
   circleLabel: string;
-  shortLabel: string;
   label: string;
   play: boolean;
 }) => {
@@ -91,9 +86,8 @@ const StatItem = ({
         </div>
       </div>
 
-      <p className="text-sm text-muted-foreground leading-relaxed text-center md:max-w-xs md:mx-auto">
-        <span className="md:hidden">{shortLabel}</span>
-        <span className="hidden md:inline whitespace-pre-line">{label}</span>
+      <p className="hidden md:block text-sm text-muted-foreground leading-relaxed text-center md:max-w-xs md:mx-auto whitespace-pre-line">
+        {label}
       </p>
     </div>
   );
