@@ -40,6 +40,8 @@ const Navbar = () => {
 
     const compute = () => {
       ticking = false;
+      if (scrollLockRef.current) return;
+
       if (sectionEls.length !== allLinks.length) {
         sectionEls = allLinks
           .map((link) => document.querySelector(link.href) as HTMLElement | null)
