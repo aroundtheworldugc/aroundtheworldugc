@@ -27,12 +27,21 @@ export function useScrollReveal<T extends HTMLElement = HTMLDivElement>(
     ).matches;
     if (prefersReduced) return;
 
-    const children = Array.from(el.children) as HTMLElement[];
-    // Stagger direct children when it reads as one coordinated sequence.
+    // Descend through single-child wrappers to find the real content group.
+    let group: HTMLElement = el;
+    for (let depth = 0; depth < 3; depth += 1) {
+      const only = group.children.length === 1 ? group.children[0] : null;
+      if (!(only instanceof HTMLElement)) break;
+      group = only;
+    }
+
+    const children = Array.from(group.children) as HTMLElement[];
+    // Stagger direct children so a section reads as one coordinated sequence.
     const targets =
       stagger > 0 && children.length > 1 && children.length <= 10
         ? children
         : [el];
+
 
     // Use GPU-accelerated properties only (opacity + transform)
     targets.forEach((target, index) => {
