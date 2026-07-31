@@ -12,15 +12,17 @@ const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 50);
-    window.addEventListener("scroll", onScroll);
+    const onScroll = () => setScrolled(window.scrollY > 40);
+    window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 bg-background/95 backdrop-blur-md ${
-        scrolled ? "py-3 shadow-sm" : "py-6"
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-[280ms] ease-out ${
+        scrolled
+          ? "py-4 bg-background/95 backdrop-blur-[10px] border-b border-warm-taupe/25 shadow-[0_1px_0_0_rgba(0,0,0,0.02)]"
+          : "py-6 bg-transparent border-b border-transparent"
       }`}
     >
       <div className="container mx-auto flex items-center justify-between px-6">
