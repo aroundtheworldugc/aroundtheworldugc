@@ -39,7 +39,10 @@ const WhyChooseUs = () => {
             ))}
           </div>
 
-          <div className="mt-12 border-2 border-warm-taupe/50 p-8 text-center">
+          <div
+            className="mt-12 p-8 text-center bg-card rounded-md"
+            style={{ borderWidth: "1.5px", borderColor: "hsl(var(--warm-taupe) / 0.55)" }}
+          >
             <p className="text-sm text-muted-foreground leading-relaxed">
               Trusted by 50+ brands across five countries. Consistent quality, reliable delivery, and a workflow refined collaboration after collaboration.
             </p>
