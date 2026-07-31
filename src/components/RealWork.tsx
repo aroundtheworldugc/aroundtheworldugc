@@ -507,7 +507,7 @@ const PhoneMockup = ({
                     ref={iframeRef}
                     src={`${video}?autoplay=1&loop=1&muted=0&controls=0&playsinline=1&dnt=1&title=0&byline=0&portrait=0&quality=720p`}
                     className="w-full h-full object-cover"
-                    style={{ border: "none", objectFit: "cover", pointerEvents: showControls ? "none" : "auto" }}
+                    style={{ border: "none", objectFit: "cover", pointerEvents: "none" }}
                     allow="autoplay; fullscreen; picture-in-picture"
                     loading="lazy"
                     title={brand}
