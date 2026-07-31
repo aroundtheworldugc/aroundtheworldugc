@@ -58,7 +58,7 @@ const Hero = () => {
         </h1>
         <p
           className="font-serif text-xl md:text-2xl text-primary-foreground/90 italic mb-4 animate-fade-up">
-          Cinematic Storytelling for Hotels, Tours, Restaurants & Lifestyle Brands
+          Authentic Storytelling for Hotels, Tours, Restaurants & Lifestyle Brands
         </p>
         <p
           className="text-sm md:text-base text-primary-foreground/70 max-w-2xl mx-auto mb-10 leading-relaxed animate-fade-up"
