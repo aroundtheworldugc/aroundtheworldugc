@@ -375,19 +375,31 @@ const PhoneMockup = ({
     setProgress(pct);
   }, [isVimeo]);
 
-  // Auto-hide controls after 3s on touch devices
+  // Auto-hide controls after ~1.5s on touch devices — always, whether the
+  // video is playing or paused. Controls become visible on any tap (play,
+  // pause, resume, or first activation) and this timer hides them again,
+  // leaving only the clean video. A new tap restarts the same timer.
   const showControlsWithTimer = useCallback(() => {
     setShowControls(true);
     if (hideTimerRef.current) clearTimeout(hideTimerRef.current);
-    hideTimerRef.current = setTimeout(() => setShowControls(false), 3000);
+    hideTimerRef.current = setTimeout(() => setShowControls(false), 1500);
   }, []);
+
+  // On touch devices, briefly show controls (with the auto-hide timer) the
+  // moment the player becomes ready — i.e. right after the first activation
+  // tap finishes loading the iframe.
+  useEffect(() => {
+    if (isTouchDevice.current && iframeLoaded) {
+      showControlsWithTimer();
+    }
+  }, [iframeLoaded, showControlsWithTimer]);
 
   const handleTap = useCallback(() => {
     if (isTouchDevice.current) {
       // A single tap anywhere on the video area toggles play/pause immediately,
       // using the same function as the center play/pause button — no need to
-      // wait for controls to appear. Controls are also briefly shown so the
-      // user can still reach the scrubber and audio toggle.
+      // wait for controls to appear. Controls are also shown and the auto-hide
+      // timer is (re)started so the scrubber and audio toggle are reachable.
       togglePlay();
       showControlsWithTimer();
     } else {
