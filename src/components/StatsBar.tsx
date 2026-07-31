@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 
 const stats = [
   {
-    target: 150,
+    target: 200,
     suffix: "+",
     circleLabel: "CONTENTS",
     label: "delivered across accommodations, tours, restaurants and products",
