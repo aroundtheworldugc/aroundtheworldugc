@@ -578,12 +578,12 @@ const PhoneMockup = ({
                 </div>
               </button>
 
-              {/* Scrubber — always visible on mobile, hover on desktop */}
+              {/* Scrubber — visible with controls on both touch and desktop */}
               <div
                 className="absolute bottom-14 left-4 right-4 z-20"
                 style={{
-                  opacity: isTouchDevice.current ? 1 : (showControls ? 1 : 0),
-                  pointerEvents: isTouchDevice.current ? "auto" : (showControls ? "auto" : "none"),
+                  opacity: showControls ? 1 : 0,
+                  pointerEvents: showControls ? "auto" : "none",
                   transition: "opacity 0.2s ease-out",
                 }}
               >
