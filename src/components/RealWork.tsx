@@ -613,7 +613,7 @@ const PhoneMockup = ({
                 </div>
               </div>
 
-              {/* Sound toggle — always visible on mobile, hover on desktop */}
+              {/* Sound toggle — visible with controls on both touch and desktop */}
               <button
                 onClick={(e) => { e.stopPropagation(); toggleSound(); }}
                 className="absolute bottom-4 right-4 z-20 flex items-center justify-center cursor-pointer"
@@ -623,8 +623,8 @@ const PhoneMockup = ({
                   borderRadius: "50%",
                   background: "rgba(0,0,0,0.6)",
                   border: "none",
-                  opacity: isTouchDevice.current ? 1 : (showControls ? 1 : 0),
-                  pointerEvents: isTouchDevice.current ? "auto" : (showControls ? "auto" : "none"),
+                  opacity: showControls ? 1 : 0,
+                  pointerEvents: showControls ? "auto" : "none",
                   transition: "opacity 0.2s ease-out",
                 }}
                 aria-label={muted ? "Unmute" : "Mute"}>
