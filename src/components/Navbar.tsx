@@ -26,11 +26,9 @@ const Navbar = () => {
   // A new section must be clearly more visible than the current one and
   // remain dominant briefly before the active state changes.
   useEffect(() => {
-    const sectionEls = allLinks
+    let sectionEls = allLinks
       .map((l) => document.querySelector(l.href) as HTMLElement | null)
       .filter((el): el is HTMLElement => Boolean(el));
-
-    if (!sectionEls.length) return;
 
     let ticking = false;
     let pendingId: string | null = null;
@@ -38,6 +36,13 @@ const Navbar = () => {
 
     const compute = () => {
       ticking = false;
+      if (sectionEls.length !== allLinks.length) {
+        sectionEls = allLinks
+          .map((link) => document.querySelector(link.href) as HTMLElement | null)
+          .filter((element): element is HTMLElement => Boolean(element));
+      }
+      if (!sectionEls.length) return;
+
       const header = document.querySelector("nav");
       const headerH = header?.getBoundingClientRect().height ?? 72;
       const vh = window.innerHeight;
@@ -91,10 +96,13 @@ const Navbar = () => {
 
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", compute);
+    const sectionObserver = new MutationObserver(compute);
+    sectionObserver.observe(document.body, { childList: true, subtree: true });
     compute();
     return () => {
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", compute);
+      sectionObserver.disconnect();
       window.clearTimeout(pendingTimer);
     };
   }, []);
