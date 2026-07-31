@@ -12,7 +12,7 @@ const stats = [
     target: 200,
     suffix: "+",
     circleLabel: "CONTENTS",
-    shortLabel: "Delivered across trips",
+    shortLabel: "Delivered",
     label: "delivered across accommodations, tours, restaurants and products",
   },
   {
