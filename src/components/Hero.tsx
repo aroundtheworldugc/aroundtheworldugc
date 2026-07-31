@@ -48,17 +48,17 @@ const Hero = () => {
         <p
           className="text-sm tracking-[0.3em] uppercase text-primary-foreground/80 mb-6 animate-fade-up md:text-xl"
           style={{ animationDelay: "0.2s" }}>
-          Travel UGC Creators
+          Davide & Claudia
         </p>
         <h1
           className="font-serif text-4xl md:text-7xl lg:text-8xl font-light text-primary-foreground leading-[1.1] mb-6 animate-fade-up max-w-5xl mx-auto"
           style={{ animationDelay: "0.4s" }}>
-          Davide & Claudia
+          Cinematic Travel UGC Creators
           <span className="sr-only"> — Travel UGC Creators for Hotels & Travel Brands</span>
         </h1>
         <p
           className="font-serif text-xl md:text-2xl text-primary-foreground/90 italic mb-4 animate-fade-up">
-          Cinematic Storytelling for Hotels, Travel & Lifestyle Brands
+          Cinematic Storytelling for Hotels, Tours, Restaurants & Lifestyle Brands
         </p>
         <p
           className="text-sm md:text-base text-primary-foreground/70 max-w-2xl mx-auto mb-10 leading-relaxed animate-fade-up"
