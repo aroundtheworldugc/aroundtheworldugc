@@ -38,14 +38,12 @@ const StatItem = ({
   target,
   suffix,
   circleLabel,
-  shortLabel,
   label,
   play,
 }: {
   target: number;
   suffix: string;
   circleLabel: string;
-  shortLabel: string;
   label: string;
   play: boolean;
 }) => {
