@@ -7,15 +7,50 @@ const navLinks = [
   { label: "Approach", href: "#why-choose-us" },
 ];
 
+const allLinks = [...navLinks, { label: "Contact", href: "#contact" }];
+
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [activeId, setActiveId] = useState<string>("");
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  // Observe sections to set the active nav item while scrolling
+  useEffect(() => {
+    const sections = allLinks
+      .map((l) => document.querySelector(l.href))
+      .filter((el): el is HTMLElement => Boolean(el));
+
+    if (!sections.length) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((e) => e.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+        if (visible[0]) {
+          setActiveId(`#${visible[0].target.id}`);
+        }
+      },
+      {
+        rootMargin: "-30% 0px -60% 0px",
+        threshold: [0, 0.25, 0.5, 1],
+      }
+    );
+
+    sections.forEach((s) => observer.observe(s));
+    return () => observer.disconnect();
+  }, []);
+
+  const handleNavClick = (href: string) => {
+    setMenuOpen(false);
+    setActiveId(href);
+  };
 
   return (
     <nav
