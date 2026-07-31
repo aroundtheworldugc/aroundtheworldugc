@@ -15,6 +15,10 @@ const Navbar = () => {
   const [activeId, setActiveId] = useState<string>("");
   const activeIdRef = useRef<string>("");
   activeIdRef.current = activeId;
+  // While a programmatic (smooth) scroll is running, freeze the active item.
+  const scrollLockRef = useRef(false);
+  const unlockRafRef = useRef<number | undefined>(undefined);
+  const unlockTimerRef = useRef<number | undefined>(undefined);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
