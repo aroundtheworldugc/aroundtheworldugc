@@ -22,63 +22,68 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Stable scroll-spy: a section becomes active only when it clearly
-  // occupies a target line near the center of the viewport (just below
-  // the sticky header), with a short debounce so it never flickers
-  // near section boundaries.
+  // Stable scroll-spy: compare the visible area of every linked section.
+  // A new section must be clearly more visible than the current one and
+  // remain dominant briefly before the active state changes.
   useEffect(() => {
-    const sectionEls = allLinks
+    let sectionEls = allLinks
       .map((l) => document.querySelector(l.href) as HTMLElement | null)
       .filter((el): el is HTMLElement => Boolean(el));
 
-    if (!sectionEls.length) return;
-
     let ticking = false;
-    let pending: string | null = null;
+    let pendingId: string | null = null;
     let pendingTimer: number | undefined;
 
     const compute = () => {
       ticking = false;
-      // Target line: ~42% from top, but never behind the sticky header.
-      const headerH = 72;
-      const vh = window.innerHeight;
-      const targetLine = headerH + (vh - headerH) * 0.42;
+      if (sectionEls.length !== allLinks.length) {
+        sectionEls = allLinks
+          .map((link) => document.querySelector(link.href) as HTMLElement | null)
+          .filter((element): element is HTMLElement => Boolean(element));
+      }
+      if (!sectionEls.length) return;
 
-      let occupying: string | null = null;
-      // First pass: section that fully spans the target line.
-      for (let i = 0; i < sectionEls.length; i++) {
-        const rect = sectionEls[i].getBoundingClientRect();
-        if (rect.top <= targetLine && rect.bottom > targetLine) {
-          occupying = `#${sectionEls[i].id}`;
-          break;
-        }
-      }
-      // Fallback (target line sits in a gap between sections):
-      // the last section whose top has passed the line.
-      if (!occupying) {
-        for (let i = 0; i < sectionEls.length; i++) {
-          if (sectionEls[i].getBoundingClientRect().top <= targetLine) {
-            occupying = `#${sectionEls[i].id}`;
-          }
-        }
-      }
+      const header = document.querySelector("nav");
+      const headerH = header?.getBoundingClientRect().height ?? 72;
+      const vh = window.innerHeight;
+      const visibleTop = headerH;
+      const visibleHeight = Math.max(1, vh - visibleTop);
+      const areas = sectionEls.map((section) => {
+        const rect = section.getBoundingClientRect();
+        const visibleArea = Math.max(
+          0,
+          Math.min(rect.bottom, vh) - Math.max(rect.top, visibleTop),
+        );
+        return { id: `#${section.id}`, visibleArea };
+      });
+
+      const dominant = areas.reduce((largest, item) =>
+        item.visibleArea > largest.visibleArea ? item : largest,
+      );
 
       const current = activeIdRef.current;
-      if (occupying && occupying !== current) {
-        // Hysteresis: the new candidate must persist ~140ms before we
-        // commit, so brief overshoots near boundaries don't flicker.
-        if (pending === occupying) return;
+      const currentArea = areas.find((item) => item.id === current)?.visibleArea ?? 0;
+      const dominanceMargin = Math.max(32, visibleHeight * 0.05);
+      const shouldSwitch =
+        dominant.visibleArea > 0 &&
+        dominant.id !== current &&
+        (currentArea === 0 || dominant.visibleArea >= currentArea + dominanceMargin);
+
+      if (shouldSwitch) {
+        if (pendingId === dominant.id) return;
         window.clearTimeout(pendingTimer);
-        pending = occupying;
+        pendingId = dominant.id;
         pendingTimer = window.setTimeout(() => {
-          setActiveId(occupying!);
-          pending = null;
-        }, 140);
-      } else if (!occupying) {
-        // In a real gap with no candidate: cancel any pending switch
-        // and keep the current item sticky.
+          const nextId = pendingId;
+          if (nextId) {
+            activeIdRef.current = nextId;
+            setActiveId(nextId);
+          }
+          pendingId = null;
+        }, 100);
+      } else {
         window.clearTimeout(pendingTimer);
-        pending = null;
+        pendingId = null;
       }
     };
 
@@ -91,16 +96,20 @@ const Navbar = () => {
 
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", compute);
+    const sectionObserver = new MutationObserver(compute);
+    sectionObserver.observe(document.body, { childList: true, subtree: true });
     compute();
     return () => {
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", compute);
+      sectionObserver.disconnect();
       window.clearTimeout(pendingTimer);
     };
   }, []);
 
   const handleNavClick = (href: string) => {
     setMenuOpen(false);
+    activeIdRef.current = href;
     setActiveId(href);
   };
 
