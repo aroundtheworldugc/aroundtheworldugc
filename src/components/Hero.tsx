@@ -83,7 +83,7 @@ const Hero = () => {
       </div>
 
       {/* Scroll indicator */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-fade-in" style={{ animationDelay: "1.5s" }}>
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-fade-in" style={{ animationDelay: "0.9s" }}>
         <div className="w-px h-12 bg-primary-foreground/40 mx-auto mb-2" />
         <p className="text-[10px] tracking-[0.3em] uppercase text-primary-foreground/50">Scroll</p>
       </div>
