@@ -5,21 +5,18 @@ const stats = [
     target: 50,
     suffix: "+",
     circleLabel: "BRANDS",
-    shortLabel: "Worked with",
     label: "worked with",
   },
   {
     target: 200,
     suffix: "+",
     circleLabel: "CONTENTS",
-    shortLabel: "Delivered",
     label: "delivered across accommodations, tours, restaurants and products",
   },
   {
     target: 5,
     suffix: "",
     circleLabel: "COUNTRIES",
-    shortLabel: "Across 5 countries",
     label: "explored and documented:\nAustralia, Maldives, Sri Lanka, Thailand, Italy",
   },
 ];
