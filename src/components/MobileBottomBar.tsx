@@ -1,13 +1,15 @@
 import { useEffect, useState } from "react";
 
 const MobileBottomBar = () => {
-  const [visible, setVisible] = useState(true);
+  const [visible, setVisible] = useState(false);
 
   useEffect(() => {
     const onScroll = () => {
       const scrollPos = window.scrollY + window.innerHeight;
       const docHeight = document.documentElement.scrollHeight;
-      setVisible(scrollPos < docHeight - 600);
+      const pastHero = window.scrollY > window.innerHeight; // past ~100vh
+      const nearContact = scrollPos >= docHeight - 600;
+      setVisible(pastHero && !nearContact);
     };
 
     window.addEventListener("scroll", onScroll, { passive: true });
