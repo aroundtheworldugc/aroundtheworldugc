@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 const navLinks = [
   { label: "About", href: "#about" },
@@ -13,6 +13,8 @@ const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeId, setActiveId] = useState<string>("");
+  const activeIdRef = useRef<string>("");
+  activeIdRef.current = activeId;
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -20,31 +22,81 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Observe sections to set the active nav item while scrolling
+  // Stable scroll-spy: a section becomes active only when it clearly
+  // occupies a target line near the center of the viewport (just below
+  // the sticky header), with a short debounce so it never flickers
+  // near section boundaries.
   useEffect(() => {
-    const sections = allLinks
-      .map((l) => document.querySelector(l.href))
+    const sectionEls = allLinks
+      .map((l) => document.querySelector(l.href) as HTMLElement | null)
       .filter((el): el is HTMLElement => Boolean(el));
 
-    if (!sections.length) return;
+    if (!sectionEls.length) return;
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visible = entries
-          .filter((e) => e.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
-        if (visible[0]) {
-          setActiveId(`#${visible[0].target.id}`);
+    let ticking = false;
+    let pending: string | null = null;
+    let pendingTimer: number | undefined;
+
+    const compute = () => {
+      ticking = false;
+      // Target line: ~42% from top, but never behind the sticky header.
+      const headerH = 72;
+      const vh = window.innerHeight;
+      const targetLine = headerH + (vh - headerH) * 0.42;
+
+      let occupying: string | null = null;
+      // First pass: section that fully spans the target line.
+      for (let i = 0; i < sectionEls.length; i++) {
+        const rect = sectionEls[i].getBoundingClientRect();
+        if (rect.top <= targetLine && rect.bottom > targetLine) {
+          occupying = `#${sectionEls[i].id}`;
+          break;
         }
-      },
-      {
-        rootMargin: "-30% 0px -60% 0px",
-        threshold: [0, 0.25, 0.5, 1],
       }
-    );
+      // Fallback (target line sits in a gap between sections):
+      // the last section whose top has passed the line.
+      if (!occupying) {
+        for (let i = 0; i < sectionEls.length; i++) {
+          if (sectionEls[i].getBoundingClientRect().top <= targetLine) {
+            occupying = `#${sectionEls[i].id}`;
+          }
+        }
+      }
 
-    sections.forEach((s) => observer.observe(s));
-    return () => observer.disconnect();
+      const current = activeIdRef.current;
+      if (occupying && occupying !== current) {
+        // Hysteresis: the new candidate must persist ~140ms before we
+        // commit, so brief overshoots near boundaries don't flicker.
+        if (pending === occupying) return;
+        window.clearTimeout(pendingTimer);
+        pending = occupying;
+        pendingTimer = window.setTimeout(() => {
+          setActiveId(occupying!);
+          pending = null;
+        }, 140);
+      } else if (!occupying) {
+        // In a real gap with no candidate: cancel any pending switch
+        // and keep the current item sticky.
+        window.clearTimeout(pendingTimer);
+        pending = null;
+      }
+    };
+
+    const onScroll = () => {
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(compute);
+      }
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", compute);
+    compute();
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", compute);
+      window.clearTimeout(pendingTimer);
+    };
   }, []);
 
   const handleNavClick = (href: string) => {
