@@ -384,17 +384,16 @@ const PhoneMockup = ({
 
   const handleTap = useCallback(() => {
     if (isTouchDevice.current) {
-      if (showControls) {
-        // If controls visible, hide them
-        if (hideTimerRef.current) clearTimeout(hideTimerRef.current);
-        setShowControls(false);
-      } else {
-        showControlsWithTimer();
-      }
+      // A single tap anywhere on the video area toggles play/pause immediately,
+      // using the same function as the center play/pause button — no need to
+      // wait for controls to appear. Controls are also briefly shown so the
+      // user can still reach the scrubber and audio toggle.
+      togglePlay();
+      showControlsWithTimer();
     } else {
       setShowControls((prev) => !prev);
     }
-  }, [showControls, showControlsWithTimer]);
+  }, [togglePlay, showControlsWithTimer]);
 
   // Show thumbnail when: not activated yet, or activated but iframe not loaded
   const showThumbnail = !isPlaceholder && !isVimeo ? false : (!activated || (activated && !iframeLoaded));
@@ -508,7 +507,7 @@ const PhoneMockup = ({
                     ref={iframeRef}
                     src={`${video}?autoplay=1&loop=1&muted=0&controls=0&playsinline=1&dnt=1&title=0&byline=0&portrait=0&quality=720p`}
                     className="w-full h-full object-cover"
-                    style={{ border: "none", objectFit: "cover", pointerEvents: showControls ? "none" : "auto" }}
+                    style={{ border: "none", objectFit: "cover", pointerEvents: "none" }}
                     allow="autoplay; fullscreen; picture-in-picture"
                     loading="lazy"
                     title={brand}
