@@ -91,8 +91,9 @@ const categories = [
 const PhoneMockup = ({
   video,
   brand,
-  caption
-}: {video: string; brand: string; caption: string;}) => {
+  caption,
+  thumbnail
+}: {video: string; brand: string; caption: string; thumbnail?: string;}) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const playerRef = useRef<Player | null>(null);
@@ -106,7 +107,7 @@ const PhoneMockup = ({
   const hideTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [activated, setActivated] = useState(false);
   const [iframeLoaded, setIframeLoaded] = useState(false);
-  const [vimeoThumbnail, setVimeoThumbnail] = useState<string | null>(null);
+  
   const isTouchDevice = useRef(false);
 
   const isPlaceholder = video.includes("placeholder");
