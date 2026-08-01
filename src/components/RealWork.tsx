@@ -1,6 +1,15 @@
 import React, { useRef, useState, useEffect, useCallback } from "react";
 import Player from "@vimeo/player";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
+import coverAquaLuna from "@/assets/covers/1_aqua-luna-maldives.webp.asset.json";
+import coverTheva from "@/assets/covers/2_theva-kandy.webp.asset.json";
+import coverWhitehouse from "@/assets/covers/3_whitehouse-sharkbay.webp.asset.json";
+import coverSurfer from "@/assets/covers/4_surfer-surfcamp.webp.asset.json";
+import coverNingaloo from "@/assets/covers/5_ningaloo-whaleshark.webp.asset.json";
+import coverSafari from "@/assets/covers/6_safari-yala.webp.asset.json";
+import coverSubsea from "@/assets/covers/7_subsea-estate.webp.asset.json";
+import coverSoulFood from "@/assets/covers/8_soulfood-sigiriya.webp.asset.json";
+import coverSeahaus from "@/assets/covers/9_seahaus-kalbarri.webp.asset.json";
 
 // Global registry: only one video plays at a time
 const activePlayerRef: { current: (() => void) | null } = { current: null };
@@ -14,16 +23,19 @@ const categories = [
   {
     video: "https://player.vimeo.com/video/1211523867",
     brand: "Aqua Luna - Maldives",
+    thumbnail: coverAquaLuna.url,
     caption: "Cinematic reel capturing overwater luxury and the turquoise stillness of the Maldives."
   },
   {
     video: "https://player.vimeo.com/video/1211523870",
     brand: "Theva Residency - Sri Lanka",
+    thumbnail: coverTheva.url,
     caption: "Immersive storytelling showcasing tropical hillside charm and boutique hospitality."
   },
   {
     video: "https://player.vimeo.com/video/1211523869",
     brand: "The Whitehouse - Shark Bay",
+    thumbnail: coverWhitehouse.url,
     caption: "Coastal lifestyle content built around relaxed, elevated stays."
   },
   ]
@@ -35,16 +47,19 @@ const categories = [
   {
     video: "https://player.vimeo.com/video/1211526471",
     brand: "The Surfer - Weligama",
+    thumbnail: coverSurfer.url,
     caption: "Energetic surf culture narrative capturing community and coastal adventure."
   },
   {
     video: "https://player.vimeo.com/video/1211526550",
     brand: "Ningaloo Discovery - Exmouth",
+    thumbnail: coverNingaloo.url,
     caption: "Adventure driven reel following an unforgettable whale shark encounter."
   },
   {
     video: "https://player.vimeo.com/video/1211526549",
     brand: "Safari Lodge - Yala",
+    thumbnail: coverSafari.url,
     caption: "Wildlife inspired storytelling blending safari adventure with authentic hospitality."
   }]
 },
@@ -55,16 +70,19 @@ const categories = [
   {
     video: "https://player.vimeo.com/video/1211526559",
     brand: "Subsea Estate - Margaret River",
+    thumbnail: coverSubsea.url,
     caption: "Cinematic vineyard narrative pairing coastal wine culture with refined dining."
   },
   {
     video: "https://player.vimeo.com/video/1211527447",
     brand: "Soul Food - Sigiriya",
+    thumbnail: coverSoulFood.url,
     caption: "Vibrant food focused reel capturing flavor, atmosphere and local warmth."
   },
   {
     video: "https://player.vimeo.com/video/1211527450",
     brand: "Seahaus - Kalbarri",
+    thumbnail: coverSeahaus.url,
     caption: "Elevated coastal dining content designed for premium brand storytelling."
   }]
 }];
